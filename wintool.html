@@ -463,94 +463,16 @@
             flex-grow: 1;
         }
 
-        /* --- Screenshots Section --- */
+        /* --- Screenshots/Video Section --- */
         .screenshots-section {
             padding: 80px 0;
             text-align: center;
             position: relative;
             z-index: 1;
         }
-        .screenshots-container {
-            position: relative;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 60px;
-        }
-        .screenshots-grid {
-            display: flex;
-            gap: 30px;
-            overflow-x: auto;
-            scroll-behavior: smooth;
-            padding: 30px 10px;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-            align-items: center;
-        }
-        .screenshots-grid::-webkit-scrollbar { display: none; }
-        .screenshot {
-            flex: 0 0 auto;
-            width: 400px;
-            background: rgba(15, 15, 15, 0.8);
-            border: 1px solid rgba(255, 152, 0, 0.15);
-            border-radius: 20px;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-            cursor: pointer;
-            position: relative;
-        }
-        .screenshot::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(255, 152, 0, 0.1) 0%, transparent 50%);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            border-radius: 20px;
-        }
-        .screenshot:hover::before { opacity: 1; }
-        .screenshot img {
-            width: 100%;
-            height: auto;
-            display: block;
-            object-fit: cover;
-            transition: transform 0.4s ease;
-        }
-        .screenshot:hover {
-            transform: translateY(-10px) scale(1.05);
-            border-color: rgba(255, 152, 0, 0.4);
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 152, 0, 0.2);
-        }
-        .screenshot:hover img { transform: scale(1.05); }
-        .nav-arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(15, 15, 15, 0.9);
-            border: 2px solid rgba(255, 152, 0, 0.2);
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            color: #ff9800;
-            z-index: 10;
-            backdrop-filter: blur(10px);
-        }
-        .nav-arrow:hover {
-            background: rgba(255, 152, 0, 0.15);
-            border-color: rgba(255, 152, 0, 0.4);
-            transform: translateY(-50%) scale(1.1);
-            box-shadow: 0 10px 25px rgba(255, 152, 0, 0.2);
-        }
-        .prev-arrow { left: 10px; }
-        .next-arrow { right: 10px; }
+
+
+
 
         /* --- Content Sections --- */
         .content-section {
@@ -757,8 +679,6 @@
         @media (max-width: 1024px) {
             .app-preview-section { gap: 40px; }
             .features-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
-            .screenshots-container { padding: 0 40px; }
-            .screenshot { width: 350px; }
             .back-button-container { top: 20px; left: 20px; }
         }
 
@@ -869,9 +789,6 @@
             .content-section h3 { font-size: 1.3rem; }
             .content-section pre { padding: 15px; }
             .content-section pre code { font-size: 0.9rem; }
-            .screenshots-container { padding: 0 30px; }
-            .screenshot { width: 320px; }
-            .nav-arrow { width: 45px; height: 45px; }
         }
 
         @media (max-width: 480px) {
@@ -909,9 +826,6 @@
             .feature-card { padding: 25px 20px; }
             .feature-card .icon { width: 60px; height: 60px; }
             .feature-card .icon i { font-size: 1.8rem; }
-            .screenshot { width: 280px; }
-            .nav-arrow { display: none; }
-            .screenshots-grid { padding: 20px 5px; }
             .notification-container {
                 bottom: 20px;
                 right: 20px;
@@ -1250,7 +1164,7 @@
             <!-- Stats Section -->
             <div class="stats-section" data-aos="fade-up" data-aos-delay="300">
                 <div class="stat-card">
-                    <span class="stat-number">6</span>
+                    <span class="stat-number">7</span>
                     <span class="stat-label">Core Tools</span>
                 </div>
                 <div class="stat-card">
@@ -1273,9 +1187,9 @@
     <section class="container app-showcase">
         <div class="app-preview-section" data-aos="fade-up">
             <div class="app-preview">
-                <img src="https://cdn.glitch.global/c71b63a5-9bbb-4161-9304-824cf8b9757b/welcome.png?v=1746057426300"
-                     alt="WinTool Portable Dashboard Preview"
-                     onerror="this.onerror=null; this.src='https://placehold.co/600x400/141414/FF7810?text=WinTool+Preview';"
+                <img src="wintool.gif"
+                     alt="WinTool Portable Application Demo - Animated demonstration of features"
+                     onerror="this.onerror=null; this.src='https://placehold.co/600x400/141414/FF7810?text=WinTool+Demo+GIF';"
                      onclick="openModal(this.src)">
             </div>
             <div class="app-info">
@@ -1348,6 +1262,16 @@
                 <h3>System Cleanup</h3>
                 <p>Optimize Windows performance by cleaning temporary files, system cache, and unnecessary data to free up disk space and improve speed.</p>
               </div>
+              <div class="feature-card glass-card" data-aos="fade-up" data-aos-delay="600">
+                <div class="icon"><i class="fas fa-code"></i></div>
+                <h3>Environment Variables</h3>
+                <p>Comprehensive environment variable management with separate user and system variable sections, PATH editor, search functionality, and export capabilities.</p>
+              </div>
+              <div class="feature-card glass-card" data-aos="fade-up" data-aos-delay="700">
+                <div class="icon"><i class="fas fa-cogs"></i></div>
+                <h3>Windows Unattend</h3>
+                <p>Create and export Windows unattend.xml files for automated installations with preset configurations, comprehensive settings, and real-time XML preview.</p>
+              </div>
           </div>
         </section>
 
@@ -1388,59 +1312,7 @@
           </div>
         </section>
 
-        <!-- Screenshots Section -->
-        <section id="screenshots" class="screenshots-section">
-          <h2 data-aos="fade-up"><i class="fas fa-images"></i> Application Screenshots</h2>
-          <div class="screenshots-container">
-            <button class="nav-arrow prev-arrow" onclick="scrollScreenshots('left')" aria-label="Previous Screenshot">
-              <i class="fas fa-chevron-left"></i>
-            </button>
-            <div class="screenshots-grid" id="screenshots-grid">
-              <div class="screenshot" data-aos="fade-up">
-                <img src="https://cdn.glitch.global/c71b63a5-9bbb-4161-9304-824cf8b9757b/welcome.png?v=1746057426300"
-                     alt="WinTool Welcome Dashboard"
-                     onerror="this.onerror=null; this.src='https://placehold.co/400x250/1e1e1e/FF7810?text=Welcome+Dashboard';"
-                     onclick="openModal(this.src)">
-              </div>
-              <div class="screenshot" data-aos="fade-up" data-aos-delay="100">
-                 <img src="https://cdn.glitch.global/c71b63a5-9bbb-4161-9304-824cf8b9757b/dash.png?v=1746057416980"
-                      alt="System Information Dashboard"
-                      onerror="this.onerror=null; this.src='https://placehold.co/400x250/1e1e1e/FF7810?text=System+Info';"
-                      onclick="openModal(this.src)">
-              </div>
-              <div class="screenshot" data-aos="fade-up" data-aos-delay="200">
-                 <img src="https://cdn.glitch.global/c71b63a5-9bbb-4161-9304-824cf8b9757b/system-tools.png?v=1746057421315"
-                      alt="System Utilities Collection"
-                      onerror="this.onerror=null; this.src='https://placehold.co/400x250/1e1e1e/FF7810?text=System+Utilities';"
-                      onclick="openModal(this.src)">
-              </div>
-              <div class="screenshot" data-aos="fade-up" data-aos-delay="300">
-                 <img src="https://cdn.glitch.global/c71b63a5-9bbb-4161-9304-824cf8b9757b/packages.png?v=1746057419894"
-                      alt="Package Manager Interface"
-                      onerror="this.onerror=null; this.src='https://placehold.co/400x250/1e1e1e/FF7810?text=Package+Manager';"
-                      onclick="openModal(this.src)">
-              </div>
-              <div class="screenshot" data-aos="fade-up" data-aos-delay="400">
-                 <img src="https://placehold.co/400x250/1e1e1e/FF7810?text=Services+Manager"
-                      alt="Services Manager Interface"
-                      onclick="openModal(this.src)">
-              </div>
-              <div class="screenshot" data-aos="fade-up" data-aos-delay="500">
-                 <img src="https://placehold.co/400x250/1e1e1e/FF7810?text=Network+Tools"
-                      alt="Network Tools Interface"
-                      onclick="openModal(this.src)">
-              </div>
-              <div class="screenshot" data-aos="fade-up" data-aos-delay="600">
-                 <img src="https://placehold.co/400x250/1e1e1e/FF7810?text=System+Cleanup"
-                      alt="System Cleanup Interface"
-                      onclick="openModal(this.src)">
-              </div>
-            </div>
-            <button class="nav-arrow next-arrow" onclick="scrollScreenshots('right')" aria-label="Next Screenshot">
-              <i class="fas fa-chevron-right"></i>
-            </button>
-          </div>
-        </section>
+
 
         <!-- Installation Section -->
         <section id="installation" class="content-section">
@@ -1507,6 +1379,8 @@ npm run dist</code></pre>
                 <li><strong>Package Manager:</strong> Install and manage software using winget integration</li>
                 <li><strong>Network Tools:</strong> View network interfaces and connectivity information</li>
                 <li><strong>System Cleanup:</strong> Clean temporary files and optimize system performance</li>
+                <li><strong>Environment Variables:</strong> Manage user and system environment variables with PATH editor and export functionality</li>
+                <li><strong>Windows Unattend:</strong> Create and export unattend.xml files for automated Windows deployments</li>
             </ul>
 
             <h3>Customization</h3>
@@ -1640,27 +1514,7 @@ npm run dist</code></pre>
             });
         }
 
-        // --- Screenshot Scrolling ---
-        // Function to scroll the screenshots container
-        window.scrollScreenshots = function(direction) {
-            const screenshotsGrid = document.getElementById('screenshots-grid');
-            if (!screenshotsGrid) return; // Exit if grid not found
 
-            const scrollAmount = 300; // Amount to scroll in pixels
-            let targetScrollLeft;
-
-            if (direction === 'left') {
-                targetScrollLeft = screenshotsGrid.scrollLeft - scrollAmount;
-            } else { // direction === 'right'
-                targetScrollLeft = screenshotsGrid.scrollLeft + scrollAmount;
-            }
-
-            // Use smooth scrolling behavior
-            screenshotsGrid.scrollTo({
-                left: targetScrollLeft,
-                behavior: 'smooth'
-            });
-        }
 
         // --- Particle Generation Script ---
         const particlesContainer = document.querySelector('.particles-container');

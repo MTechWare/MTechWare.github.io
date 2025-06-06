@@ -951,6 +951,8 @@
                     <li><a href="#packages"><i class="fas fa-box"></i> Package Manager</a></li>
                     <li><a href="#networking"><i class="fas fa-network-wired"></i> Network Tools</a></li>
                     <li><a href="#cleanup"><i class="fas fa-broom"></i> System Cleanup</a></li>
+                    <li><a href="#environment-variables"><i class="fas fa-code"></i> Environment Variables</a></li>
+                    <li><a href="#windows-unattend"><i class="fas fa-cogs"></i> Windows Unattend</a></li>
                 </ul>
 
                 <h3><i class="fas fa-code"></i> Development</h3>
@@ -1158,6 +1160,7 @@ npm run dist</code></pre>
                         <li><code>Ctrl + R</code> - Refresh current tab data</li>
                         <li><code>Ctrl + S</code> - Open settings panel</li>
                         <li><code>F5</code> - Refresh system information</li>
+                        <li><code>Escape</code> - Close modal dialogs</li>
                         <li><code>Escape</code> - Close modal dialogs</li>
                     </ul>
 
@@ -1462,6 +1465,228 @@ npm run dist</code></pre>
                         <li><strong>Confirmation Prompts:</strong> User confirmation for destructive operations</li>
                         <li><strong>Exclusion Lists:</strong> Protect important files from deletion</li>
                         <li><strong>Undo Capability:</strong> Restore recently deleted files when possible</li>
+                    </ul>
+                </section>
+
+                <!-- Environment Variables Section -->
+                <section id="environment-variables" class="doc-section">
+                    <h2><i class="fas fa-code"></i> Environment Variables</h2>
+                    <p>
+                        The Environment Variables module provides comprehensive management of both user and system environment variables
+                        in Windows. This powerful tool enables administrators and developers to view, edit, add, and delete environment
+                        variables with advanced features like PATH editing and export functionality.
+                    </p>
+
+                    <h3>Key Features</h3>
+                    <ul>
+                        <li><strong>Dual Variable Management:</strong> Separate sections for User and System environment variables</li>
+                        <li><strong>Advanced PATH Editor:</strong> Specialized editor for PATH variable with individual entry management</li>
+                        <li><strong>Search and Filter:</strong> Quickly find variables with real-time search and filtering options</li>
+                        <li><strong>Export Functionality:</strong> Export all environment variables to JSON format with timestamps</li>
+                        <li><strong>Input Validation:</strong> Comprehensive validation for variable names and values</li>
+                        <li><strong>Real-time Updates:</strong> Immediate reflection of changes in the system</li>
+                    </ul>
+
+                    <h3>Variable Management</h3>
+                    <h4>Adding Variables</h4>
+                    <p>
+                        Create new environment variables by clicking the "Add Variable" button. The system provides:
+                    </p>
+                    <ul>
+                        <li>Variable name validation (letters, numbers, and underscores only)</li>
+                        <li>Choice between User and System variable targets</li>
+                        <li>Multi-line value support for complex configurations</li>
+                        <li>Real-time input validation and feedback</li>
+                    </ul>
+
+                    <h4>Editing Variables</h4>
+                    <p>
+                        Modify existing variables with the edit functionality:
+                    </p>
+                    <ul>
+                        <li>Pre-filled forms with current variable values</li>
+                        <li>Protected variable name field during editing</li>
+                        <li>Support for long values with expand/collapse functionality</li>
+                        <li>Confirmation dialogs for critical changes</li>
+                    </ul>
+
+                    <h4>PATH Variable Editor</h4>
+                    <p>
+                        The specialized PATH editor provides enhanced management for PATH environment variables:
+                    </p>
+                    <ul>
+                        <li><strong>Individual Entry Management:</strong> Add, remove, and reorder PATH entries individually</li>
+                        <li><strong>Path Validation:</strong> Visual indicators for valid and invalid path entries</li>
+                        <li><strong>Bulk Operations:</strong> Validate all entries at once</li>
+                        <li><strong>User-friendly Interface:</strong> Separate input fields for each PATH component</li>
+                    </ul>
+
+                    <h3>Search and Organization</h3>
+                    <ul>
+                        <li><strong>Real-time Search:</strong> Filter variables by name or value as you type</li>
+                        <li><strong>Category Filtering:</strong> View all variables, user-only, or system-only</li>
+                        <li><strong>Variable Counts:</strong> Display total number of variables in each category</li>
+                        <li><strong>Responsive Layout:</strong> Optimized display for different screen sizes</li>
+                    </ul>
+
+                    <h3>Security and Safety</h3>
+                    <ul>
+                        <li><strong>Input Sanitization:</strong> Prevents injection attacks and invalid characters</li>
+                        <li><strong>Rate Limiting:</strong> Protects against rapid successive operations</li>
+                        <li><strong>Confirmation Dialogs:</strong> Prevents accidental deletion of important variables</li>
+                        <li><strong>Error Handling:</strong> Comprehensive error messages and recovery options</li>
+                    </ul>
+
+                    <h3>Export and Backup</h3>
+                    <p>
+                        The export functionality allows you to create backups of your environment configuration:
+                    </p>
+                    <ul>
+                        <li>JSON format export with structured data</li>
+                        <li>Timestamp inclusion for version tracking</li>
+                        <li>Separate user and system variable sections</li>
+                        <li>Easy import capability for system restoration</li>
+                    </ul>
+
+                    <div class="quick-start">
+                        <h3>Quick Start Guide</h3>
+                        <ol>
+                            <li>Navigate to the Environment Variables tab</li>
+                            <li>Use the search box to find specific variables</li>
+                            <li>Click "Add Variable" to create new environment variables</li>
+                            <li>Use the PATH Editor for complex PATH variable management</li>
+                            <li>Export your configuration for backup purposes</li>
+                        </ol>
+                    </div>
+                </section>
+
+                <!-- Windows Unattend Section -->
+                <section id="windows-unattend" class="doc-section">
+                    <h2><i class="fas fa-cogs"></i> Windows Unattend</h2>
+                    <p>
+                        The Windows Unattend module provides a comprehensive tool for creating and exporting Windows unattend.xml files
+                        for automated installations and deployments. This powerful feature enables IT professionals to streamline
+                        Windows deployment processes with customized configuration settings.
+                    </p>
+
+                    <h3>Key Features</h3>
+                    <ul>
+                        <li><strong>Preset Configurations:</strong> Quick-start templates for Basic, Enterprise, and Secure setups</li>
+                        <li><strong>Comprehensive Settings:</strong> User accounts, regional settings, computer configuration, and more</li>
+                        <li><strong>XML Preview:</strong> Real-time preview of generated unattend.xml before export</li>
+                        <li><strong>Export Functionality:</strong> Save to file or copy to clipboard for immediate use</li>
+                        <li><strong>Form Validation:</strong> Built-in validation to ensure configuration integrity</li>
+                        <li><strong>Responsive Design:</strong> Optimized interface for desktop and mobile devices</li>
+                    </ul>
+
+                    <h3>Configuration Sections</h3>
+                    <h4>User Accounts & Authentication</h4>
+                    <ul>
+                        <li><strong>Administrator Account:</strong> Configure administrator username and password</li>
+                        <li><strong>Standard User Account:</strong> Set up default user account with credentials</li>
+                        <li><strong>Auto-logon:</strong> Enable automatic login for standard user account</li>
+                        <li><strong>Account Visibility:</strong> Hide administrator account from login screen</li>
+                    </ul>
+
+                    <h4>Regional & Language Settings</h4>
+                    <ul>
+                        <li><strong>Time Zone:</strong> Configure system time zone (Eastern, Central, Pacific, UTC, etc.)</li>
+                        <li><strong>System Language:</strong> Set display language and locale settings</li>
+                        <li><strong>Keyboard Layout:</strong> Configure input method and keyboard layout</li>
+                        <li><strong>Regional Format:</strong> Set date, time, and number formatting preferences</li>
+                    </ul>
+
+                    <h4>Computer & Organization Settings</h4>
+                    <ul>
+                        <li><strong>Computer Name:</strong> Set computer name or leave empty for random generation</li>
+                        <li><strong>Workgroup/Domain:</strong> Configure workgroup membership or domain join settings</li>
+                        <li><strong>Organization Info:</strong> Set registered organization and owner information</li>
+                        <li><strong>Computer Description:</strong> Add descriptive text for the computer</li>
+                    </ul>
+
+                    <h4>Product Key & Windows Edition</h4>
+                    <ul>
+                        <li><strong>Windows Edition:</strong> Select from Windows 10/11 Home, Pro, Enterprise, or Education</li>
+                        <li><strong>Architecture:</strong> Choose between 64-bit (x64) or 32-bit (x86) architecture</li>
+                        <li><strong>Product Key:</strong> Optional product key entry for automated activation</li>
+                        <li><strong>EULA Acceptance:</strong> Automatically accept End User License Agreement</li>
+                    </ul>
+
+                    <h3>Preset Configurations</h3>
+                    <h4>Basic Setup</h4>
+                    <ul>
+                        <li>Standard installation with minimal configuration</li>
+                        <li>Pre-configured user accounts with default passwords</li>
+                        <li>Auto-logon enabled for convenience</li>
+                        <li>Basic security features enabled</li>
+                        <li>Ideal for personal computers and testing environments</li>
+                    </ul>
+
+                    <h4>Enterprise Setup</h4>
+                    <ul>
+                        <li>Corporate environment configuration</li>
+                        <li>Domain join capabilities pre-configured</li>
+                        <li>Enhanced security settings</li>
+                        <li>Privacy features disabled for compliance</li>
+                        <li>Remote Desktop enabled for management</li>
+                    </ul>
+
+                    <h4>Secure Setup</h4>
+                    <ul>
+                        <li>Maximum security configuration</li>
+                        <li>Strong password requirements</li>
+                        <li>All privacy features enabled</li>
+                        <li>Telemetry and data collection disabled</li>
+                        <li>PowerShell execution restricted</li>
+                    </ul>
+
+                    <h3>Export Options</h3>
+                    <h4>Preview XML</h4>
+                    <p>
+                        Before exporting, you can preview the generated unattend.xml file in a modal dialog.
+                        This allows you to review the configuration and ensure all settings are correct.
+                    </p>
+
+                    <h4>Export to File</h4>
+                    <p>
+                        Save the unattend.xml file directly to your computer using the built-in file save dialog.
+                        The file can then be used with Windows deployment tools or installation media.
+                    </p>
+
+                    <h4>Copy to Clipboard</h4>
+                    <p>
+                        Copy the XML content directly to your clipboard for immediate use in other applications
+                        or deployment scripts.
+                    </p>
+
+                    <h3>Usage Workflow</h3>
+                    <ol>
+                        <li><strong>Select Preset:</strong> Choose from Basic, Enterprise, or Secure preset configurations</li>
+                        <li><strong>Customize Settings:</strong> Modify any settings to match your specific requirements</li>
+                        <li><strong>Validate Configuration:</strong> The system automatically validates critical settings</li>
+                        <li><strong>Preview XML:</strong> Review the generated unattend.xml content</li>
+                        <li><strong>Export File:</strong> Save the file or copy to clipboard for deployment</li>
+                    </ol>
+
+                    <h3>Integration with Deployment Tools</h3>
+                    <p>
+                        The generated unattend.xml files are compatible with standard Windows deployment tools:
+                    </p>
+                    <ul>
+                        <li><strong>Windows Deployment Services (WDS):</strong> Use for network-based deployments</li>
+                        <li><strong>Microsoft Deployment Toolkit (MDT):</strong> Integrate with MDT task sequences</li>
+                        <li><strong>System Center Configuration Manager (SCCM):</strong> Deploy via SCCM infrastructure</li>
+                        <li><strong>Windows Assessment and Deployment Kit (ADK):</strong> Use with DISM and other ADK tools</li>
+                        <li><strong>Custom Installation Media:</strong> Include in Windows installation USB/DVD</li>
+                    </ul>
+
+                    <h3>Best Practices</h3>
+                    <ul>
+                        <li><strong>Test Thoroughly:</strong> Always test unattend files in a lab environment first</li>
+                        <li><strong>Secure Passwords:</strong> Use strong passwords and consider security implications</li>
+                        <li><strong>Document Settings:</strong> Keep records of configuration choices for future reference</li>
+                        <li><strong>Version Control:</strong> Maintain different versions for different deployment scenarios</li>
+                        <li><strong>Regular Updates:</strong> Update configurations as requirements change</li>
                     </ul>
                 </section>
 
