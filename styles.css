@@ -1,0 +1,401 @@
+/* --- Global Styles & Resets --- */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #050505;
+    color: #e0e0e0;
+    line-height: 1.6;
+    overflow-x: hidden;
+    position: relative;
+    /* Removed padding-top as header is gone */
+    background-image: linear-gradient(to bottom, rgba(5, 5, 5, 0.8), rgba(5, 5, 5, 0.95));
+}
+.font-mono { font-family: 'Roboto Mono', monospace; }
+
+/* --- Layout Container --- */
+.container {
+    width: 90%; 
+    max-width: 1100px; 
+    margin: 0 auto;
+    padding: 0 15px; 
+    position: relative; 
+    z-index: 1;
+}
+
+/* --- Rain Animation --- */
+.rain-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.raindrop {
+    position: absolute;
+    bottom: 100%;
+    width: 1px;
+    height: 60px;
+    background: linear-gradient(to bottom, rgba(255, 152, 0, 0), rgba(255, 152, 0, 0.6));
+    animation: rainFall linear infinite;
+    opacity: 0.6;
+}
+
+@keyframes rainFall {
+    0% {
+        transform: translateY(0);
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateY(100vh);
+        opacity: 0.2;
+    }
+}
+
+/* --- Page Title Section --- */
+.page-title-section {
+    padding: 60px 0 40px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.page-title-section h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255, 120, 20, 0.3);
+}
+
+.name-highlight {
+    color: #FF7810;
+    text-shadow: 0 0 15px rgba(255, 120, 20, 0.5);
+}
+
+.page-title-section p {
+    font-size: 1.2rem;
+    color: #a0a0a0;
+    margin-bottom: 25px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.back-button-container {
+    margin-top: 20px;
+}
+
+/* --- Button Styles --- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.btn-secondary {
+    background-color: rgba(255, 120, 20, 0.15);
+    color: #FF7810;
+    border: 1px solid rgba(255, 120, 20, 0.4);
+}
+
+.btn-secondary:hover {
+    background-color: rgba(255, 120, 20, 0.25);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 120, 20, 0.2);
+}
+
+.btn-pulse {
+    position: relative;
+}
+
+.btn-pulse::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    border-radius: 4px;
+    background-color: rgba(255, 120, 20, 0.1);
+    z-index: -1;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.7;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 0.3;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0.7;
+    }
+}
+
+.btn i {
+    margin-right: 8px;
+}
+
+/* --- Glow Effects --- */
+.glow-orange { text-shadow: 0 0 5px rgba(255, 152, 0, 0.7), 0 0 10px rgba(255, 152, 0, 0.5); }
+.glow-blue { text-shadow: 0 0 6px rgba(220, 220, 220, 0.4), 0 0 12px rgba(220, 220, 220, 0.2); }
+
+/* --- Angular Border Style --- */
+.angular-border {
+    position: relative;
+    border: 1px solid rgba(255, 120, 20, 0.2);
+    padding: 1.5rem;
+    background-color: rgba(20, 20, 20, 0.7);
+    backdrop-filter: blur(8px);
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+.angular-border::before, .angular-border::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-color: #FF7810;
+    border-style: solid;
+    transition: all 0.3s ease;
+    z-index: 2;
+}
+
+.angular-border::before { top: 8px; left: 8px; border-width: 2px 0 0 2px; }
+.angular-border::after { bottom: 8px; right: 8px; border-width: 0 2px 2px 0; }
+.angular-border:hover::before, .angular-border:hover::after { border-color: #ff9800; width: 12px; height: 12px; }
+
+/* --- Glitch Effect --- */
+.glitch-container { position: relative; display: inline-block; }
+@keyframes glitch {
+  0%, 15%, 80%, 86%, 100% { transform: translate(0); opacity: 1; color: inherit; }
+  5% { transform: translate(-3px, 2px) skewX(-5deg); opacity: 0.8; color: #cccccc; }
+  10% { transform: translate(3px, -2px) skewX(5deg); opacity: 0.9; color: #ff9800; }
+  20% { transform: translate(-3px, 0) skewX(-3deg); opacity: 0.8; color: #cccccc; }
+  25% { transform: translate(3px, 0) skewX(3deg); opacity: 0.9; color: #ff9800; }
+  85% { transform: translate(3px, 0) skewX(3deg); opacity: 0.9; color: #ff9800; }
+}
+.glitch { animation: glitch 6s infinite; }
+
+/* --- Section Styling --- */
+.section {
+    padding: 60px 0;
+    position: relative;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #FF7810;
+}
+
+.section-tagline {
+    text-align: center;
+    color: #a0a0a0;
+    margin-bottom: 40px;
+    font-size: 1rem;
+    font-weight: 400;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* --- Documentation Specific Styles --- */
+.documentation-container {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 20px;
+    min-height: 600px;
+}
+
+.documentation-nav {
+    border-right: 1px solid rgba(255, 120, 20, 0.1);
+    padding-right: 20px;
+}
+
+.documentation-nav h3 {
+    color: #FF7810;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.documentation-nav ul {
+    list-style: none;
+    margin-bottom: 25px;
+}
+
+.documentation-nav ul li {
+    margin-bottom: 5px;
+}
+
+.documentation-nav ul li a {
+    color: #c0c0c0;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    display: block;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+.documentation-nav ul li a:hover,
+.documentation-nav ul li a.active {
+    color: #FF7810;
+    background: rgba(255, 120, 20, 0.1);
+}
+
+.documentation-content {
+    padding-left: 20px;
+}
+
+.doc-section {
+    margin-bottom: 40px;
+}
+
+.doc-section h3 {
+    color: #FF7810;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    font-weight: 600;
+    border-bottom: 1px solid rgba(255, 120, 20, 0.2);
+    padding-bottom: 5px;
+}
+
+.doc-section h4 {
+    color: #e0e0e0;
+    font-size: 1.1rem;
+    margin: 20px 0 10px;
+    font-weight: 600;
+}
+
+.doc-section p {
+    color: #c0c0c0;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.doc-section ul {
+    list-style: none;
+    padding-left: 20px;
+    margin-bottom: 15px;
+}
+
+.doc-section ul li {
+    position: relative;
+    padding-left: 15px;
+    margin-bottom: 8px;
+    color: #b0b0b0;
+}
+
+.doc-section ul li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: #FF7810;
+}
+
+.doc-section ul li ul {
+    margin-top: 8px;
+}
+
+.doc-section code {
+    font-family: 'Roboto Mono', monospace;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-size: 0.85rem;
+    color: #ffb74d;
+}
+
+.doc-section pre {
+    background: rgba(0, 0, 0, 0.3);
+    border-left: 3px solid #FF7810;
+    padding: 15px;
+    border-radius: 5px;
+    overflow-x: auto;
+    margin: 15px 0;
+}
+
+.doc-section pre code {
+    background: transparent;
+    padding: 0;
+    color: #e0e0e0;
+}
+
+/* --- Footer --- */
+footer {
+    border: 1px solid rgba(255, 120, 20, 0.1);
+    background-color: rgba(10, 10, 10, 0.9);
+    padding: 30px 0;
+    border-radius: 0.5rem;
+    margin-top: 3rem;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #a0a0a0;
+    width: 90%;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1rem;
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 768px) {
+    .documentation-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .documentation-nav {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 120, 20, 0.1);
+        padding-right: 0;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+    }
+    
+    .documentation-content {
+        padding-left: 0;
+    }
+    
+    .section-title {
+        font-size: 1.7rem;
+    }
+    
+    .page-title-section h1 {
+        font-size: 2.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-title-section h1 { font-size: 2.2rem; }
+    .page-title-section p { font-size: 1rem; }
+    .section-title { font-size: 1.5rem; }
+    .section-tagline { font-size: 0.9rem; }
+    .grid { grid-template-columns: 1fr !important; }
+    .angular-border { padding: 1.25rem; }
+    .doc-section h3 { font-size: 1.3rem; }
+    .doc-section h4 { font-size: 1rem; }
+    .btn { padding: 10px 20px; font-size: 0.9rem; }
+}
