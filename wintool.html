@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WinTool - The Ultimate Windows Utility</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="icon" href="wintool.gif" type="image/gif">
-    <!-- Add any other head elements here -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Professional Windows System Management Suite</title>
+    <meta name="description" content="WinTool Portable - Comprehensive Windows system management toolkit with real-time monitoring, 24+ utilities, service management, and package control. No installation required.">
+    <meta name="keywords" content="Windows tools, system management, utilities, services, package manager, system monitor, Windows admin tools">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
     <style>
         /* --- Global Styles & Resets --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -674,8 +678,7 @@
         /* --- Responsive Design --- */
         @media (max-width: 1024px) {
             .app-preview-section { gap: 40px; }
-            .features-grid {
-                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+            .features-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
             .back-button-container { top: 20px; left: 20px; }
         }
 
@@ -1099,9 +1102,51 @@
     <div class="particles-container"></div>
 
     <header>
-      <div id="nav-placeholder"></div>
+      <nav>
+        <div style="display: flex; align-items: center;">
+            <a href="index.html" class="nav-logo">
+                <div class="nav-logo-icon">
+                    <i class="fas fa-terminal"></i>
+                </div>
+                <div class="nav-logo-text">
+                    <span class="brand-name">MTech</span>
+                    <span class="brand-tagline">IT Solutions</span>
+                </div>
+            </a>
+            <div class="nav-status">
+                <div class="status-indicator"></div>
+                <span class="status-text">Online</span>
+            </div>
+        </div>
+
+        <div class="nav-main-container">
+            <ul class="main-nav">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="wintool.html" class="active">WinTool</a></li>
+              <li><a href="docs.html">Docs</a></li>
+            </ul>
+
+            <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <ul class="mobile-nav">
+             <li><a href="index.html">Home</a></li>
+             <li><a href="dashboard.html">Dashboard</a></li>
+             <li><a href="wintool.html">Tools</a></li>
+             <li><a href="docs.html">Docs</a></li>
+         </ul>
+      </nav>
     </header>
 
+    <!-- Back Button -->
+    <div class="back-button-container">
+        <a href="javascript:history.back()" class="back-button" title="Go Back">
+            <i class="fas fa-arrow-left"></i>
+            <span>Back</span>
+        </a>
+    </div>
 
     <!-- Hero Section -->
     <section class="hero-section">
@@ -1533,6 +1578,5 @@ npm run dist</code></pre>
       }); // End DOMContentLoaded
      </script>
 
-      <script src="nav.js"></script>
-</body>
+  </body>
 </html>

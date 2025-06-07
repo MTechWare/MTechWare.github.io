@@ -871,9 +871,51 @@
     <div class="particles-container"></div>
 
     <header>
-      <div id="nav-placeholder"></div>
+      <nav>
+        <div style="display: flex; align-items: center;">
+            <a href="index.html" class="nav-logo">
+                <div class="nav-logo-icon">
+                    <i class="fas fa-terminal"></i>
+                </div>
+                <div class="nav-logo-text">
+                    <span class="brand-name">MTech</span>
+                    <span class="brand-tagline">IT Solutions</span>
+                </div>
+            </a>
+            <div class="nav-status">
+                <div class="status-indicator"></div>
+                <span class="status-text">Online</span>
+            </div>
+        </div>
+
+        <div class="nav-main-container">
+            <ul class="main-nav">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="wintool.html">WinTool</a></li>
+              <li><a href="docs.html" class="active">Docs</a></li>
+            </ul>
+
+            <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <ul class="mobile-nav">
+             <li><a href="index.html">Home</a></li>
+             <li><a href="dashboard.html">Dashboard</a></li>
+             <li><a href="wintool.html">Tools</a></li>
+             <li><a href="docs.html">Docs</a></li>
+         </ul>
+      </nav>
     </header>
 
+    <!-- Back Button -->
+    <div class="back-button-container">
+        <a href="../wintool.html" class="back-button" title="Back to WinTool">
+            <i class="fas fa-arrow-left"></i>
+            <span>Back</span>
+        </a>
+    </div>
 
     <!-- Hero Section -->
     <section class="hero-section">
@@ -2230,7 +2272,6 @@ npm run dist:portable</code></pre>
             createMobileToggle();
         });
     </script>
-    <script src="nav.js"></script>
 </body>
 </html>
                                 <p>The applications.json file serves as the central database for all software packages that can be installed through the Packages tab. This configuration file is critical for the package management functionality of WinTool.</p>
@@ -4263,6 +4304,5 @@ npm run dist:portable</code></pre>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="script.js"></script>
-    <script src="nav.js"></script>
 </body>
 </html>
