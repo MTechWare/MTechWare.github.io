@@ -3,16 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MTech Main Page</title>
-    <meta name="description" content="MTech Main Page - Professional Windows System Management Suite and IT Support Portal">
-    <meta name="keywords" content="MTech, Windows tools, system management, IT support, help desk">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
-
+    <title>WinTool - Your Ultimate Windows Utility</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="icon" href="wintool.gif" type="image/gif">
+    <!-- Add any other head elements here -->
     <style>
         /* --- Global Styles & Resets --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -92,256 +88,6 @@
         .glass-card:hover::before { opacity: 1; }
 
 
-        /* --- Enhanced Header & Navigation --- */
-        header {
-            position: fixed;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 92%;
-            max-width: 1200px;
-            z-index: 9999;
-            background: rgba(10, 10, 10, 0.95);
-            border: 1px solid rgba(255, 152, 0, 0.2);
-            border-radius: 16px;
-            padding: 12px 24px;
-            backdrop-filter: blur(20px);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3), 0 0 15px rgba(255, 152, 0, 0.1);
-        }
-
-        header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(255, 152, 0, 0.05) 0%, transparent 50%, rgba(255, 87, 34, 0.03) 100%);
-            border-radius: 20px;
-            z-index: -1;
-        }
-
-        header:hover {
-            border-color: rgba(255, 152, 0, 0.3);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 152, 0, 0.15);
-            transform: translateX(-50%) translateY(-1px);
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-        }
-
-        .nav-logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .nav-logo-icon {
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, #ff9800 0%, #ff5722 100%);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
-            color: #000;
-            font-weight: 700;
-            transition: all 0.3s ease;
-            box-shadow: 0 3px 12px rgba(255, 152, 0, 0.3);
-        }
-
-        .nav-logo:hover .nav-logo-icon {
-            transform: scale(1.08) rotate(5deg);
-            box-shadow: 0 4px 16px rgba(255, 152, 0, 0.4);
-        }
-
-        .nav-logo-text {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .nav-logo-text .brand-name {
-            font-weight: 800;
-            font-size: 1.25rem;
-            background: linear-gradient(135deg, #ff9800 0%, #ff5722 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1;
-        }
-
-        .nav-logo-text .brand-tagline {
-            font-size: 0.7rem;
-            color: #888;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-family: 'Roboto Mono', monospace;
-        }
-
-        .nav-logo:hover .brand-name {
-            filter: drop-shadow(0 0 8px rgba(255, 152, 0, 0.6));
-        }
-
-        .nav-status {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            margin-left: 16px;
-        }
-
-        .status-indicator {
-            width: 8px;
-            height: 8px;
-            background: #4caf50;
-            border-radius: 50%;
-            animation: pulse-status 2s infinite;
-        }
-
-        .status-text {
-            font-size: 0.65rem;
-            color: #4caf50;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-family: 'Roboto Mono', monospace;
-        }
-
-        @keyframes pulse-status {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.7; transform: scale(1.2); }
-        }
-
-        /* Enhanced Desktop Navigation */
-        .nav-main-container {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-        }
-
-        nav ul.main-nav {
-            display: flex;
-            list-style: none;
-            gap: 8px;
-            padding: 0;
-            margin: 0;
-            align-items: center;
-            background: rgba(255, 152, 0, 0.05);
-            border-radius: 12px;
-            padding: 6px;
-        }
-
-        nav ul.main-nav > li {
-            position: relative;
-        }
-
-        nav ul.main-nav a {
-            color: #d0d0d0;
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 600;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            padding: 10px 16px;
-            border-radius: 8px;
-            display: block;
-            white-space: nowrap;
-            position: relative;
-            overflow: hidden;
-        }
-
-        nav ul.main-nav a::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(255, 152, 0, 0.15), rgba(255, 87, 34, 0.15));
-            border-radius: 8px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: -1;
-        }
-
-        nav ul.main-nav > li > a:hover,
-        nav ul.main-nav > li > a.active {
-            color: #ffffff;
-            background: linear-gradient(135deg, rgba(255, 152, 0, 0.2), rgba(255, 87, 34, 0.2));
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(255, 152, 0, 0.2);
-        }
-
-        nav ul.main-nav > li > a:hover::before,
-        nav ul.main-nav > li > a.active::before {
-            opacity: 1;
-        }
-
-        nav ul.main-nav > li > a.active {
-            background: linear-gradient(135deg, rgba(255, 152, 0, 0.25), rgba(255, 87, 34, 0.25));
-            color: #ff9800;
-            font-weight: 700;
-        }
-
-        /* Enhanced Mobile Navigation */
-        nav ul.mobile-nav {
-            display: none;
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            width: 100%;
-        }
-
-        /* Enhanced Mobile Menu Toggle */
-        .menu-toggle {
-            display: none;
-            color: #e8e8e8;
-            font-size: 1.1rem;
-            background: rgba(255, 152, 0, 0.1);
-            border: 1px solid rgba(255, 152, 0, 0.2);
-            cursor: pointer;
-            padding: 10px;
-            border-radius: 10px;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .menu-toggle::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(255, 152, 0, 0.2), rgba(255, 87, 34, 0.2));
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: -1;
-        }
-
-        .menu-toggle:hover {
-            color: #ff9800;
-            background: rgba(255, 152, 0, 0.15);
-            border-color: rgba(255, 152, 0, 0.4);
-            transform: scale(1.05);
-        }
-
-        .menu-toggle:hover::before {
-            opacity: 1;
-        }
-
-        .menu-toggle:active {
-            transform: scale(0.95);
-        }
 
         /* --- Enhanced Animations --- */
         @keyframes pulse-glow {
@@ -892,43 +638,7 @@
     <div class="particles-container"></div>
 
     <header>
-      <nav>
-        <div style="display: flex; align-items: center;">
-            <a href="index.html" class="nav-logo">
-                <div class="nav-logo-icon">
-                    <i class="fas fa-terminal"></i>
-                </div>
-                <div class="nav-logo-text">
-                    <span class="brand-name">MTech</span>
-                    <span class="brand-tagline">IT Solutions</span>
-                </div>
-            </a>
-            <div class="nav-status">
-                <div class="status-indicator"></div>
-                <span class="status-text">Online</span>
-            </div>
-        </div>
-
-        <div class="nav-main-container">
-            <ul class="main-nav">
-              <li><a href="index.html" class="active">Home</a></li>
-              <li><a href="dashboard.html">Dashboard</a></li>
-              <li><a href="wintool.html">Tools</a></li>
-              <li><a href="docs.html">Docs</a></li>
-            </ul>
-
-            <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
-                <i class="fas fa-bars"></i>
-            </button>
-        </div>
-
-        <ul class="mobile-nav">
-             <li><a href="index.html">Home</a></li>
-             <li><a href="dashboard.html">Dashboard</a></li>
-             <li><a href="wintool.html">Tools</a></li>
-             <li><a href="docs.html">Docs</a></li>
-         </ul>
-      </nav>
+      <div id="nav-placeholder"></div>
     </header>
 
     <div id="main-content" class="container mx-auto py-8 px-4">
@@ -1316,5 +1026,6 @@
         }); // End DOMContentLoaded
      </script>
 
+    <script src="nav.js"></script>
 </body>
 </html>
