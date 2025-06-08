@@ -885,6 +885,53 @@
             .contact-card { padding: 30px 25px; }
         }
 
+        /* Project Grid Styles */
+        #project-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        
+        #project-grid .card {
+            max-width: none;
+        }
+        
+        @media (min-width: 768px) {
+            #project-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 2.5rem;
+            }
+        }
+
+        /* Featured Project Styles */
+        .featured-project {
+            background: linear-gradient(135deg, rgba(255, 152, 0, 0.15), rgba(255, 87, 34, 0.05));
+            border-color: rgba(255, 152, 0, 0.3);
+            position: relative;
+            transform: scale(1.05);
+        }
+
+        .featured-project::after {
+            content: 'Featured Project';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #ff9800, #ff5722);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #000;
+            box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
+            white-space: nowrap;
+            width: fit-content;
+            max-width: 90%;
+            z-index: 1;
+        }
     </style>
 </head>
 <body>
@@ -1025,7 +1072,9 @@
                         Explore some of my personal projects and see how I apply my technical skills in real-world scenarios and learning experiences.
                     </p>
                 </div>
-                <div id="project-grid" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6"></div>
+                <div id="project-grid">
+                    <!-- Project cards will be inserted here by JavaScript -->
+                </div>
             </div>
         </section>
 
@@ -1125,15 +1174,19 @@
             const modalPatchNotes = document.getElementById('modal-patch-notes');
 
             const projectsData = [
-                { icon: "🚀", title: "WinTool", description: "A streamlined utility concept designed to optimize and manage Windows systems, exploring UI design and system interaction ideas.", githubLink: "https://github.com/MTechWare/wintool", version: "0.0.2w", patchNotes: ["Added new features.","Improved UI responsiveness.","Fixed minor bugs."] }
+                { icon: "🐍", title: "WinPY", description: "An archived utility designed to optimize and manage Windows systems in python. Packed with features and a older UI", githubLink: "https://github.com/MTechWare/wintools_python_util", version: "0.0.5a", patchNotes: ["This repository was archived by the owner on Apr 27, 2025. It is now read-only."] },
+                { icon: "🚀", title: "WinTool", description: "A streamlined utility concept designed to optimize and manage Windows systems, exploring UI design and system interaction ideas.", githubLink: "https://github.com/MTechWare/wintool", version: "Live", patchNotes: ["Added new features.","Improved UI responsiveness.","Fixed minor bugs."], featured: true },
+                { icon: "🌐", title: "MTech Website", description: "This is the main website for MTechWare's Portfolio and his Projects. Switch from Glitch to Github Pages.", githubLink: "https://github.com/MTechWare/MTechWare.github.io", version: "1.1.1", patchNotes: ["Edits and bug fixes."] }
+
             ];
 
             // Function to create a project card
             function createProjectCard(project, index) {
                 const card = document.createElement('div');
-                card.classList.add('card', 'app-card', 'angular-border');
-                card.setAttribute('data-aos', 'fade-up');
-                card.setAttribute('data-aos-delay', `${100 + index * 100}`);
+                card.classList.add('card', 'app-card', 'glass-card');
+                if (project.featured) {
+                    card.classList.add('featured-project');
+                }
 
                 const iconDiv = document.createElement('div');
                 iconDiv.classList.add('app-icon', 'text-4xl', 'mb-4'); // Note: Tailwind class text-4xl might override CSS icon size. Check if needed.
