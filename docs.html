@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Documentation</title>
-    <meta name="description" content="Comprehensive documentation for WinTool Portable - Professional Windows System Management Suite. Learn about features, installation, and development.">
+    <meta name="description" content="Comprehensive documentation for WinTool - Professional Windows System Management Suite. Learn about features, installation, and development.">
     <meta name="keywords" content="WinTool documentation, Windows tools, system management, developer guide, API reference">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -921,7 +921,7 @@
     <section class="hero-section">
         <div class="container">
             <p class="subtitle" data-aos="fade-up">Developer Documentation</p>
-            <h1 data-aos="fade-up" data-aos-delay="100">WinTool Portable</h1>
+            <h1 data-aos="fade-up" data-aos-delay="100">WinTool</h1>
             <p class="description" data-aos="fade-up" data-aos-delay="200">
                 Comprehensive documentation for developers, users, and contributors.
                 Learn about features, installation, development, and API reference.
@@ -969,55 +969,27 @@
                 <section id="overview" class="doc-section">
                     <h2><i class="fas fa-home"></i> Overview</h2>
                     <p>
-                        WinTool Portable is a comprehensive Windows system management suite designed for IT professionals,
+                        WinTool is a comprehensive Windows system management suite designed for IT professionals,
                         system administrators, and power users. Built with Electron and modern web technologies, it provides
                         a unified interface for managing Windows systems, monitoring performance, and accessing administrative tools.
                     </p>
 
                     <div class="quick-start">
                         <h3>Quick Start</h3>
-                        <p>Get started with WinTool Portable in just a few steps:</p>
+                        <p>Get started with WinTool in just a few steps:</p>
                         <ol>
                             <li>Download the portable executable from the releases page</li>
                             <li>Run the application - no installation required</li>
-                            <li>Explore the six core management tools</li>
+                            <li>Explore the eight core management tools</li>
                             <li>Customize settings to match your workflow</li>
                         </ol>
-                    </div>
-
-                    <h3>Key Features</h3>
-                    <div class="feature-grid">
-                        <div class="feature-card">
-                            <h4><i class="fas fa-desktop"></i> System Information</h4>
-                            <p>Real-time monitoring of CPU, RAM, disk usage, and comprehensive hardware details.</p>
-                        </div>
-                        <div class="feature-card">
-                            <h4><i class="fas fa-tools"></i> System Utilities</h4>
-                            <p>Quick access to 24+ Windows administrative tools organized by category.</p>
-                        </div>
-                        <div class="feature-card">
-                            <h4><i class="fas fa-cogs"></i> Services Manager</h4>
-                            <p>Complete Windows service management with customizable quick access.</p>
-                        </div>
-                        <div class="feature-card">
-                            <h4><i class="fas fa-box"></i> Package Manager</h4>
-                            <p>Software installation and management using winget integration.</p>
-                        </div>
-                        <div class="feature-card">
-                            <h4><i class="fas fa-network-wired"></i> Network Tools</h4>
-                            <p>Network interface monitoring and connectivity analysis.</p>
-                        </div>
-                        <div class="feature-card">
-                            <h4><i class="fas fa-broom"></i> System Cleanup</h4>
-                            <p>Performance optimization through temporary file cleanup.</p>
-                        </div>
                     </div>
 
                     <h3>System Requirements</h3>
                     <ul>
                         <li>Windows 10 or Windows 11 (64-bit)</li>
                         <li>Minimum 4GB RAM (8GB recommended)</li>
-                        <li>50MB free disk space</li>
+                        <li>60MB free disk space</li>
                         <li>Administrator privileges (recommended for full functionality)</li>
                         <li>.NET Framework 4.7.2 or later</li>
                     </ul>
@@ -1027,7 +999,7 @@
                 <section id="installation" class="doc-section">
                     <h2><i class="fas fa-download"></i> Installation</h2>
                     <p>
-                        WinTool Portable is designed to run without installation. Simply download and execute the portable
+                        WinTool is designed to run without installation. Simply download and execute the portable
                         application file to get started immediately.
                     </p>
 
@@ -1038,9 +1010,9 @@
                     <h3>Option 2: Manual Download</h3>
                     <ol>
                         <li>Visit the <a href="https://github.com/MTechWare/wintool/releases" target="_blank">GitHub Releases page</a></li>
-                        <li>Download the latest <code>WinTool-Portable-0.0.1w.exe</code></li>
-                        <li>Run the executable file</li>
-                        <li>The application will open at 60% of your screen size by default</li>
+                        <li>Download the latest <code>WinTool.exe</code></li>
+                        <li>Run the executable file.</li>
+                        <li>The application will open at 60% of your screen size by default.</li>
                     </ol>
 
                     <h3>Option 3: Build from Source</h3>
@@ -1060,7 +1032,7 @@ npm run dist</code></pre>
 
                     <h3>First Launch</h3>
                     <p>
-                        When you first run WinTool Portable, you'll see a splash screen while the application loads all
+                        When you first run WinTool, you'll see a splash screen while the application loads all
                         tabs and system data. The Welcome tab provides an overview of all available features and quick
                         access to commonly used tools.
                     </p>
@@ -1076,7 +1048,7 @@ npm run dist</code></pre>
                 <section id="features" class="doc-section">
                     <h2><i class="fas fa-star"></i> Features</h2>
                     <p>
-                        WinTool Portable offers a comprehensive set of tools and features designed to streamline
+                        WinTool offers a comprehensive set of tools and features designed to streamline
                         Windows system management and administration tasks.
                     </p>
 
@@ -1106,6 +1078,33 @@ npm run dist</code></pre>
                         <li>Service dependency viewer and analysis</li>
                         <li>Customizable quick access for frequently used services</li>
                         <li>Service status monitoring and alerts</li>
+                    </ul>
+
+                    <h4>Package Manager</h4>
+                    <ul>
+                        <li>Dual package manager support (winget and Chocolatey)</li>
+                        <li>367 curated software packages across 10 organized categories</li>
+                        <li>Bulk installation and uninstallation operations</li>
+                        <li>Real-time progress tracking with detailed command output</li>
+                        <li>Package manager switching with dropdown selection</li>
+                    </ul>
+
+                    <h4>Environment Variables</h4>
+                    <ul>
+                        <li>Comprehensive user and system environment variable management</li>
+                        <li>Advanced PATH editor with individual entry management</li>
+                        <li>Real-time search and filtering capabilities</li>
+                        <li>Export functionality with JSON format support</li>
+                        <li>Input validation and security protections</li>
+                    </ul>
+
+                    <h4>Windows Unattend</h4>
+                    <ul>
+                        <li>Create and export Windows unattend.xml files</li>
+                        <li>Preset configurations for Basic, Enterprise, and Secure setups</li>
+                        <li>Comprehensive settings for user accounts, regional settings, and more</li>
+                        <li>Real-time XML preview and validation</li>
+                        <li>Compatible with standard Windows deployment tools</li>
                     </ul>
 
                     <h3>Advanced Features</h3>
@@ -1140,7 +1139,7 @@ npm run dist</code></pre>
                 <section id="usage" class="doc-section">
                     <h2><i class="fas fa-play"></i> Usage Guide</h2>
                     <p>
-                        This guide covers the basic usage patterns and workflows for WinTool Portable,
+                        This guide covers the basic usage patterns and workflows for WinTool,
                         helping you get the most out of the application's features.
                     </p>
 
@@ -1156,10 +1155,9 @@ npm run dist</code></pre>
                     <h4>Keyboard Shortcuts</h4>
                     <ul>
                         <li><code>Ctrl + F</code> - Focus the tab search box</li>
-                        <li><code>Ctrl + R</code> - Refresh current tab data</li>
+                        <li><code>Ctrl + R</code> - Refresh Application
                         <li><code>Ctrl + S</code> - Open settings panel</li>
                         <li><code>F5</code> - Refresh system information</li>
-                        <li><code>Escape</code> - Close modal dialogs</li>
                         <li><code>Escape</code> - Close modal dialogs</li>
                     </ul>
 
@@ -1168,7 +1166,6 @@ npm run dist</code></pre>
                     <ol>
                         <li>Navigate to the System Information tab</li>
                         <li>Review real-time performance metrics</li>
-                        <li>Check hardware temperatures and utilization</li>
                         <li>Monitor network activity and disk usage</li>
                         <li>Set up auto-refresh intervals in Settings</li>
                     </ol>
@@ -1176,10 +1173,11 @@ npm run dist</code></pre>
                     <h4>Software Management</h4>
                     <ol>
                         <li>Open the Package Manager tab</li>
-                        <li>Browse available software or use the search function</li>
-                        <li>Select applications for installation</li>
-                        <li>Monitor installation progress in real-time</li>
-                        <li>Manage installed software and updates</li>
+                        <li>Select your preferred package manager (winget or Chocolatey) from the dropdown</li>
+                        <li>Browse 367 available packages by category or use the search function</li>
+                        <li>Select applications for installation using individual checkboxes or "Select All"</li>
+                        <li>Click "Install Selected" to begin batch installation</li>
+                        <li>Monitor installation progress in real-time with expandable output details</li>
                     </ol>
 
                     <h4>Service Management</h4>
@@ -1188,7 +1186,6 @@ npm run dist</code></pre>
                         <li>Browse the list of Windows services</li>
                         <li>Use quick access for frequently managed services</li>
                         <li>Start, stop, or restart services as needed</li>
-                        <li>Configure service startup types and dependencies</li>
                     </ol>
 
                     <h3>Customization</h3>
@@ -1202,7 +1199,6 @@ npm run dist</code></pre>
                     <h4>Quick Access Setup</h4>
                     <ul>
                         <li>Add frequently used services to quick access in Services Manager</li>
-                        <li>Customize the Welcome tab quick actions</li>
                         <li>Organize tabs in your preferred order</li>
                         <li>Configure auto-refresh intervals for different data types</li>
                     </ul>
@@ -1213,187 +1209,235 @@ npm run dist</code></pre>
                     <h2><i class="fas fa-desktop"></i> System Information</h2>
                     <p>
                         The System Information module provides comprehensive real-time monitoring of your Windows system,
-                        including hardware details, performance metrics, and system status information.
+                        displaying hardware details, system specifications, and performance metrics in an organized overview.
                     </p>
 
-                    <h3>Features</h3>
+                    <h3>System Overview Cards</h3>
                     <ul>
-                        <li><strong>Real-time Monitoring:</strong> Live updates of CPU, RAM, and disk usage</li>
-                        <li><strong>Hardware Details:</strong> Comprehensive information about system components</li>
-                        <li><strong>Performance Metrics:</strong> Historical data and trend analysis</li>
-                        <li><strong>System Overview:</strong> Operating system and configuration details</li>
-                        <li><strong>Network Status:</strong> Active connections and interface information</li>
+                        <li><strong>Platform:</strong> Operating system name and version</li>
+                        <li><strong>Architecture:</strong> System architecture (x64, x86, ARM)</li>
+                        <li><strong>Hostname:</strong> Computer name and network identifier</li>
+                        <li><strong>Uptime:</strong> System uptime since last boot</li>
                     </ul>
 
-                    <h3>Data Categories</h3>
-                    <h4>System Overview</h4>
+                    <h3>Hardware Information</h3>
+                    <h4>CPU Details</h4>
                     <ul>
-                        <li>Operating system name, version, and build number</li>
-                        <li>Computer name, username, and domain information</li>
-                        <li>System uptime and last boot time</li>
-                        <li>Windows activation status</li>
+                        <li><strong>CPU Model:</strong> Processor name and manufacturer</li>
+                        <li><strong>Core Count:</strong> Number of physical and logical cores</li>
+                        <li><strong>Clock Speed:</strong> Base and boost frequencies</li>
+                        <li><strong>Architecture:</strong> Processor architecture details</li>
                     </ul>
 
-                    <h4>Hardware Information</h4>
+                    <h4>Memory Information</h4>
                     <ul>
-                        <li>CPU model, architecture, and clock speeds</li>
-                        <li>Memory modules and total system RAM</li>
-                        <li>Storage devices and disk space utilization</li>
-                        <li>Graphics card information and driver versions</li>
-                        <li>Motherboard and BIOS details</li>
+                        <li><strong>Total Memory:</strong> Total system RAM capacity</li>
+                        <li><strong>Available Memory:</strong> Currently available memory</li>
+                        <li><strong>Memory Usage:</strong> Current memory utilization</li>
+                        <li><strong>Memory Type:</strong> RAM type and specifications</li>
                     </ul>
 
-                    <h4>Performance Monitoring</h4>
+                    <h4>Storage Details</h4>
                     <ul>
-                        <li>CPU usage per core and overall utilization</li>
-                        <li>Memory usage with available and committed memory</li>
-                        <li>Disk activity including read/write operations</li>
-                        <li>Network throughput and packet statistics</li>
-                        <li>Temperature monitoring for supported hardware</li>
+                        <li><strong>Disk Information:</strong> Storage device details and capacities</li>
+                        <li><strong>File System:</strong> File system types and mount points</li>
+                        <li><strong>Disk Usage:</strong> Used and available space per drive</li>
+                        <li><strong>Drive Health:</strong> Storage device status and health</li>
                     </ul>
 
-                    <h3>Configuration</h3>
-                    <p>
-                        The System Information module can be configured through the Settings panel to adjust
-                        refresh intervals, display preferences, and data collection options.
-                    </p>
+                    <h3>Key Features</h3>
+                    <ul>
+                        <li><strong>Real-time Updates:</strong> Live system information with automatic refresh</li>
+                        <li><strong>Comprehensive Coverage:</strong> Complete hardware and system details</li>
+                        <li><strong>Visual Layout:</strong> Clean card-based interface for easy reading</li>
+                        <li><strong>Error Handling:</strong> Robust error handling for missing information</li>
+                    </ul>
                 </section>
 
                 <!-- System Utilities Module -->
                 <section id="system-utilities" class="doc-section">
                     <h2><i class="fas fa-tools"></i> System Utilities</h2>
                     <p>
-                        The System Utilities module provides quick access to 24+ Windows administrative tools
-                        organized into logical categories for efficient system management.
+                        The System Utilities module provides quick access to exactly 24 Windows administrative tools
+                        organized into 6 logical categories for efficient system management.
                     </p>
 
-                    <h3>Tool Categories</h3>
-                    <h4>System Management</h4>
+                    <h3>Tool Categories (24 Total Utilities)</h3>
+                    <h4>System Management (4 utilities)</h4>
                     <ul>
-                        <li><strong>Device Manager:</strong> Hardware device management and driver configuration</li>
-                        <li><strong>Disk Management:</strong> Partition and volume management</li>
-                        <li><strong>Computer Management:</strong> Comprehensive system administration console</li>
-                        <li><strong>System Configuration:</strong> Boot options and startup program management</li>
+                        <li><strong>Device Manager (devmgmt.msc):</strong> Manage hardware devices and drivers</li>
+                        <li><strong>Disk Management (diskmgmt.msc):</strong> Manage disk partitions and storage</li>
+                        <li><strong>Computer Management (compmgmt.msc):</strong> Comprehensive system management</li>
+                        <li><strong>System Configuration (msconfig):</strong> Configure startup and services</li>
                     </ul>
 
-                    <h4>Performance & Monitoring</h4>
+                    <h4>Registry & Services (4 utilities)</h4>
                     <ul>
-                        <li><strong>Task Manager:</strong> Process and performance monitoring</li>
-                        <li><strong>Resource Monitor:</strong> Detailed system resource analysis</li>
-                        <li><strong>Performance Monitor:</strong> Advanced performance data collection</li>
-                        <li><strong>Event Viewer:</strong> System and application log analysis</li>
+                        <li><strong>Registry Editor (regedit):</strong> Edit Windows registry</li>
+                        <li><strong>Services (services.msc):</strong> Manage Windows services</li>
+                        <li><strong>Task Manager (taskmgr):</strong> Monitor running processes</li>
+                        <li><strong>Group Policy Editor (gpedit.msc):</strong> Edit local group policies</li>
                     </ul>
 
-                    <h4>Network & Security</h4>
+                    <h4>Network Tools (4 utilities)</h4>
                     <ul>
-                        <li><strong>Windows Firewall:</strong> Network security configuration</li>
-                        <li><strong>Network Connections:</strong> Network adapter and connection management</li>
-                        <li><strong>Local Security Policy:</strong> Security settings and policies</li>
-                        <li><strong>Certificate Manager:</strong> Digital certificate management</li>
+                        <li><strong>Network Connections (ncpa.cpl):</strong> Manage network adapters</li>
+                        <li><strong>Network Center:</strong> Network and sharing settings</li>
+                        <li><strong>Command Prompt (cmd):</strong> Command line interface</li>
+                        <li><strong>PowerShell:</strong> Advanced command interface</li>
                     </ul>
 
-                    <h4>User & Group Management</h4>
+                    <h4>System Information (4 utilities)</h4>
                     <ul>
-                        <li><strong>Local Users and Groups:</strong> User account management</li>
-                        <li><strong>User Account Control:</strong> UAC settings configuration</li>
-                        <li><strong>Group Policy Editor:</strong> Local group policy management</li>
+                        <li><strong>System Information (msinfo32):</strong> Detailed system information</li>
+                        <li><strong>Event Viewer (eventvwr.msc):</strong> View system logs</li>
+                        <li><strong>Performance Monitor (perfmon.msc):</strong> Monitor system performance</li>
+                        <li><strong>Resource Monitor (resmon):</strong> Real-time resource monitoring</li>
                     </ul>
 
-                    <h4>System Tools</h4>
+                    <h4>User Management (4 utilities)</h4>
                     <ul>
-                        <li><strong>Registry Editor:</strong> Windows registry modification</li>
-                        <li><strong>System File Checker:</strong> System file integrity verification</li>
-                        <li><strong>Disk Cleanup:</strong> Temporary file and cache cleanup</li>
-                        <li><strong>System Restore:</strong> System restore point management</li>
+                        <li><strong>User Accounts (netplwiz):</strong> Manage user accounts</li>
+                        <li><strong>Local Users & Groups (lusrmgr.msc):</strong> Advanced user management</li>
+                        <li><strong>User Control Panel:</strong> User account settings</li>
+                        <li><strong>Security Policy (secpol.msc):</strong> Local security settings</li>
                     </ul>
 
-                    <h4>Advanced Tools</h4>
+                    <h4>Disk Tools (4 utilities)</h4>
                     <ul>
-                        <li><strong>Command Prompt:</strong> Command-line interface access</li>
-                        <li><strong>PowerShell:</strong> Advanced scripting and automation</li>
-                        <li><strong>Windows Memory Diagnostic:</strong> Memory testing utility</li>
-                        <li><strong>System Information:</strong> Detailed system configuration report</li>
+                        <li><strong>Disk Cleanup (cleanmgr):</strong> Clean up disk space</li>
+                        <li><strong>Disk Defragmenter (dfrgui):</strong> Optimize drives</li>
+                        <li><strong>Check Disk:</strong> Check disk for errors</li>
+                        <li><strong>DiskPart:</strong> Advanced disk partitioning tool</li>
                     </ul>
 
-                    <h3>Usage</h3>
-                    <p>
-                        Click on any utility card to launch the corresponding Windows tool. The utilities are
-                        organized by category and include search functionality to quickly locate specific tools.
-                    </p>
+                    <h3>Key Features</h3>
+                    <ul>
+                        <li><strong>Real-time Search:</strong> Filter utilities by name with live search functionality</li>
+                        <li><strong>Utility Counter:</strong> Shows "24 utilities available" and filtered count</li>
+                        <li><strong>One-Click Launch:</strong> Direct access to Windows administrative tools</li>
+                        <li><strong>Organized Grid Layout:</strong> Clean card-based interface with icons</li>
+                        <li><strong>No Results Handling:</strong> Helpful message when search yields no results</li>
+                        <li><strong>Tooltips:</strong> Hover descriptions for each utility's purpose</li>
+                    </ul>
                 </section>
 
                 <!-- Services Manager Module -->
                 <section id="services" class="doc-section">
                     <h2><i class="fas fa-cogs"></i> Services Manager</h2>
                     <p>
-                        The Services Manager provides comprehensive Windows service management capabilities with
-                        an intuitive interface for controlling service states and configurations.
+                        The Services Manager provides comprehensive Windows service management with real-time monitoring,
+                        quick access shortcuts, and secure service control operations with enhanced security validation.
                     </p>
 
-                    <h3>Features</h3>
+                    <h3>Quick Access Services</h3>
                     <ul>
-                        <li><strong>Service Control:</strong> Start, stop, restart, and pause Windows services</li>
-                        <li><strong>Status Monitoring:</strong> Real-time service status updates</li>
-                        <li><strong>Quick Access:</strong> Customizable shortcuts for frequently managed services</li>
-                        <li><strong>Dependency Viewer:</strong> Service dependency analysis and visualization</li>
-                        <li><strong>Startup Configuration:</strong> Configure service startup types</li>
+                        <li><strong>Customizable Shortcuts:</strong> Add frequently managed services to quick access</li>
+                        <li><strong>Service Cards:</strong> Visual cards showing service name, status, and actions</li>
+                        <li><strong>One-Click Operations:</strong> Start, stop, and restart services directly from cards</li>
+                        <li><strong>Status Indicators:</strong> Real-time visual status indicators (running, stopped, etc.)</li>
+                        <li><strong>Service Details:</strong> Quick access to detailed service information</li>
+                    </ul>
+
+                    <h3>All Services Management</h3>
+                    <ul>
+                        <li><strong>Complete Service List:</strong> Table view of all Windows services</li>
+                        <li><strong>Service Filtering:</strong> Filter by status (all, running, stopped) and type</li>
+                        <li><strong>Real-time Search:</strong> Search services by name with live filtering</li>
+                        <li><strong>Service Count:</strong> Display total number of services and filtered results</li>
+                        <li><strong>Detailed Information:</strong> Service name, display name, status, and startup type</li>
                     </ul>
 
                     <h3>Service Operations</h3>
-                    <h4>Basic Operations</h4>
                     <ul>
-                        <li><strong>Start Service:</strong> Initiate a stopped service</li>
-                        <li><strong>Stop Service:</strong> Terminate a running service</li>
-                        <li><strong>Restart Service:</strong> Stop and start a service in sequence</li>
-                        <li><strong>Pause/Resume:</strong> Temporarily suspend service operations</li>
+                        <li><strong>Start Service:</strong> Start stopped services with progress tracking</li>
+                        <li><strong>Stop Service:</strong> Stop running services safely</li>
+                        <li><strong>Restart Service:</strong> Stop and start services in sequence</li>
+                        <li><strong>Service Details:</strong> View comprehensive service information and dependencies</li>
+                        <li><strong>Progress Monitoring:</strong> Real-time progress modals during operations</li>
                     </ul>
 
-                    <h4>Configuration Management</h4>
+                    <h3>Security Features</h3>
                     <ul>
-                        <li><strong>Startup Type:</strong> Automatic, Manual, or Disabled</li>
-                        <li><strong>Service Account:</strong> Configure service execution context</li>
-                        <li><strong>Recovery Options:</strong> Set service failure recovery actions</li>
-                        <li><strong>Dependencies:</strong> View and manage service dependencies</li>
+                        <li><strong>Service Name Validation:</strong> Validates service names against security patterns</li>
+                        <li><strong>Critical Service Protection:</strong> Prevents operations on critical system services</li>
+                        <li><strong>Secure Command Execution:</strong> Sanitized service control commands</li>
+                        <li><strong>Action Validation:</strong> Only allows approved service actions (start, stop, restart)</li>
+                        <li><strong>Error Handling:</strong> Comprehensive error handling and user feedback</li>
                     </ul>
 
-                    <h3>Quick Access Configuration</h3>
-                    <p>
-                        Customize the Quick Access section to include services you manage frequently.
-                        This feature allows for rapid service management without browsing the full service list.
-                    </p>
+                    <h3>Quick Access Management</h3>
+                    <ul>
+                        <li><strong>Add Services:</strong> Add services to quick access from the main service list</li>
+                        <li><strong>Remove Services:</strong> Remove services from quick access when no longer needed</li>
+                        <li><strong>Persistent Storage:</strong> Quick access preferences saved between sessions</li>
+                        <li><strong>Service Search:</strong> Search and filter available services for quick access</li>
+                        <li><strong>Modal Interface:</strong> Clean modal dialog for managing quick access services</li>
+                    </ul>
+
+                    <h3>Key Features</h3>
+                    <ul>
+                        <li><strong>Real-time Updates:</strong> Live service status monitoring and updates</li>
+                        <li><strong>Secure Operations:</strong> Enhanced security validation for all service operations</li>
+                        <li><strong>User-friendly Interface:</strong> Clean, intuitive interface with visual feedback</li>
+                        <li><strong>Progress Tracking:</strong> Real-time progress indicators for service operations</li>
+                        <li><strong>Error Recovery:</strong> Robust error handling with helpful error messages</li>
+                    </ul>
                 </section>
 
                 <!-- Package Manager Module -->
                 <section id="packages" class="doc-section">
                     <h2><i class="fas fa-box"></i> Package Manager</h2>
                     <p>
-                        The Package Manager integrates with Windows package managers to provide a unified
-                        interface for software installation, updates, and removal.
+                        The Package Manager provides a unified interface for software installation and management
+                        using both Windows Package Manager (winget) and Chocolatey. Switch seamlessly between
+                        package managers with a simple dropdown selection.
                     </p>
 
                     <h3>Supported Package Managers</h3>
                     <ul>
-                        <li><strong>WinGet:</strong> Microsoft's official Windows package manager</li>
-                        <li><strong>Chocolatey:</strong> Community-driven package manager for Windows</li>
-                        <li><strong>Direct Downloads:</strong> Support for direct installer downloads</li>
+                        <li><strong>Windows Package Manager (winget):</strong> Microsoft's official package manager</li>
+                        <li><strong>Chocolatey (choco):</strong> Community-driven package manager for Windows</li>
+                        <li><strong>Seamless Switching:</strong> Switch between package managers with dropdown selection</li>
+                        <li><strong>Installation Guide:</strong> Direct link to Chocolatey installation for new users</li>
                     </ul>
 
-                    <h3>Features</h3>
+                    <h3>Package Library</h3>
                     <ul>
-                        <li><strong>Package Discovery:</strong> Browse and search available software packages</li>
-                        <li><strong>Bulk Operations:</strong> Install or remove multiple packages simultaneously</li>
-                        <li><strong>Progress Tracking:</strong> Real-time installation progress monitoring</li>
-                        <li><strong>Update Management:</strong> Check for and apply package updates</li>
-                        <li><strong>Category Filtering:</strong> Filter packages by category or type</li>
+                        <li><strong>350+ Curated Applications:</strong> Hand-selected software packages across multiple categories</li>
+                        <li><strong>Dual Package Support:</strong> Each package includes both winget and Chocolatey identifiers when available</li>
+                        <li><strong>Category Organization:</strong> 10 organized categories for easy browsing</li>
+                        <li><strong>Package Information:</strong> Detailed descriptions, official links, and version information</li>
                     </ul>
 
-                    <h3>Installation Process</h3>
+                    <h3>Available Categories</h3>
+                    <ul>
+                        <li><strong>Browsers:</strong> Chrome, Firefox, Edge, Brave, Vivaldi, and more</li>
+                        <li><strong>Communications:</strong> Discord, Zoom, Teams, Slack, and messaging apps</li>
+                        <li><strong>Development:</strong> VS Code, Git, Docker, Node.js, Python, and dev tools</li>
+                        <li><strong>Document:</strong> Adobe Reader, LibreOffice, Notion, and document tools</li>
+                        <li><strong>Games:</strong> Steam, Epic Games, emulators, and gaming platforms</li>
+                        <li><strong>Multimedia Tools:</strong> VLC, OBS Studio, GIMP, Audacity, and media apps</li>
+                        <li><strong>Pro Tools:</strong> Wireshark, Advanced IP Scanner, network and professional tools</li>
+                        <li><strong>Utilities:</strong> 7-Zip, WinRAR, system utilities, and productivity tools</li>
+                    </ul>
+
+                    <h3>Key Features</h3>
+                    <ul>
+                        <li><strong>Bulk Operations:</strong> Select and install/uninstall multiple packages simultaneously</li>
+                        <li><strong>Real-time Progress:</strong> Live progress tracking with detailed command output</li>
+                        <li><strong>Search & Filter:</strong> Search packages by name and filter by category</li>
+                        <li><strong>Package Actions:</strong> Individual install/uninstall buttons for each package</li>
+                        <li><strong>Progress Cancellation:</strong> Cancel ongoing operations if needed</li>
+                    </ul>
+
+                    <h3>Installation Workflow</h3>
                     <ol>
-                        <li>Browse or search for desired software packages</li>
-                        <li>Select packages for installation using checkboxes</li>
-                        <li>Click the install button to begin the process</li>
-                        <li>Monitor progress through the real-time progress indicators</li>
-                        <li>Verify successful installation in the installed packages list</li>
+                        <li>Select your preferred package manager (winget or Chocolatey) from the dropdown</li>
+                        <li>Browse packages by category or use the search function</li>
+                        <li>Select packages using individual checkboxes or "Select All"</li>
+                        <li>Click "Install Selected" to begin batch installation</li>
+                        <li>Monitor real-time progress with expandable output details</li>
                     </ol>
                 </section>
 
@@ -1401,34 +1445,44 @@ npm run dist</code></pre>
                 <section id="networking" class="doc-section">
                     <h2><i class="fas fa-network-wired"></i> Network Tools</h2>
                     <p>
-                        The Network Tools module provides comprehensive network monitoring and analysis
-                        capabilities for troubleshooting and managing network connections.
+                        The Network Tools module provides real-time network interface monitoring and detailed
+                        network configuration information for troubleshooting and system analysis.
                     </p>
 
-                    <h3>Features</h3>
+                    <h3>Network Overview</h3>
                     <ul>
-                        <li><strong>Interface Monitoring:</strong> Real-time network interface status</li>
-                        <li><strong>Connectivity Analysis:</strong> Network connection testing and diagnostics</li>
-                        <li><strong>Traffic Statistics:</strong> Network usage and throughput monitoring</li>
-                        <li><strong>Configuration Details:</strong> IP addresses, DNS, and network settings</li>
+                        <li><strong>Total Interfaces:</strong> Count of all network adapters on the system</li>
+                        <li><strong>Active Interfaces:</strong> Number of currently active network connections</li>
+                        <li><strong>Primary Interface:</strong> Main network adapter currently in use</li>
+                        <li><strong>Connection Status:</strong> Overall network connectivity status</li>
                     </ul>
 
-                    <h3>Network Information</h3>
-                    <h4>Interface Details</h4>
+                    <h3>Network Interface Details</h3>
+                    <p>For each network interface, the module displays:</p>
                     <ul>
-                        <li>Network adapter names and types</li>
-                        <li>IP addresses (IPv4 and IPv6)</li>
-                        <li>Subnet masks and gateway information</li>
-                        <li>DNS server configurations</li>
-                        <li>MAC addresses and hardware details</li>
+                        <li><strong>Interface Name:</strong> Network adapter name and identifier</li>
+                        <li><strong>Interface Type:</strong> Ethernet, Wi-Fi, or other connection types</li>
+                        <li><strong>IP Address:</strong> Current IPv4 address assignment</li>
+                        <li><strong>MAC Address:</strong> Hardware address of the network adapter</li>
+                        <li><strong>Operational Status:</strong> Current status (up, down, unknown)</li>
                     </ul>
 
-                    <h4>Connection Status</h4>
+                    <h3>Network Statistics</h3>
+                    <p>Real-time network statistics when available:</p>
                     <ul>
-                        <li>Active network connections</li>
-                        <li>Connection speeds and link status</li>
-                        <li>Network utilization metrics</li>
-                        <li>Packet transmission statistics</li>
+                        <li><strong>Data Transfer:</strong> Bytes sent and received</li>
+                        <li><strong>Packet Counts:</strong> Packets transmitted and received</li>
+                        <li><strong>Error Statistics:</strong> Network errors and dropped packets</li>
+                        <li><strong>Performance Metrics:</strong> Network utilization and throughput</li>
+                    </ul>
+
+                    <h3>Key Features</h3>
+                    <ul>
+                        <li><strong>Real-time Monitoring:</strong> Live updates of network interface status</li>
+                        <li><strong>Comprehensive Details:</strong> Complete network configuration information</li>
+                        <li><strong>Visual Interface Cards:</strong> Clean card-based layout for each adapter</li>
+                        <li><strong>Status Indicators:</strong> Clear visual indicators for interface status</li>
+                        <li><strong>Automatic Detection:</strong> Automatically discovers all network interfaces</li>
                     </ul>
                 </section>
 
@@ -1436,34 +1490,52 @@ npm run dist</code></pre>
                 <section id="cleanup" class="doc-section">
                     <h2><i class="fas fa-broom"></i> System Cleanup</h2>
                     <p>
-                        The System Cleanup module helps optimize Windows performance by removing temporary files,
-                        clearing caches, and freeing up disk space.
+                        The System Cleanup module provides a streamlined interface for cleaning temporary files
+                        and optimizing Windows system performance with real-time progress tracking.
                     </p>
 
-                    <h3>Cleanup Categories</h3>
+                    <h3>Disk Space Overview</h3>
                     <ul>
-                        <li><strong>Temporary Files:</strong> Windows and application temporary files</li>
-                        <li><strong>System Cache:</strong> Windows system cache and prefetch files</li>
-                        <li><strong>Browser Data:</strong> Browser caches, cookies, and temporary files</li>
-                        <li><strong>Log Files:</strong> System and application log files</li>
-                        <li><strong>Recycle Bin:</strong> Permanently delete recycled files</li>
+                        <li><strong>Total Space:</strong> Visual display of total disk capacity</li>
+                        <li><strong>Used Space:</strong> Current disk usage with progress bars</li>
+                        <li><strong>Free Space:</strong> Available disk space visualization</li>
+                        <li><strong>Real-time Updates:</strong> Live disk space monitoring</li>
+                    </ul>
+
+                    <h3>Cleanup Operations</h3>
+                    <p>The cleanup process targets the following system areas:</p>
+                    <ul>
+                        <li><strong>Temporary Files and Folders:</strong> Windows and application temp files</li>
+                        <li><strong>System Cache and Logs:</strong> Windows system cache and log files</li>
+                        <li><strong>Windows Update Cache:</strong> Downloaded update files and cache</li>
+                        <li><strong>Error Reports and Dump Files:</strong> Crash dumps and error reports</li>
                     </ul>
 
                     <h3>Cleanup Process</h3>
                     <ol>
-                        <li>Select cleanup categories to process</li>
-                        <li>Review estimated space to be freed</li>
-                        <li>Execute cleanup operation</li>
-                        <li>Monitor progress and completion status</li>
-                        <li>Review cleanup results and freed space</li>
+                        <li>Click "Start Cleanup" to begin the cleaning process</li>
+                        <li>Monitor real-time progress with percentage and status updates</li>
+                        <li>View detailed progress information during cleanup</li>
+                        <li>Review cleanup results showing files cleaned and space freed</li>
+                        <li>Option to run cleanup again or open Windows Disk Cleanup</li>
                     </ol>
 
-                    <h3>Safety Features</h3>
+                    <h3>Key Features</h3>
                     <ul>
-                        <li><strong>Safe Deletion:</strong> Only removes safe-to-delete files</li>
-                        <li><strong>Confirmation Prompts:</strong> User confirmation for destructive operations</li>
-                        <li><strong>Exclusion Lists:</strong> Protect important files from deletion</li>
-                        <li><strong>Undo Capability:</strong> Restore recently deleted files when possible</li>
+                        <li><strong>One-Click Cleanup:</strong> Simple "Start Cleanup" button for easy operation</li>
+                        <li><strong>Real-time Progress:</strong> Live progress tracking with percentage and details</li>
+                        <li><strong>Results Summary:</strong> Shows files cleaned, space freed, and time taken</li>
+                        <li><strong>Windows Integration:</strong> Direct access to Windows Disk Cleanup tool</li>
+                        <li><strong>Safe Operation:</strong> Only removes safe-to-delete temporary files</li>
+                        <li><strong>Visual Feedback:</strong> Progress bars and status messages throughout</li>
+                    </ul>
+
+                    <h3>Results Display</h3>
+                    <p>After cleanup completion, the module displays:</p>
+                    <ul>
+                        <li><strong>Files Cleaned:</strong> Total number of files removed</li>
+                        <li><strong>Space Freed:</strong> Amount of disk space recovered (in MB/GB)</li>
+                        <li><strong>Time Taken:</strong> Duration of the cleanup operation</li>
                     </ul>
                 </section>
 
@@ -1516,7 +1588,6 @@ npm run dist</code></pre>
                     <ul>
                         <li><strong>Individual Entry Management:</strong> Add, remove, and reorder PATH entries individually</li>
                         <li><strong>Path Validation:</strong> Visual indicators for valid and invalid path entries</li>
-                        <li><strong>Bulk Operations:</strong> Validate all entries at once</li>
                         <li><strong>User-friendly Interface:</strong> Separate input fields for each PATH component</li>
                     </ul>
 
@@ -1693,7 +1764,7 @@ npm run dist</code></pre>
                 <section id="architecture" class="doc-section">
                     <h2><i class="fas fa-sitemap"></i> Architecture</h2>
                     <p>
-                        WinTool Portable is built using Electron, combining web technologies with native system access
+                        WinTool is built using Electron, combining web technologies with native system access
                         to create a powerful and flexible Windows management application.
                     </p>
 
@@ -1793,13 +1864,41 @@ npm run dist</code></pre>
 
                     <h3>Package Management API</h3>
                     <div class="api-method">
-                        <h5>window.electronAPI.installPackage(packageId, manager)</h5>
-                        <p class="method-description">Installs a software package using the specified package manager.</p>
+                        <h5>window.electronAPI.executeWingetCommand(command)</h5>
+                        <p class="method-description">Executes a winget command with security validation and returns the output.</p>
                         <div class="parameters">
                             <h6>Parameters:</h6>
                             <ul>
+                                <li><code>command</code> (string) - Winget command to execute (install, uninstall, search, etc.)</li>
+                            </ul>
+                            <h6>Returns:</h6>
+                            <p><code>Promise&lt;CommandResult&gt;</code> - Command execution result with output</p>
+                        </div>
+                    </div>
+
+                    <div class="api-method">
+                        <h5>window.electronAPI.executeChocoCommand(command)</h5>
+                        <p class="method-description">Executes a Chocolatey command with security validation and returns the output.</p>
+                        <div class="parameters">
+                            <h6>Parameters:</h6>
+                            <ul>
+                                <li><code>command</code> (string) - Chocolatey command to execute (install, uninstall, search, etc.)</li>
+                            </ul>
+                            <h6>Returns:</h6>
+                            <p><code>Promise&lt;CommandResult&gt;</code> - Command execution result with output</p>
+                        </div>
+                    </div>
+
+                    <div class="api-method">
+                        <h5>window.electronAPI.executeWingetCommandWithProgressSecure(command, packageId, args, progressCallback)</h5>
+                        <p class="method-description">Executes a winget command with real-time progress updates and enhanced security validation.</p>
+                        <div class="parameters">
+                            <h6>Parameters:</h6>
+                            <ul>
+                                <li><code>command</code> (string) - Winget command (install, uninstall)</li>
                                 <li><code>packageId</code> (string) - Package identifier</li>
-                                <li><code>manager</code> (string) - Package manager: 'winget' or 'chocolatey'</li>
+                                <li><code>args</code> (array) - Additional command arguments</li>
+                                <li><code>progressCallback</code> (function) - Progress update callback</li>
                             </ul>
                             <h6>Returns:</h6>
                             <p><code>Promise&lt;InstallResult&gt;</code> - Installation result with progress updates</p>
@@ -1825,7 +1924,7 @@ npm run dist</code></pre>
                 <section id="contributing" class="doc-section">
                     <h2><i class="fas fa-users"></i> Contributing</h2>
                     <p>
-                        We welcome contributions to WinTool Portable! Whether you're fixing bugs, adding features,
+                        We welcome contributions to WinTool! Whether you're fixing bugs, adding features,
                         or improving documentation, your contributions help make the project better for everyone.
                     </p>
 
@@ -1891,7 +1990,7 @@ npm test</code></pre>
                 <section id="building" class="doc-section">
                     <h2><i class="fas fa-hammer"></i> Building</h2>
                     <p>
-                        This section covers building WinTool Portable from source code, including development builds
+                        This section covers building WinTool from source code, including development builds
                         and production releases.
                     </p>
 
@@ -1969,7 +2068,7 @@ npm run dist:portable</code></pre>
     <!-- Footer -->
     <footer style="background: linear-gradient(135deg, rgba(10, 10, 10, 0.95), rgba(20, 20, 20, 0.95)); border-top: 1px solid rgba(255, 152, 0, 0.2); padding: 40px 0; text-align: center; backdrop-filter: blur(15px); margin-top: 60px; color: #b0b0b0;">
         <div class="container">
-            <p>WinTool Portable Documentation - Professional Windows System Management Suite</p>
+            <p>WinTool Documentation - Professional Windows System Management Suite</p>
             <p>Made with ❤️ by MTechWare | <a href="https://github.com/MTechWare/wintool" target="_blank" rel="noopener noreferrer" style="color: #ff9800; text-decoration: none;">Open Source on GitHub</a></p>
         </div>
     </footer>
@@ -2558,7 +2657,7 @@ npm run dist:portable</code></pre>
                                 <h4>Purpose & Functionality:</h4>
                                 <ul>
                                     <li>Serves as the default starting tab when the application launches</li>
-                                    <li>Provides a user-friendly introduction to WinTool's capabilities</li>
+                                    <li>Provides a user-friendly introduction to WinTools capabilities</li>
                                     <li>Offers quick access buttons to frequently used features</li>
                                     <li>Displays application version and system information</li>
                                     <li>Shows tutorial cards for new users to learn about the application</li>
@@ -4213,7 +4312,7 @@ npm run dist:portable</code></pre>
                         <div id="system-tray" class="doc-section">
                             <h3><i class="fas fa-desktop mr-2"></i> System Tray</h3>
                             <div class="doc-content">
-                                <p>The System Tray documentation covers the implementation and behavior of WinTool's system tray integration. This feature allows the application to run in the background and be quickly accessed from the Windows system tray.</p>
+                                <p>The System Tray documentation covers the implementation and behavior of WinTools system tray integration. This feature allows the application to run in the background and be quickly accessed from the Windows system tray.</p>
 
                                 <h4>Purpose & Functionality:</h4>
                                 <ul>
