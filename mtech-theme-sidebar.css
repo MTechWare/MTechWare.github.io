@@ -1,0 +1,595 @@
+/**
+ * MTech Components - Sidebar Navigation
+ * Advanced sidebar navigation with glassmorphism design
+ * Dark theme with orange accents and smooth animations
+ */
+
+/* === Main Sidebar Container === */
+.mtech-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 280px;
+    height: 100vh;
+    background: rgba(10, 10, 10, 0.95);
+    border-right: 1px solid var(--border-color);
+    backdrop-filter: blur(20px);
+    z-index: 9998;
+    transform: translateX(-100%);
+    transition: transform var(--transition-cubic);
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.mtech-sidebar.open {
+    transform: translateX(0);
+}
+
+.mtech-sidebar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, 
+        var(--glow-color, rgba(255, 152, 0, 0.05)) 0%, 
+        transparent 50%);
+    pointer-events: none;
+}
+
+/* === Sidebar Header === */
+.mtech-sidebar-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    position: relative;
+    z-index: 1;
+}
+
+.mtech-sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    transition: all var(--transition-normal);
+}
+
+.mtech-sidebar-brand:hover {
+    transform: translateX(4px);
+}
+
+.mtech-sidebar-logo {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: #000;
+    font-weight: 700;
+    box-shadow: 0 4px 15px var(--glow-color, rgba(255, 152, 0, 0.3));
+}
+
+.mtech-sidebar-brand-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.mtech-sidebar-brand-name {
+    font-weight: 800;
+    font-size: 1.3rem;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+}
+
+.mtech-sidebar-brand-tagline {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: var(--font-mono);
+}
+
+.mtech-sidebar-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    display: none;
+}
+
+.mtech-sidebar-close:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.1);
+    transform: scale(1.1);
+}
+
+/* === Sidebar Navigation === */
+.mtech-sidebar-nav {
+    padding: 1rem 0;
+    position: relative;
+    z-index: 1;
+}
+
+.mtech-sidebar-section {
+    margin-bottom: 2rem;
+}
+
+.mtech-sidebar-section-title {
+    padding: 0 1.5rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    margin-bottom: 0.5rem;
+}
+
+.mtech-sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.mtech-sidebar-item {
+    position: relative;
+}
+
+.mtech-sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 1.5rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all var(--transition-cubic);
+    position: relative;
+    overflow: hidden;
+}
+
+.mtech-sidebar-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--primary-color);
+    transform: scaleY(0);
+    transition: transform var(--transition-cubic);
+    transform-origin: bottom;
+}
+
+.mtech-sidebar-link::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, 
+        var(--glow-color, rgba(255, 152, 0, 0.1)) 0%, 
+        transparent 100%);
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+}
+
+.mtech-sidebar-link:hover,
+.mtech-sidebar-link.active {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateX(8px);
+}
+
+.mtech-sidebar-link:hover::before,
+.mtech-sidebar-link.active::before {
+    transform: scaleY(1);
+}
+
+.mtech-sidebar-link:hover::after,
+.mtech-sidebar-link.active::after {
+    opacity: 1;
+}
+
+.mtech-sidebar-link.active {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.mtech-sidebar-icon {
+    font-size: 1.1rem;
+    width: 20px;
+    text-align: center;
+    transition: all var(--transition-normal);
+}
+
+.mtech-sidebar-link:hover .mtech-sidebar-icon,
+.mtech-sidebar-link.active .mtech-sidebar-icon {
+    color: var(--primary-color);
+    transform: scale(1.1);
+}
+
+.mtech-sidebar-text {
+    flex: 1;
+}
+
+.mtech-sidebar-badge {
+    background: var(--primary-color);
+    color: #000;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: var(--radius-full);
+    min-width: 18px;
+    text-align: center;
+    line-height: 1.2;
+}
+
+.mtech-sidebar-arrow {
+    font-size: 0.8rem;
+    transition: transform var(--transition-normal);
+}
+
+/* === Submenu === */
+.mtech-sidebar-submenu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height var(--transition-cubic);
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.mtech-sidebar-item.open .mtech-sidebar-submenu {
+    max-height: 500px;
+}
+
+.mtech-sidebar-item.open .mtech-sidebar-arrow {
+    transform: rotate(90deg);
+}
+
+.mtech-sidebar-submenu .mtech-sidebar-link {
+    padding-left: 3rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.mtech-sidebar-submenu .mtech-sidebar-link::before {
+    left: 2rem;
+    width: 2px;
+}
+
+.mtech-sidebar-submenu .mtech-sidebar-link:hover,
+.mtech-sidebar-submenu .mtech-sidebar-link.active {
+    transform: translateX(4px);
+}
+
+/* === Sidebar Footer === */
+.mtech-sidebar-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+.mtech-sidebar-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    transition: all var(--transition-normal);
+    cursor: pointer;
+}
+
+.mtech-sidebar-user:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+}
+
+.mtech-sidebar-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: #000;
+    font-size: 0.9rem;
+}
+
+.mtech-sidebar-user-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.mtech-sidebar-user-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.mtech-sidebar-user-role {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    line-height: 1.2;
+}
+
+.mtech-sidebar-user-status {
+    width: 8px;
+    height: 8px;
+    background: var(--success-color);
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+/* === Compact Sidebar === */
+.mtech-sidebar.compact {
+    width: 70px;
+}
+
+.mtech-sidebar.compact .mtech-sidebar-brand-text,
+.mtech-sidebar.compact .mtech-sidebar-text,
+.mtech-sidebar.compact .mtech-sidebar-badge,
+.mtech-sidebar.compact .mtech-sidebar-arrow,
+.mtech-sidebar.compact .mtech-sidebar-section-title,
+.mtech-sidebar.compact .mtech-sidebar-user-info {
+    display: none;
+}
+
+.mtech-sidebar.compact .mtech-sidebar-link {
+    justify-content: center;
+    padding: 12px;
+}
+
+.mtech-sidebar.compact .mtech-sidebar-submenu {
+    display: none;
+}
+
+.mtech-sidebar.compact .mtech-sidebar-user {
+    justify-content: center;
+}
+
+/* === Sidebar Overlay === */
+.mtech-sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9997;
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition-normal);
+    backdrop-filter: blur(2px);
+}
+
+.mtech-sidebar-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* === Sidebar Toggle Button === */
+.mtech-sidebar-toggle {
+    position: fixed;
+    top: 1.5rem;
+    left: 1.5rem;
+    z-index: 9999;
+    background: rgba(10, 10, 10, 0.9);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 12px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-cubic);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.mtech-sidebar-toggle:hover {
+    background: rgba(20, 20, 20, 0.9);
+    border-color: var(--border-hover);
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.mtech-sidebar-toggle i {
+    font-size: 1.1rem;
+    transition: transform var(--transition-normal);
+}
+
+.mtech-sidebar.open + .mtech-sidebar-toggle i {
+    transform: rotate(90deg);
+}
+
+/* === Right Sidebar === */
+.mtech-sidebar.right {
+    left: auto;
+    right: 0;
+    transform: translateX(100%);
+    border-left: 1px solid var(--border-color);
+    border-right: none;
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.mtech-sidebar.right.open {
+    transform: translateX(0);
+}
+
+.mtech-sidebar.right .mtech-sidebar-link::before {
+    left: auto;
+    right: 0;
+}
+
+.mtech-sidebar.right .mtech-sidebar-link:hover,
+.mtech-sidebar.right .mtech-sidebar-link.active {
+    transform: translateX(-8px);
+}
+
+.mtech-sidebar.right .mtech-sidebar-submenu .mtech-sidebar-link:hover,
+.mtech-sidebar.right .mtech-sidebar-submenu .mtech-sidebar-link.active {
+    transform: translateX(-4px);
+}
+
+/* === Mobile Responsive === */
+@media (max-width: 768px) {
+    .mtech-sidebar {
+        width: 100%;
+        max-width: 320px;
+    }
+    
+    .mtech-sidebar-close {
+        display: block;
+    }
+    
+    .mtech-sidebar-toggle {
+        top: 1rem;
+        left: 1rem;
+        padding: 10px;
+    }
+    
+    .mtech-sidebar-header {
+        padding: 1rem 1.5rem 1rem 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .mtech-sidebar {
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .mtech-sidebar-link {
+        padding: 14px 1.5rem;
+        font-size: 1rem;
+    }
+    
+    .mtech-sidebar-icon {
+        font-size: 1.2rem;
+    }
+}
+
+/* === Theme Variations === */
+:root.theme-green .mtech-sidebar-logo {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    box-shadow: 0 4px 15px var(--glow-color, rgba(67, 160, 71, 0.3));
+}
+
+:root.theme-green .mtech-sidebar-brand-name {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+:root.theme-green .mtech-sidebar-link::before {
+    background: var(--primary-color);
+}
+
+:root.theme-green .mtech-sidebar-link::after {
+    background: linear-gradient(90deg, 
+        var(--glow-color, rgba(67, 160, 71, 0.1)) 0%, 
+        transparent 100%);
+}
+
+:root.theme-green .mtech-sidebar-avatar {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+}
+
+/* === Accessibility === */
+@media (prefers-reduced-motion: reduce) {
+    .mtech-sidebar,
+    .mtech-sidebar-link,
+    .mtech-sidebar-submenu,
+    .mtech-sidebar-overlay {
+        transition: none !important;
+    }
+    
+    .mtech-sidebar-toggle i,
+    .mtech-sidebar-arrow {
+        transition: none !important;
+    }
+}
+
+/* === High Contrast Mode === */
+@media (prefers-contrast: high) {
+    .mtech-sidebar {
+        background: #000;
+        border-color: var(--primary-color);
+    }
+    
+    .mtech-sidebar-link {
+        border-bottom: 1px solid #333;
+    }
+    
+    .mtech-sidebar-link:hover,
+    .mtech-sidebar-link.active {
+        background: var(--primary-color);
+        color: #000;
+    }
+    
+    .mtech-sidebar-toggle {
+        background: #000;
+        border: 2px solid var(--primary-color);
+    }
+}
+
+/* === Focus States === */
+.mtech-sidebar-link:focus,
+.mtech-sidebar-toggle:focus,
+.mtech-sidebar-user:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* === Scrollbar Styling === */
+.mtech-sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.mtech-sidebar::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.mtech-sidebar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+}
+
+.mtech-sidebar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+}

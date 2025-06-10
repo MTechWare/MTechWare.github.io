@@ -1,0 +1,622 @@
+/**
+ * MTech Components - Progress Bars & Meters
+ * Advanced progress indicators and measurement displays
+ * Dark theme with orange accents and glassmorphism effects
+ */
+
+/* === Base Progress Bar === */
+.mtech-progress {
+    position: relative;
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    backdrop-filter: blur(5px);
+}
+
+.mtech-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    border-radius: var(--radius-full);
+    transition: width var(--transition-cubic);
+    position: relative;
+    overflow: hidden;
+}
+
+.mtech-progress-bar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: mtech-progress-shine 2s ease-in-out infinite;
+}
+
+/* === Progress Bar Sizes === */
+.mtech-progress-xs {
+    height: 4px;
+}
+
+.mtech-progress-sm {
+    height: 6px;
+}
+
+.mtech-progress-md {
+    height: 8px;
+}
+
+.mtech-progress-lg {
+    height: 12px;
+}
+
+.mtech-progress-xl {
+    height: 16px;
+}
+
+/* === Progress Bar Variants === */
+.mtech-progress-success .mtech-progress-bar {
+    background: linear-gradient(90deg, var(--success-color) 0%, #66bb6a 100%);
+}
+
+.mtech-progress-error .mtech-progress-bar {
+    background: linear-gradient(90deg, var(--error-color) 0%, #ef5350 100%);
+}
+
+.mtech-progress-warning .mtech-progress-bar {
+    background: linear-gradient(90deg, var(--warning-color) 0%, var(--primary-dark) 100%);
+}
+
+.mtech-progress-info .mtech-progress-bar {
+    background: linear-gradient(90deg, var(--info-color) 0%, #42a5f5 100%);
+}
+
+/* === Striped Progress === */
+.mtech-progress-striped .mtech-progress-bar {
+    background-image: linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.15) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(255, 255, 255, 0.15) 50%,
+        rgba(255, 255, 255, 0.15) 75%,
+        transparent 75%,
+        transparent
+    );
+    background-size: 1rem 1rem;
+}
+
+.mtech-progress-animated .mtech-progress-bar {
+    animation: mtech-progress-stripes 1s linear infinite;
+}
+
+/* === Progress with Label === */
+.mtech-progress-labeled {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.mtech-progress-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.mtech-progress-label-text {
+    color: var(--text-primary);
+}
+
+.mtech-progress-label-value {
+    color: var(--primary-color);
+    font-family: var(--font-mono);
+}
+
+/* === Circular Progress === */
+.mtech-progress-circle {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 120px;
+}
+
+.mtech-progress-circle-svg {
+    transform: rotate(-90deg);
+    width: 100%;
+    height: 100%;
+}
+
+.mtech-progress-circle-bg {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.1);
+    stroke-width: 8;
+}
+
+.mtech-progress-circle-bar {
+    fill: none;
+    stroke: var(--primary-color);
+    stroke-width: 8;
+    stroke-linecap: round;
+    stroke-dasharray: 283; /* 2 * π * 45 (radius) */
+    stroke-dashoffset: 283;
+    transition: stroke-dashoffset var(--transition-cubic);
+    filter: drop-shadow(0 0 8px var(--glow-color, rgba(255, 152, 0, 0.3)));
+}
+
+.mtech-progress-circle-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.mtech-progress-circle-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1;
+}
+
+.mtech-progress-circle-label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-top: 0.25rem;
+}
+
+/* === Circular Progress Sizes === */
+.mtech-progress-circle-sm {
+    width: 80px;
+    height: 80px;
+}
+
+.mtech-progress-circle-sm .mtech-progress-circle-bg,
+.mtech-progress-circle-sm .mtech-progress-circle-bar {
+    stroke-width: 6;
+}
+
+.mtech-progress-circle-sm .mtech-progress-circle-bar {
+    stroke-dasharray: 188; /* 2 * π * 30 */
+    stroke-dashoffset: 188;
+}
+
+.mtech-progress-circle-sm .mtech-progress-circle-value {
+    font-size: 1rem;
+}
+
+.mtech-progress-circle-lg {
+    width: 160px;
+    height: 160px;
+}
+
+.mtech-progress-circle-lg .mtech-progress-circle-bg,
+.mtech-progress-circle-lg .mtech-progress-circle-bar {
+    stroke-width: 10;
+}
+
+.mtech-progress-circle-lg .mtech-progress-circle-bar {
+    stroke-dasharray: 377; /* 2 * π * 60 */
+    stroke-dashoffset: 377;
+}
+
+.mtech-progress-circle-lg .mtech-progress-circle-value {
+    font-size: 2rem;
+}
+
+/* === Circular Progress Variants === */
+.mtech-progress-circle-success .mtech-progress-circle-bar {
+    stroke: var(--success-color);
+    filter: drop-shadow(0 0 8px rgba(76, 175, 80, 0.3));
+}
+
+.mtech-progress-circle-error .mtech-progress-circle-bar {
+    stroke: var(--error-color);
+    filter: drop-shadow(0 0 8px rgba(244, 67, 54, 0.3));
+}
+
+.mtech-progress-circle-warning .mtech-progress-circle-bar {
+    stroke: var(--warning-color);
+    filter: drop-shadow(0 0 8px var(--glow-color, rgba(255, 152, 0, 0.3)));
+}
+
+.mtech-progress-circle-info .mtech-progress-circle-bar {
+    stroke: var(--info-color);
+    filter: drop-shadow(0 0 8px rgba(33, 150, 243, 0.3));
+}
+
+/* === Meter/Gauge Components === */
+.mtech-meter {
+    position: relative;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    backdrop-filter: blur(10px);
+}
+
+.mtech-meter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.mtech-meter-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.mtech-meter-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    font-family: var(--font-mono);
+}
+
+.mtech-meter-progress {
+    margin-bottom: 1rem;
+}
+
+.mtech-meter-stats {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+/* === Semi-circular Gauge === */
+.mtech-gauge {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    height: 120px;
+}
+
+.mtech-gauge-svg {
+    width: 100%;
+    height: 100%;
+}
+
+.mtech-gauge-bg {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.1);
+    stroke-width: 12;
+    stroke-linecap: round;
+}
+
+.mtech-gauge-bar {
+    fill: none;
+    stroke: var(--primary-color);
+    stroke-width: 12;
+    stroke-linecap: round;
+    transition: stroke-dashoffset var(--transition-cubic);
+    filter: drop-shadow(0 0 10px var(--glow-color, rgba(255, 152, 0, 0.4)));
+}
+
+.mtech-gauge-content {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+.mtech-gauge-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1;
+}
+
+.mtech-gauge-label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-top: 0.25rem;
+}
+
+/* === Multi-step Progress === */
+.mtech-progress-steps {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 2rem 0;
+}
+
+.mtech-progress-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    flex: 1;
+}
+
+.mtech-progress-step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    width: 100%;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 1;
+}
+
+.mtech-progress-step.completed:not(:last-child)::after {
+    background: var(--primary-color);
+}
+
+.mtech-progress-step-circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    position: relative;
+    z-index: 2;
+    transition: all var(--transition-normal);
+}
+
+.mtech-progress-step.completed .mtech-progress-step-circle {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #000;
+    box-shadow: 0 0 15px var(--glow-color, rgba(255, 152, 0, 0.3));
+}
+
+.mtech-progress-step.active .mtech-progress-step-circle {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    box-shadow: 0 0 10px var(--glow-color, rgba(255, 152, 0, 0.2));
+}
+
+.mtech-progress-step-label {
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-align: center;
+    transition: color var(--transition-normal);
+}
+
+.mtech-progress-step.completed .mtech-progress-step-label,
+.mtech-progress-step.active .mtech-progress-step-label {
+    color: var(--text-primary);
+}
+
+/* === Loading Progress === */
+.mtech-progress-loading {
+    position: relative;
+    overflow: hidden;
+}
+
+.mtech-progress-loading .mtech-progress-bar {
+    width: 100% !important;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        var(--primary-color) 50%,
+        transparent 100%
+    );
+    animation: mtech-progress-loading 1.5s ease-in-out infinite;
+}
+
+/* === Skill/Rating Bars === */
+.mtech-skill-bar {
+    margin-bottom: 1.5rem;
+}
+
+.mtech-skill-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.mtech-skill-name {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.mtech-skill-level {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+}
+
+.mtech-skill-progress {
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    position: relative;
+}
+
+.mtech-skill-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    border-radius: var(--radius-full);
+    transition: width 1s ease-out;
+    position: relative;
+}
+
+.mtech-skill-progress-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 4px;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 0 var(--radius-full) var(--radius-full) 0;
+}
+
+/* === Animations === */
+@keyframes mtech-progress-shine {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+@keyframes mtech-progress-stripes {
+    0% {
+        background-position: 1rem 0;
+    }
+    100% {
+        background-position: 0 0;
+    }
+}
+
+@keyframes mtech-progress-loading {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+/* === Responsive Design === */
+@media (max-width: 768px) {
+    .mtech-progress-circle {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .mtech-progress-circle-value {
+        font-size: 1.25rem;
+    }
+    
+    .mtech-gauge {
+        width: 160px;
+        height: 100px;
+    }
+    
+    .mtech-gauge-value {
+        font-size: 1.25rem;
+    }
+    
+    .mtech-progress-steps {
+        margin: 1rem 0;
+    }
+    
+    .mtech-progress-step-circle {
+        width: 25px;
+        height: 25px;
+        font-size: 0.75rem;
+    }
+    
+    .mtech-progress-step-label {
+        font-size: 0.7rem;
+    }
+    
+    .mtech-meter {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .mtech-progress-circle {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .mtech-progress-circle-value {
+        font-size: 1rem;
+    }
+    
+    .mtech-gauge {
+        width: 140px;
+        height: 80px;
+    }
+    
+    .mtech-progress-step-label {
+        display: none;
+    }
+}
+
+/* === Theme Variations === */
+:root.theme-green .mtech-progress-bar {
+    background: linear-gradient(90deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+}
+
+:root.theme-green .mtech-progress-circle-bar {
+    stroke: var(--primary-color);
+    filter: drop-shadow(0 0 8px var(--glow-color, rgba(67, 160, 71, 0.3)));
+}
+
+:root.theme-green .mtech-gauge-bar {
+    stroke: var(--primary-color);
+    filter: drop-shadow(0 0 10px var(--glow-color, rgba(67, 160, 71, 0.4)));
+}
+
+:root.theme-green .mtech-progress-step.completed .mtech-progress-step-circle {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 15px var(--glow-color, rgba(67, 160, 71, 0.3));
+}
+
+:root.theme-green .mtech-skill-progress-bar {
+    background: linear-gradient(90deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+}
+
+/* === Accessibility === */
+@media (prefers-reduced-motion: reduce) {
+    .mtech-progress-bar,
+    .mtech-progress-circle-bar,
+    .mtech-gauge-bar,
+    .mtech-skill-progress-bar {
+        transition: none !important;
+    }
+    
+    .mtech-progress-bar::before,
+    .mtech-progress-animated .mtech-progress-bar,
+    .mtech-progress-loading .mtech-progress-bar {
+        animation: none !important;
+    }
+}
+
+/* === High Contrast Mode === */
+@media (prefers-contrast: high) {
+    .mtech-progress {
+        background: #000;
+        border: 2px solid var(--primary-color);
+    }
+    
+    .mtech-progress-bar {
+        background: var(--primary-color) !important;
+    }
+    
+    .mtech-progress-circle-bg {
+        stroke: #333;
+        stroke-width: 10;
+    }
+    
+    .mtech-progress-circle-bar {
+        stroke: var(--primary-color) !important;
+        stroke-width: 10;
+        filter: none !important;
+    }
+}
