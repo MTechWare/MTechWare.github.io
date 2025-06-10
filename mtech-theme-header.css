@@ -15,9 +15,9 @@
     text-align: center;
     padding: 120px 0 100px;
     margin-bottom: 60px;
-    background: linear-gradient(135deg, rgba(255, 152, 0, 0.08) 0%, rgba(255, 87, 34, 0.03) 50%, transparent 100%);
+    background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.08) 0%, rgba(var(--primary-dark-rgb), 0.03) 50%, transparent 100%);
     border-radius: 32px;
-    border: 1px solid rgba(255, 152, 0, 0.1);
+    border: 1px solid rgba(var(--primary-rgb), 0.1);
 }
 
 .mtech-hero-header::before {
@@ -27,7 +27,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(circle at 50% 50%, rgba(255, 152, 0, 0.1) 0%, transparent 70%);
+    background: radial-gradient(circle at 50% 50%, rgba(var(--primary-rgb), 0.1) 0%, transparent 70%);
     border-radius: 32px;
     z-index: -1;
     pointer-events: none;
@@ -55,7 +55,7 @@
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 30px var(--glow-color, rgba(255, 152, 0, 0.3));
+    text-shadow: 0 0 30px rgba(var(--primary-rgb), 0.3);
     animation: mtech-hero-glow 3s ease-in-out infinite alternate;
     position: relative;
 }
@@ -68,7 +68,7 @@
     transform: translate(-50%, -50%);
     width: 120%;
     height: 120%;
-    background: radial-gradient(ellipse, var(--glow-color, rgba(255, 152, 0, 0.1)) 0%, transparent 70%);
+    background: radial-gradient(ellipse, rgba(var(--primary-rgb), 0.1) 0%, transparent 70%);
     z-index: -1;
     animation: mtech-hero-pulse 4s ease-in-out infinite;
 }
@@ -126,8 +126,8 @@
     color: #000;
     border: 2px solid transparent;
     box-shadow: 
-        0 8px 25px var(--glow-color, rgba(255, 152, 0, 0.3)),
-        0 0 20px var(--glow-color, rgba(255, 152, 0, 0.1));
+        0 8px 25px rgba(var(--primary-rgb), 0.3),
+        0 0 20px rgba(var(--primary-rgb), 0.1);
 }
 
 .mtech-hero-btn-primary::before {
@@ -144,8 +144,8 @@
 .mtech-hero-btn-primary:hover {
     transform: translateY(-3px) scale(1.05);
     box-shadow: 
-        0 15px 35px var(--glow-color, rgba(255, 152, 0, 0.4)),
-        0 0 30px var(--glow-color, rgba(255, 152, 0, 0.2));
+        0 15px 35px rgba(var(--primary-rgb), 0.4),
+        0 0 30px rgba(var(--primary-rgb), 0.2);
 }
 
 .mtech-hero-btn-primary:hover::before {
@@ -178,7 +178,7 @@
     left: 10%;
     width: 80px;
     height: 80px;
-    background: linear-gradient(135deg, var(--glow-color, rgba(255, 152, 0, 0.1)), transparent);
+    background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.1), transparent);
     border-radius: 50%;
     animation: mtech-hero-float-1 8s ease-in-out infinite;
 }
@@ -188,7 +188,7 @@
     right: 15%;
     width: 60px;
     height: 60px;
-    background: linear-gradient(135deg, var(--primary-dark-rgba, rgba(255, 87, 34, 0.1)), transparent);
+    background: linear-gradient(135deg, rgba(var(--primary-dark-rgb), 0.1), transparent);
     border-radius: 50%;
     animation: mtech-hero-float-2 6s ease-in-out infinite;
 }
@@ -198,7 +198,7 @@
     left: 20%;
     width: 40px;
     height: 40px;
-    background: linear-gradient(135deg, var(--glow-color, rgba(255, 152, 0, 0.15)), transparent);
+    background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.15), transparent);
     border-radius: 50%;
     animation: mtech-hero-float-3 10s ease-in-out infinite;
 }
@@ -296,10 +296,10 @@
 /* === Animations === */
 @keyframes mtech-hero-glow {
     0% {
-        text-shadow: 0 0 30px var(--glow-color, rgba(255, 152, 0, 0.3));
+        text-shadow: 0 0 30px rgba(var(--primary-rgb), 0.3);
     }
     100% {
-        text-shadow: 0 0 40px var(--glow-color, rgba(255, 152, 0, 0.5));
+        text-shadow: 0 0 40px rgba(var(--primary-rgb), 0.5);
     }
 }
 
@@ -446,14 +446,14 @@
 :root.theme-green .mtech-hero-btn-primary {
     background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
     box-shadow: 
-        0 8px 25px var(--glow-color, rgba(67, 160, 71, 0.3)),
-        0 0 20px var(--glow-color, rgba(67, 160, 71, 0.1));
+        0 8px 25px rgba(var(--primary-rgb), 0.3),
+        0 0 20px rgba(var(--primary-rgb), 0.1);
 }
 
 :root.theme-green .mtech-hero-btn-primary:hover {
     box-shadow: 
-        0 15px 35px var(--glow-color, rgba(67, 160, 71, 0.4)),
-        0 0 30px var(--glow-color, rgba(67, 160, 71, 0.2));
+        0 15px 35px rgba(var(--primary-rgb), 0.4),
+        0 0 30px rgba(var(--primary-rgb), 0.2);
 }
 
 /* === Performance Optimizations === */
