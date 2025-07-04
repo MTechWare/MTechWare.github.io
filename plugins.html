@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WinTool Plugins - Extend Your Toolkit</title>
+    
+    <!-- Include all MTech theme CSS files -->
+    <link rel="stylesheet" href="mtech-theme-base.css">
+    <link rel="stylesheet" href="mtech-theme-buttons.css">
+    <link rel="stylesheet" href="mtech-theme-cards.css">
+    <link rel="stylesheet" href="mtech-theme-forms.css">
+    <link rel="stylesheet" href="mtech-theme-modals.css">
+    <link rel="stylesheet" href="mtech-theme-header.css">
+    <link rel="stylesheet" href="mtech-theme-progress.css">
+    <link rel="stylesheet" href="mtech-theme-sidebar.css">
+    <link rel="stylesheet" href="mtech-theme-tooltips.css">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  :root.theme-orange {
+    --primary-color: #ff9800;
+    --primary-dark: #ff5722;
+    --primary-rgb: 255,152,0;
+    --primary-dark-rgb: 255,87,34;
+  }
+  :root.theme-green {
+    --primary-color: #43a047;
+    --primary-dark: #388e3c;
+    --primary-rgb: 67,160,71;
+    --primary-dark-rgb: 56,142,60;
+  }
+  .mtech-text-primary {
+    color: var(--primary-color) !important;
+  }
+  .mtech-gradient-primary {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%) !important;
+  }
+  .mtech-gradient-primary-text {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+  }
+  .mtech-navbar-theme {
+    border: 1px solid rgba(var(--primary-rgb), 0.2) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1), 0 0 15px rgba(var(--primary-rgb), 0.1) !important;
+  }
+  .mtech-bg-primary-alpha08 {
+    background: rgba(var(--primary-rgb), 0.08) !important;
+  }
+  .mtech-bg-primary-alpha02 {
+    background: rgba(var(--primary-rgb), 0.2) !important;
+  }
+  .mtech-bg-primary-alpha015 {
+    background: rgba(var(--primary-rgb), 0.15) !important;
+  }
+  .mtech-bg-primary-alpha01 {
+    background: rgba(var(--primary-rgb), 0.1) !important;
+  }
+  .mtech-border-primary {
+    border-color: rgba(var(--primary-rgb), 0.2) !important;
+  }
+  .mtech-border-primary-01 {
+    border-color: rgba(var(--primary-rgb), 0.1) !important;
+  }
+  .mtech-shadow-primary {
+    box-shadow: 0 2px 10px rgba(var(--primary-rgb), 0.3) !important;
+  }
+</style>
+</head>
+<body style="padding-top: 0;">
+    <!-- Background Effects -->
+    <div class="mtech-bg-pattern"></div>
+    <div class="mtech-particles"></div>
+
+    <!-- Navigation Bar -->
+    <header class="mtech-navbar-theme" style="position: fixed; top: 20px; left: 50%; transform: translateX(-50%); width: 88%; max-width: 1100px; z-index: 9999; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); border-radius: 15px; padding: 12px 24px; transition: all 0.3s ease;">
+      <nav style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+        <!-- Left Section: Logo & Status -->
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <a href="index.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none; transition: all 0.3s ease;" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
+                <div class="mtech-gradient-primary mtech-shadow-primary" style="width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: #000; font-weight: 700; transition: all 0.3s ease;">
+                    <i class="fas fa-microchip"></i>
+                </div>
+                <div style="display: flex; flex-direction: column;">
+                    <span class="mtech-gradient-primary-text" style="font-weight: 700; font-size: 1.1rem; line-height: 1;">MTechWare</span>
+                    <span style="font-size: 0.6rem; color: #888; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Roboto Mono', monospace;">IT Professional</span>
+                </div>
+            </a>
+            
+            <!-- Status Indicator -->
+            <div style="display: flex; align-items: center; gap: 6px; padding: 4px 10px; background: rgba(76, 175, 80, 0.1); border: 1px solid rgba(76, 175, 80, 0.3); border-radius: 20px; backdrop-filter: blur(10px);">
+                <div style="width: 6px; height: 6px; background: #4caf50; border-radius: 50%; animation: pulse 2s infinite;"></div>
+                <span style="font-size: 0.6rem; color: #4caf50; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Roboto Mono', monospace;">Online</span>
+            </div>
+        </div>
+
+        <!-- Right Section: Navigation Links & Mobile Menu Toggle -->
+        <div style="display: flex; align-items: center; gap: 16px;">
+            <!-- Navigation Links -->
+            <div class="mtech-bg-primary-alpha08" style="display: flex; align-items: center; gap: 4px; border-radius: 12px; padding: 4px;">
+                <a href="index.html" style="color: #d0d0d0; text-decoration: none; font-size: 0.8rem; font-weight: 600; padding: 8px 14px; border-radius: 8px; transition: all 0.3s ease;" onmouseover="this.style.color='#fff'; this.style.background='linear-gradient(135deg, rgba(var(--primary-rgb), 0.15), rgba(var(--primary-dark-rgb), 0.15))'; this.style.transform='translateY(-1px)'" onmouseout="this.style.color='#d0d0d0'; this.style.background='transparent'; this.style.transform='translateY(0)'">
+                    <i class="fas fa-home" style="margin-right: 6px; font-size: 0.7rem;"></i>Home
+                </a>
+                <a href="wintool.html" style="color: #d0d0d0; text-decoration: none; font-size: 0.8rem; font-weight: 600; padding: 8px 14px; border-radius: 8px; transition: all 0.3s ease;" onmouseover="this.style.color='#fff'; this.style.background='linear-gradient(135deg, rgba(var(--primary-rgb), 0.15), rgba(var(--primary-dark-rgb), 0.15))'; this.style.transform='translateY(-1px)'" onmouseout="this.style.color='#d0d0d0'; this.style.background='transparent'; this.style.transform='translateY(0)'">
+                    <i class="fas fa-tools" style="margin-right: 6px; font-size: 0.7rem;"></i>WinTool
+                </a>
+                <a href="plugins.html" class="mtech-gradient-primary mtech-shadow-primary" style="color: #fff; text-decoration: none; font-size: 0.8rem; font-weight: 600; padding: 8px 14px; border-radius: 8px; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 4px 12px rgba(var(--primary-rgb), 0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(var(--primary-rgb), 0.2)';">
+                    <i class="fas fa-puzzle-piece" style="margin-right: 6px; font-size: 0.7rem;"></i>Plugins
+                </a>
+            </div>
+            
+            <!-- Mobile Menu Toggle -->
+            <button class="menu-toggle mtech-bg-primary-alpha01 mtech-border-primary" style="display: none; color: #e8e8e8; font-size: 1rem; padding: 8px; border-radius: 8px; cursor: pointer; transition: all 0.3s ease;" aria-label="Toggle menu" aria-expanded="false" onmouseover="this.style.background='rgba(var(--primary-rgb), 0.2)'; this.style.borderColor='rgba(var(--primary-rgb), 0.5)';" onmouseout="this.style.background='rgba(var(--primary-rgb), 0.1)'; this.style.borderColor='rgba(var(--primary-rgb), 0.3)';">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Navigation -->
+        <ul class="mobile-nav mtech-border-primary" style="display: none; position: absolute; top: 100%; left: 0; width: 100%; background: rgba(8, 8, 8, 0.95); backdrop-filter: blur(20px); flex-direction: column; padding: 20px 0; text-align: center; border-top: none; border-radius: 0 0 20px 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); list-style: none; margin: 0; padding: 0;">
+             <li style="width: 100%;"><a class="mtech-border-primary-01" href="index.html" style="display: block; padding: 16px 30px; color: #d0d0d0; font-size: 1rem; font-weight: 600; text-decoration: none; transition: all 0.3s ease; border-bottom: 1px solid rgba(var(--primary-rgb), 0.1);" onmouseover="this.style.background='rgba(var(--primary-rgb), 0.1)'; this.style.color='var(--primary-color)'" onmouseout="this.style.background='transparent'; this.style.color='#d0d0d0'"><i class="fas fa-home" style="margin-right: 8px;"></i>Home</a></li>
+             <li style="width: 100%;"><a class="mtech-border-primary-01" href="wintool.html" style="display: block; padding: 16px 30px; color: #d0d0d0; font-size: 1rem; font-weight: 600; text-decoration: none; transition: all 0.3s ease; border-bottom: 1px solid rgba(var(--primary-rgb), 0.1);" onmouseover="this.style.background='rgba(var(--primary-rgb), 0.1)'; this.style.color='var(--primary-color)'" onmouseout="this.style.background='transparent'; this.style.color='#d0d0d0'"><i class="fas fa-tools" style="margin-right: 8px;"></i>WinTool</a></li>
+             <li style="width: 100%;"><a class="mtech-border-primary-01" href="plugins.html" style="display: block; padding: 16px 30px; color: var(--primary-color); font-size: 1rem; font-weight: 600; text-decoration: none; transition: all 0.3s ease; border-bottom: 1px solid rgba(var(--primary-rgb), 0.1); background: rgba(var(--primary-rgb), 0.1);" onmouseover="this.style.background='rgba(var(--primary-rgb), 0.2)'" onmouseout="this.style.background='rgba(var(--primary-rgb), 0.1)'"><i class="fas fa-puzzle-piece" style="margin-right: 8px;"></i>Plugins</a></li>
+         </ul>
+      </nav>
+    </header>
+
+    <!-- Add CSS for animations -->
+    <style>
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.2); }
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                top: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                width: 100% !important;
+                max-width: none !important;
+                border-radius: 0 !important;
+                border-left: none !important;
+                border-right: none !important;
+                border-top: none !important;
+                padding: 8px 16px !important;
+                transform: none !important;
+            }
+            
+            header nav > div:nth-child(2) {
+                display: none !important;
+            }
+            
+            header nav > div:nth-child(3) .menu-toggle {
+                display: block !important;
+            }
+            
+            .mobile-nav.active {
+                display: flex !important;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            header {
+                padding: 6px 12px !important;
+            }
+            
+            header nav > div:nth-child(1) a > div:nth-child(1) {
+                width: 32px !important;
+                height: 32px !important;
+                font-size: 1rem !important;
+            }
+            
+            header nav > div:nth-child(1) a > div:nth-child(2) span:nth-child(1) {
+                font-size: 1rem !important;
+            }
+            
+            header nav > div:nth-child(1) > div:nth-child(2) {
+                display: none !important;
+            }
+            
+            header nav > div:nth-child(3) a {
+                padding: 6px 12px !important;
+                font-size: 0.7rem !important;
+            }
+        }
+    </style>
+
+    <script>
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const menuToggle = document.querySelector('.menu-toggle');
+            const mobileNavUl = document.querySelector('nav ul.mobile-nav');
+            
+            if (menuToggle && mobileNavUl) {
+                menuToggle.addEventListener('click', function() {
+                    const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+                    mobileNavUl.classList.toggle('active');
+                    menuToggle.setAttribute('aria-expanded', !isExpanded);
+                    
+                    const icon = menuToggle.querySelector('i');
+                    if (icon) {
+                        icon.classList.toggle('fa-bars');
+                        icon.classList.toggle('fa-times');
+                    }
+                });
+            }
+        });
+    </script>
+
+    <!-- Hero Section for Plugins -->
+    <section class="mtech-hero-header">
+        <div class="mtech-hero-content mtech-mt-xl">
+            <div class="mtech-hero-subtitle mtech-text-primary" style="font-weight: 600; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 2px;">
+                WinTool Plugin Ecosystem
+            </div>
+            <h1 class="mtech-hero-title">
+                Plugin Library
+            </h1>
+            <p class="mtech-hero-description">
+                Discover and share community-built plugins to extend and customize your WinTool experience.
+            </p>
+        </div>
+    </section>
+
+    <!-- Featured Plugins Section -->
+    <section id="featured-plugins" class="mtech-section">
+        <div class="mtech-container">
+            <h2 class="mtech-title-lg mtech-text-center mtech-mb-xl">Featured Plugins</h2>
+            <div class="mtech-grid mtech-grid-3" style="gap: 28px;">
+                <!-- Placeholder for Plugin 1 -->
+                <div class="mtech-card mtech-card-glass mtech-card-hover" style="padding: 44px 32px; border-radius: 22px; align-items: center; background: rgba(20,20,20,0.92); border: 1.5px solid rgba(var(--primary-rgb),0.13); box-shadow: 0 4px 32px rgba(var(--primary-rgb),0.04); transition: all 0.4s cubic-bezier(0.4,0,0.2,1);">
+                    <div style="width: 72px; height: 72px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, rgba(var(--primary-rgb),0.18), rgba(var(--primary-dark-rgb),0.13)); border-radius: 20px; margin-bottom: 25px;">
+                        <i class="fas fa-vial mtech-text-primary" style="font-size: 2.1rem;"></i>
+                    </div>
+                    <h3 class="mtech-card-title" style="color: #fff; font-size: 1.35rem; margin-bottom: 15px; font-weight: 700;">Developer Template</Template></h3>
+                    <p class="mtech-card-content" style="color: #e0cfa6; font-size: 1.01rem; margin: 0; line-height: 1.7;">A plugin to test and demonstrate all features of the wintoolAPI and a template for your plugin!</p>
+                    <div class="mtech-card-footer">
+                        <span>By: MTechWare</span>
+                        <a href="https://github.com/MTechWare/wintool-plugins/blob/main/api-tester.zip" class="mtech-btn mtech-btn-sm mtech-btn-secondary">Learn More</a>
+                    </div>
+                </div>
+                <!-- Placeholder for Plugin 2 -->
+                <div class="mtech-card mtech-card-glass mtech-card-hover" style="padding: 44px 32px; border-radius: 22px; align-items: center; background: rgba(20,20,20,0.92); border: 1.5px solid rgba(var(--primary-rgb),0.13); box-shadow: 0 4px 32px rgba(var(--primary-rgb),0.04); transition: all 0.4s cubic-bezier(0.4,0,0.2,1);">
+                    <div style="width: 72px; height: 72px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, rgba(var(--primary-rgb),0.18), rgba(var(--primary-dark-rgb),0.13)); border-radius: 20px; margin-bottom: 25px;">
+                        <i class="fas fa-clock mtech-text-primary" style="font-size: 2.1rem;"></i>
+                    </div>
+                    <h3 class="mtech-card-title" style="color: #fff; font-size: 1.35rem; margin-bottom: 15px; font-weight: 700;">System Uptime</Template></h3>
+                    <p class="mtech-card-content" style="color: #e0cfa6; font-size: 1.01rem; margin: 0; line-height: 1.7;">Displays how long the system has been running since the last restart.</p>
+                    <div class="mtech-card-footer">
+                        <span>By: MTechWare</span>
+                        <a href="https://github.com/MTechWare/wintool-plugins/blob/main/system-uptime.zip" class="mtech-btn mtech-btn-sm mtech-btn-secondary">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Developer Call to Action Section -->
+    <section id="develop" class="mtech-section">
+        <div class="mtech-container">
+            <div class="mtech-card mtech-card-glass mtech-card-hover" style="padding: 44px 32px; border-radius: 22px; align-items: center; text-align: center; background: rgba(20,20,20,0.92); border: 1.5px solid rgba(var(--primary-rgb),0.13); box-shadow: 0 4px 32px rgba(var(--primary-rgb),0.04); transition: all 0.4s cubic-bezier(0.4,0,0.2,1);">
+                <div style="width: 72px; height: 72px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, rgba(var(--primary-rgb),0.18), rgba(var(--primary-dark-rgb),0.13)); border-radius: 20px; margin-bottom: 25px; margin-left: auto; margin-right: auto;">
+                    <i class="fas fa-code mtech-text-primary" style="font-size: 2.1rem;"></i>
+                </div>
+                <h2 class="mtech-title-lg" style="color: #fff; font-size: 1.35rem; margin-bottom: 15px; font-weight: 700;">Become a Plugin Developer</h2>
+                <p class="mtech-text-secondary" style="color: #e0cfa6; font-size: 1.01rem; margin: 0; line-height: 1.7;">
+                    Have an idea for a tool? The WinTool plugin API is simple to use and allows you to build powerful system utilities with just HTML and JavaScript.
+                </p>
+                <a href="https://github.com/MTechWare/wintool/blob/main/src/plugins/README.md" target="_blank" class="mtech-btn mtech-btn-primary" style="margin-top: 25px;">
+                    <i class="fas fa-book"></i> Read the Developer Guide
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Theme Toggle Button -->
+    <div style="position: fixed; bottom: 2rem; right: 2rem; z-index: 1000;">
+        <button class="mtech-btn mtech-btn-secondary" id="theme-toggle-btn" type="button">
+            <i class="fas fa-adjust"></i> Switch Theme
+        </button>
+    </div>
+
+    <!-- Notification Container -->
+    <div class="notification-container" style="position: fixed; bottom: 30px; right: 30px; z-index: 9999;"></div>
+
+    <!-- Include the main script for particles and theme toggling -->
+    <script src="mtech-tooltips.js"></script>
+
+    <script>
+        // Notification system
+        function showNotification(message, type = 'info') {
+            const container = document.querySelector('.notification-container');
+            const notification = document.createElement('div');
+            
+            notification.className = `notification notification-${type}`;
+            notification.style.cssText = `
+                background: ${type === 'success' ? 'linear-gradient(135deg, #4caf50, #2e7d32)' : 
+                           type === 'error' ? 'linear-gradient(135deg, #f44336, #c62828)' : 
+                           'linear-gradient(135deg, var(--primary-color), var(--primary-dark))'};
+                color: white;
+                padding: 16px 24px;
+                border-radius: 12px;
+                margin-bottom: 12px;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255,255,255,0.1);
+                transform: translateX(100%);
+                transition: all 0.3s ease;
+                font-weight: 600;
+                font-size: 0.9rem;
+                max-width: 300px;
+                word-wrap: break-word;
+            `;
+            
+            notification.textContent = message;
+            container.appendChild(notification);
+            
+            // Trigger animation
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            // Auto remove after 4 seconds
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 4000);
+        }
+
+        // Theme management with localStorage save
+        function initializeTheme() {
+            const savedTheme = localStorage.getItem('mtech-theme') || 'orange';
+            setTheme(savedTheme);
+        }
+
+        function setTheme(theme) {
+            document.documentElement.classList.remove('theme-orange', 'theme-green');
+            document.documentElement.classList.add(`theme-${theme}`);
+            localStorage.setItem('mtech-theme', theme);
+            return theme;
+        }
+
+        function toggleTheme() {
+            const currentTheme = document.documentElement.classList.contains('theme-orange') ? 'orange' : 'green';
+            const newTheme = currentTheme === 'orange' ? 'green' : 'orange';
+            return setTheme(newTheme);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeTheme();
+            const themeBtn = document.getElementById('theme-toggle-btn');
+            if (themeBtn) {
+                themeBtn.addEventListener('click', function() {
+                    const newTheme = toggleTheme();
+                    showNotification(`Switched to ${newTheme} theme`, 'success');
+                });
+            }
+        });
+    </script>
+</body>
+</html>
