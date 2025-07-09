@@ -251,7 +251,7 @@
             
             if (navigator.clipboard && window.isSecureContext) {
                 navigator.clipboard.writeText(command).then(() => {
-                    showNotification('PowerShell command copied to clipboard!', 'success');
+                    showNotification('Command copied! Open PowerShell and paste to run.', 'success');
                 }).catch(() => {
                     fallbackCopyTextToClipboard(command);
                 });
@@ -272,7 +272,7 @@
             
             try {
                 document.execCommand('copy');
-                showNotification('PowerShell command copied to clipboard!', 'success');
+                showNotification('Command copied! Open PowerShell and paste to run.', 'success');
             } catch (err) {
                 showNotification('Failed to copy command. Please copy manually.', 'error');
             }
@@ -459,7 +459,7 @@
                 </div>
                 <!-- App Info -->
                 <div style="text-align: center; max-width: 800px; margin: 0 auto;">
-                    <div class="mtech-mb-md mtech-text-primary mtech-bg-primary-alpha01" style="font-size: 1.1rem; font-weight: 600; padding: 8px 16px; border-radius: 20px; display: inline-block;">Version 0.1.2w</div>
+                    <div class="mtech-mb-md mtech-text-primary mtech-bg-primary-alpha01" style="font-size: 1.1rem; font-weight: 600; padding: 8px 16px; border-radius: 20px; display: inline-block;">Version: Lastest Release</div>
                     <!-- Badges -->
                     <div class="mtech-mb-lg" style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;">
                         <a href="https://www.microsoft.com/windows" target="_blank" class="mtech-btn mtech-btn-secondary" style="background: linear-gradient(135deg, #0078D6, #005a9e); color: #fff; border: none;"><i class="fab fa-windows"></i> Windows 10/11</a>
@@ -469,8 +469,8 @@
                     <p class="mtech-text-secondary mtech-mb-lg">WinTool delivers comprehensive Windows system management in a single, portable application. Monitor system performance, manage services, install packages, and access 24+ administrative utilities - all with real-time data and an intuitive interface designed for IT professionals and power users.</p>
                     <!-- Action Buttons -->
                     <div class="mtech-btn-container" style="justify-content: center;">
-                        <a href="https://github.com/MTechWare/wintool/releases/download/release/WinTool.exe" class="mtech-btn mtech-btn-primary"><i class="fas fa-download"></i> Download Latest</a>
-                        <button onclick="copyPowerShellCommand()" class="mtech-btn mtech-btn-secondary"><i class="fab fa-microsoft"></i> PowerShell Install</button>
+                        <button onclick="copyPowerShellCommand()" class="mtech-btn mtech-btn-primary"><i class="fas fa-terminal"></i> PowerShell Install</button>
+                        <a href="https://github.com/MTechWare/wintool/releases/download/release/WinTool.exe" class="mtech-btn mtech-btn-secondary"><i class="fas fa-download"></i> Download Latest</a>
                         <a href="https://github.com/MTechWare/wintool" target="_blank" class="mtech-btn mtech-btn-secondary"><i class="fab fa-github"></i> View Source</a>
                     </div>
                 </div>
@@ -705,8 +705,8 @@
             <div class="mtech-gradient-primary" style="height: 4px; width: 90px; border-radius: 2px; margin: 0 auto 50px; opacity: 0.7;"></div>
             <div class="mtech-grid mtech-grid-3" style="gap: 36px 28px;">
                 <div class="mtech-card mtech-card-glass mtech-card-hover" style="padding: 34px 28px; border-radius: 20px; align-items: flex-start; background: rgba(20,20,20,0.92); border: 1.5px solid rgba(var(--primary-rgb),0.13); box-shadow: 0 4px 32px rgba(var(--primary-rgb),0.04);">
-                    <h3 class="mtech-card-title mtech-text-primary" style="font-size: 1.18rem; margin-bottom: 10px; font-weight: 700;">Option 1: Direct Download (Recommended)</h3>
-                    <p class="mtech-card-content" style="color: #e0cfa6; font-size: 1.01rem; margin-bottom: 10px;">Download the portable executable and run immediately - no installation required:</p>
+                    <h3 class="mtech-card-title mtech-text-primary" style="font-size: 1.18rem; margin-bottom: 10px; font-weight: 700;">Option 1: PowerShell Install (Recommended)</h3>
+                    <p class="mtech-card-content" style="color: #e0cfa6; font-size: 1.01rem; margin-bottom: 10px;">Run a single command in PowerShell to download and set up WinTool automatically:</p>
                     <pre class="mtech-border-primary" style="background: rgba(10, 10, 10, 0.8); border: 1px solid rgba(var(--primary-rgb), 0.2); border-left: 4px solid var(--primary-color); border-radius: 12px; padding: 20px; overflow-x: auto; margin: 25px 0; backdrop-filter: blur(10px); color: #fff;"><code>irm https://raw.githubusercontent.com/MTechWare/wintool/refs/heads/main/WinTool_Installer.ps1 | iex</code></pre>
                 </div>
                 <div class="mtech-card mtech-card-glass mtech-card-hover" style="padding: 34px 28px; border-radius: 20px; align-items: flex-start; background: rgba(20,20,20,0.92); border: 1.5px solid rgba(var(--primary-rgb),0.13); box-shadow: 0 4px 32px rgba(var(--primary-rgb),0.04);">
