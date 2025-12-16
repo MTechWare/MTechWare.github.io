@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MTech Toolkit - Advanced Windows System Management</title>
+    <meta name="description"
+        content="A comprehensive Windows system management utility with a modern web interface. Manage packages, services, network tools, and optimize your system.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <div class="brand-icon">🛠️</div>
+                <div style="display: flex; flex-direction: column;">
+                    <span class="brand-text">Toolkit</span>
+                    <span style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 500;">Windows
+                        Management</span>
+                </div>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="app.html" class="nav-link" style="color: var(--text-primary); font-weight: 600;">Toolkit
+                    App</a>
+            </div>
+            <button class="theme-toggle" id="customizeToggle" aria-label="Customize theme" style="margin-left: 0.5rem;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path
+                        d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+                    </path>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-background"></div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="badge-dot"></span>
+                <span>Advanced System Management</span>
+            </div>
+            <h1 class="hero-title">
+                Powerful Windows
+                <span class="gradient-text">Toolkit</span>
+            </h1>
+            <p class="hero-description">
+                A comprehensive system management utility with a modern web interface.
+                Manage packages, optimize services, and take control of your Windows environment.
+            </p>
+            <div class="hero-buttons">
+                <a href="#download" class="btn btn-primary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    Download Now
+                </a>
+                <a href="#features" class="btn btn-secondary">
+                    Explore Features
+                </a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-value">12+</div>
+                    <div class="stat-label">Features</div>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <div class="stat-value">Fast</div>
+                    <div class="stat-label">Performance</div>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <div class="stat-value">Modern</div>
+                    <div class="stat-label">Interface</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title">Powerful Features</h2>
+                <p class="section-description">Everything you need to manage and optimize your Windows system</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon bg-gradient-primary">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Hardware Monitor</h3>
+                    <p class="feature-description">Real-time monitoring of CPU, GPU, memory, disk, and more.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon bg-gradient-primary">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Package Manager</h3>
+                    <p class="feature-description">Install, uninstall, and update applications using WinGet with an
+                        intuitive interface.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon bg-gradient-secondary">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="3 6 5 6 21 6"></polyline>
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">System Debloater</h3>
+                    <p class="feature-description">Remove unwanted Windows apps and bloatware to free up space and
+                        improve performance.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon bg-gradient-primary">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path
+                                d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Network Tools</h3>
+                    <p class="feature-description">Comprehensive network diagnostics including ping, DNS lookup, and
+                        interface information.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon bg-gradient-secondary">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                            <line x1="8" y1="21" x2="16" y2="21"></line>
+                            <line x1="12" y1="17" x2="12" y2="21"></line>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Services Manager</h3>
+                    <p class="feature-description">Control Windows services with ease. Start, stop, and configure system
+                        services.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon bg-gradient-primary">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Event Viewer</h3>
+                    <p class="feature-description">Browse and analyze Windows event logs with advanced filtering and
+                        search capabilities.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon bg-gradient-secondary">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Process Manager</h3>
+                    <p class="feature-description">Monitor and manage running processes. View resource usage and
+                        terminate unwanted processes.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon bg-gradient-primary">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
+                            <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">System Cleanup</h3>
+                    <p class="feature-description">Clean temporary files, clear cache, and empty recycle bin to reclaim
+                        disk space.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon bg-gradient-secondary">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <line x1="4" y1="21" x2="4" y2="14"></line>
+                            <line x1="4" y1="10" x2="4" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="12"></line>
+                            <line x1="12" y1="8" x2="12" y2="3"></line>
+                            <line x1="20" y1="21" x2="20" y2="16"></line>
+                            <line x1="20" y1="12" x2="20" y2="3"></line>
+                            <line x1="1" y1="14" x2="7" y2="14"></line>
+                            <line x1="9" y1="8" x2="15" y2="8"></line>
+                            <line x1="17" y1="16" x2="23" y2="16"></line>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">And More!</h3>
+                    <p class="feature-description">Many more features that I can't fit in this page.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="section-container">
+            <div class="about-grid">
+                <div class="about-content">
+                    <h2 class="section-title">Modern Interface,<br>Powerful Tools</h2>
+                    <p class="about-text">
+                        MTech Toolkit combines the power of advanced system management with a beautiful,
+                        intuitive web interface. Built with modern technologies, it provides a seamless
+                        experience for managing your Windows environment.
+                    </p>
+                    <div class="about-features">
+                        <div class="about-feature">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            <span>No admin rights required for most features</span>
+                        </div>
+                        <div class="about-feature">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            <span>Automatic dependency installation</span>
+                        </div>
+                        <div class="about-feature">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            <span>Dark mode and customizable themes</span>
+                        </div>
+                        <div class="about-feature">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            <span>Portable executable - no installation needed</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <div class="image-placeholder">
+                        <div class="placeholder-grid">
+                            <div class="placeholder-item"></div>
+                            <div class="placeholder-item"></div>
+                            <div class="placeholder-item"></div>
+                            <div class="placeholder-item"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section id="download" class="download">
+        <div class="section-container">
+            <div class="download-card">
+                <div class="download-content">
+                    <h2 class="download-title">Ready to Get Started?</h2>
+                    <p class="download-description">
+                        Download MTech Toolkit and take control of your Windows system today.
+                        No installation required - just download and run.
+                    </p>
+                    <div class="download-buttons">
+                        <a href="MTech-Toolkit.exe" download class="btn btn-primary btn-large">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                            Download for Windows
+                        </a>
+                        <a href="#docs" class="btn btn-secondary btn-large">
+                            Join The Community
+                        </a>
+                    </div>
+                    <div class="download-info">
+                        <div class="info-item">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            <span>Windows 11 Compatible</span>
+                        </div>
+                        <div class="info-item">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            <span>~6MB Download</span>
+                        </div>
+                        <div class="info-item">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            <span>Totally Free</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" style="padding-top: 2rem; padding-bottom: 2rem;">
+        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem;">
+            <div class="footer-brand" style="margin-bottom: 0;">
+                <div class="brand-icon">🛠️</div>
+                <span class="brand-text">MTech Toolkit</span>
+            </div>
+            <p style="color: var(--text-secondary); font-size: 0.875rem;">&copy; 2025 MTech Toolkit. All rights
+                reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Theme Customization Panel -->
+    <div class="theme-panel" id="themePanel">
+        <div class="panel-header">
+            <h3>Customize Theme</h3>
+            <button class="close-panel" id="closePanel">&times;</button>
+        </div>
+        <div class="panel-content">
+            <div class="control-group">
+                <label>Theme Mode</label>
+                <div class="theme-mode-switch">
+                    <button id="modeLight" class="mode-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        Light
+                    </button>
+                    <button id="modeDark" class="mode-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                        Dark
+                    </button>
+                </div>
+            </div>
+            <div class="control-group">
+                <label>Primary Color</label>
+                <input type="color" id="primaryColorPicker" value="#3b82f6">
+            </div>
+            <div class="control-group">
+                <label>Secondary Color</label>
+                <input type="color" id="secondaryColorPicker" value="#ffa500">
+            </div>
+            <div class="control-group">
+                <label class="checkbox-container">
+                    <input type="checkbox" id="singleColorMode">
+                    <span class="checkmark"></span>
+                    Use Single Color
+                </label>
+            </div>
+            <button class="btn btn-secondary btn-sm" id="resetTheme"
+                style="width: 100%; margin-top: 1rem; padding: 0.5rem;">Reset Defaults</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

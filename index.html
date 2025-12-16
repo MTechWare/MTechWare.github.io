@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Max - IT Professional</title>
+    <meta name="description" content="Portfolio of Max, an aspiring Computer Support Specialist and IT Professional.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <div class="brand-icon">🛠️</div>
+                <div style="display: flex; flex-direction: column;">
+                    <span class="brand-text">MTechWare</span>
+                    <span style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 500;">IT
+                        Professional</span>
+                </div>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link" style="color: var(--text-primary); font-weight: 600;">Home</a>
+                <a href="app.html" class="nav-link">Toolkit App</a>
+            </div>
+            <button class="theme-toggle" id="customizeToggle" aria-label="Customize theme" style="margin-left: 0.5rem;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path
+                        d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+                    </path>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-background"></div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="badge-dot"></span>
+                <span>Aspiring Computer Support Specialist</span>
+            </div>
+            <h1 class="hero-title">
+                Hi, I'm
+                <span class="gradient-text">Max</span>
+            </h1>
+            <p class="hero-description">
+                Currently developing skills in technical support and troubleshooting through dedicated study.
+                Eager to apply knowledge in hardware, software, and network administration.
+            </p>
+            <div class="hero-buttons">
+                <a href="mailto:contact@example.com" class="btn btn-primary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                    Get In Touch
+                </a>
+                <a href="#projects" class="btn btn-secondary">
+                    View Projects
+                </a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-value">99%</div>
+                    <div class="stat-label">Yearly Uptime</div>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <div class="stat-value">CIT</div>
+                    <div class="stat-label">Student</div>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <div class="stat-value">24/7</div>
+                    <div class="stat-label">Learning Mindset</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="features">
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title">Training & Education</h2>
+                <p class="section-description">Exploring my academic path in Information Technology</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon bg-gradient-primary">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                            <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Technical Skills Focus</h3>
+                    <p class="feature-description">Specializing in Help Desk Support, System Administration, IT
+                        Infrastructure, and User Support.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon bg-gradient-secondary">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Community College</h3>
+                    <p class="feature-description">CIT Computer Support Program focusing on technical support
+                        fundamentals and network administration.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon bg-gradient-primary">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <circle cx="12" cy="8" r="7"></circle>
+                            <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Certifications</h3>
+                    <p class="feature-description">Pursuing TestOut PC Pro, Hybrid Server Pro, and IT Help Desk
+                        Fundamentals certifications.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="about">
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title">Skills Overview</h2>
+                <p class="section-description">Key technical competencies I am developing</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon bg-gradient-primary">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+                            <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+                            <line x1="6" y1="6" x2="6.01" y2="6"></line>
+                            <line x1="6" y1="18" x2="6.01" y2="18"></line>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Networking</h3>
+                    <p class="feature-description">Understanding network fundamentals, TCP/IP, DNS, DHCP, and basic
+                        network troubleshooting.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon bg-gradient-secondary">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path
+                                d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Technical Support</h3>
+                    <p class="feature-description">Diagnosing hardware/software issues, providing remote assistance, and
+                        managing tickets.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon bg-gradient-primary">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                            <line x1="8" y1="21" x2="16" y2="21"></line>
+                            <line x1="12" y1="17" x2="12" y2="21"></line>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Operating Systems</h3>
+                    <p class="feature-description">Windows installation, configuration, troubleshooting, and user
+                        account management.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="features">
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title">Project Archive</h2>
+                <p class="section-description">Personal projects and learning experiences</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon bg-gradient-primary">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="16 18 22 12 16 6"></polyline>
+                            <polyline points="8 6 2 12 8 18"></polyline>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">WinPY</h3>
+                    <div class="hero-badge"
+                        style="padding: 0.25rem 0.75rem; font-size: 0.75rem; margin-bottom: 0.5rem;">Archived</div>
+                    <p class="feature-description">Python-based Windows utility. Archived and read-only.</p>
+                </div>
+
+                <div class="feature-card" style="border-color: rgba(var(--color-primary), 0.5);">
+                    <div class="feature-icon bg-gradient-secondary">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">MTech Toolkit</h3>
+                    <div class="hero-badge"
+                        style="padding: 0.25rem 0.75rem; font-size: 0.75rem; margin-bottom: 0.5rem; background: rgba(59, 130, 246, 0.1); color: rgb(59, 130, 246);">
+                        Live</div>
+                    <p class="feature-description">Advanced Windows system management management utility with a web
+                        interface.</p>
+                    <div style="margin-top: 1.5rem;">
+                        <a href="app.html" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                            Get App
+                        </a>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon bg-gradient-primary">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path
+                                d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">MTech Website</h3>
+                    <p class="feature-description">The portfolio website you are currently viewing.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" style="padding-top: 2rem; padding-bottom: 2rem;">
+        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem;">
+            <div class="footer-brand" style="margin-bottom: 0;">
+                <div class="brand-icon">🛠️</div>
+                <span class="brand-text">MTechWare</span>
+            </div>
+            <p style="color: var(--text-secondary); font-size: 0.875rem;">&copy; 2025 MTechWare. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Theme Customization Panel -->
+    <div class="theme-panel" id="themePanel">
+        <div class="panel-header">
+            <h3>Customize Theme</h3>
+            <button class="close-panel" id="closePanel">&times;</button>
+        </div>
+        <div class="panel-content">
+            <div class="control-group">
+                <label>Theme Mode</label>
+                <div class="theme-mode-switch">
+                    <button id="modeLight" class="mode-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        Light
+                    </button>
+                    <button id="modeDark" class="mode-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                        Dark
+                    </button>
+                </div>
+            </div>
+            <div class="control-group">
+                <label>Primary Color</label>
+                <input type="color" id="primaryColorPicker" value="#3b82f6">
+            </div>
+            <div class="control-group">
+                <label>Secondary Color</label>
+                <input type="color" id="secondaryColorPicker" value="#ffa500">
+            </div>
+            <div class="control-group">
+                <label class="checkbox-container">
+                    <input type="checkbox" id="singleColorMode">
+                    <span class="checkmark"></span>
+                    Use Single Color
+                </label>
+            </div>
+            <button class="btn btn-secondary btn-sm" id="resetTheme"
+                style="width: 100%; margin-top: 1rem; padding: 0.5rem;">Reset Defaults</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
