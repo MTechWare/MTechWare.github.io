@@ -1,26 +1,24 @@
 :root {
-    --font-primary: 'Inter', 'Segoe UI Variable Display', 'Segoe UI', system-ui, sans-serif;
+    --font-primary: 'Segoe UI Variable Display', 'Segoe UI', system-ui, sans-serif;
     --color-primary: 59, 130, 246;
     --color-primary-dark: 37, 99, 235;
     --color-secondary: 255, 165, 0;
     --color-secondary-dark: 255, 140, 0;
-    --color-orange: var(--color-secondary);
-    /* Backwards compat */
 
     /* Light mode colors */
-    --bg-primary: #f3f3f3;
-    --bg-secondary: #ffffff;
-    --bg-card: rgba(255, 255, 255, 0.7);
+    --bg-primary: #fafafa;
+    --bg-secondary: rgba(255, 255, 255, 0.5);
+    --bg-card: rgba(255, 255, 255, 0.5);
     --text-primary: #18181b;
     --text-secondary: #71717a;
-    --border-color: rgba(0, 0, 0, 0.1);
-    --shadow: rgba(0, 0, 0, 0.1);
+    --border-color: #e4e4e7;
+    --shadow: rgba(0, 0, 0, 0.05);
 }
 
 .dark {
     --bg-primary: #202020;
-    --bg-secondary: #2c2c2c;
-    --bg-card: rgba(44, 44, 44, 0.7);
+    --bg-secondary: rgba(0, 0, 0, 0.2);
+    --bg-card: rgba(0, 0, 0, 0.2);
     --text-primary: #ffffff;
     --text-secondary: #a1a1aa;
     --border-color: rgba(255, 255, 255, 0.05);
@@ -41,11 +39,31 @@ html {
 
 body {
     font-family: var(--font-primary);
-    background: var(--bg-primary);
+    background-color: var(--bg-primary);
+    background-image:
+      radial-gradient(at 0% 0%, rgba(var(--color-primary), 0.1) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, rgba(var(--color-primary), 0.1) 0px, transparent 50%);
+    background-attachment: fixed;
     color: var(--text-primary);
     line-height: 1.6;
     overflow-x: hidden;
     transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image: radial-gradient(currentColor 1px, transparent 1px);
+    background-size: 24px 24px;
+    opacity: 0.03;
+    transition: opacity 0.3s ease;
+}
+
+.dark body::before {
+    opacity: 0.05;
 }
 
 /* Navigation */
@@ -131,6 +149,7 @@ body {
 
 .theme-toggle {
     background: var(--bg-secondary);
+    backdrop-filter: blur(10px);
     border: 1px solid var(--border-color);
     border-radius: 10px;
     padding: 0.6rem;
@@ -448,7 +467,7 @@ body {
 /* About Section */
 .about {
     padding: 6rem 2rem;
-    background: var(--bg-secondary);
+    background: transparent;
 }
 
 .about-grid {
@@ -628,7 +647,7 @@ body {
 
 /* Footer */
 .footer {
-    background: var(--bg-secondary);
+    background: transparent;
     border-top: 1px solid var(--border-color);
     padding: 4rem 2rem 2rem;
 }
@@ -732,20 +751,12 @@ body {
 
 /* Scrollbar */
 ::-webkit-scrollbar {
-    width: 10px;
+    display: none;
 }
 
-::-webkit-scrollbar-track {
-    background: var(--bg-primary);
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--border-color);
-    border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: rgba(var(--color-primary), 0.5);
+* {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 }
 
 /* Theme Customization Panel */
