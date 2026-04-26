@@ -81,9 +81,74 @@
       color: var(--text);
     }
 
-    .nav-logo .icon {
-      font-size: 1.5rem;
+    /* ─── ANIMATED LOGO ─── */
+    .animated-logo {
+      width: 28px;
+      height: 28px;
+      display: block;
+      overflow: visible;
+    }
+
+    .logo-hex {
+      stroke-dasharray: 280;
+      stroke-dashoffset: 0;
+      animation: drawLogo 2s ease backwards, glowPulse 3s 2s infinite alternate;
+      transform-origin: 50px 50px;
+    }
+
+    .logo-m {
+      stroke-dasharray: 180;
+      stroke-dashoffset: 0;
+      animation: drawLogoM 1.5s 0.5s ease backwards;
+    }
+
+    .nav-logo:hover .logo-hex {
+      animation: spinHex 6s linear infinite;
       filter: drop-shadow(0 0 8px var(--accent));
+    }
+
+    .nav-logo:hover .logo-m {
+      filter: drop-shadow(0 0 4px var(--accent));
+    }
+
+    @keyframes drawLogo {
+      from {
+        stroke-dashoffset: 280;
+      }
+
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    @keyframes drawLogoM {
+      from {
+        stroke-dashoffset: 180;
+      }
+
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    @keyframes glowPulse {
+      0% {
+        filter: drop-shadow(0 0 2px var(--accent));
+      }
+
+      100% {
+        filter: drop-shadow(0 0 8px var(--accent));
+      }
+    }
+
+    @keyframes spinHex {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
     }
 
     .nav-logo span {
@@ -483,7 +548,18 @@
   <!-- NAV -->
   <nav>
     <a class="nav-logo" href="index.html">
-      <span class="icon">🛠️</span>
+      <svg class="animated-logo icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="var(--accent)" />
+            <stop offset="100%" stop-color="#ffb347" />
+          </linearGradient>
+        </defs>
+        <polygon class="logo-hex" points="50,5 89,27.5 89,72.5 50,95 11,72.5 11,27.5" fill="none"
+          stroke="url(#logo-grad)" stroke-width="6" />
+        <polyline class="logo-m" points="26,68 26,35 50,55 74,35 74,68" fill="none" stroke="url(#logo-grad)"
+          stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
       <span>MTechWare</span>
     </a>
     <ul class="nav-links">
@@ -594,7 +670,18 @@
     <div class="footer-brand">
       <a class="nav-logo" href="index.html"
         style="text-decoration:none;display:inline-flex;align-items:center;gap:0.6rem;color:var(--text);">
-        <span style="font-size:1.3rem;">🛠️</span>
+        <svg class="animated-logo icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="logo-grad-footer" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="var(--accent)" />
+              <stop offset="100%" stop-color="#ffb347" />
+            </linearGradient>
+          </defs>
+          <polygon class="logo-hex" points="50,5 89,27.5 89,72.5 50,95 11,72.5 11,27.5" fill="none"
+            stroke="url(#logo-grad-footer)" stroke-width="6" />
+          <polyline class="logo-m" points="26,68 26,35 50,55 74,35 74,68" fill="none" stroke="url(#logo-grad-footer)"
+            stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
         <span style="font-family:'Space Mono',monospace;font-weight:700;color:var(--accent);">MTechWare</span>
       </a>
       <p>IT professional in training — building skills in support, infrastructure, and system administration.</p>
