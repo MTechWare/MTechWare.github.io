@@ -4,7 +4,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MTechWare</title>
+  <title>MVault — Secure Local Password Manager</title>
+  <meta name="description"
+    content="MVault is a secure, offline password manager built with React, TypeScript, and Tauri. Store logins, cards, API keys, notes, and more — all locally on your device." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -17,8 +19,10 @@
       --surface2: #1a1a26;
       --border: #2a2a40;
       --accent: #ff8000;
-      /* Main color */
-      --accent2: #7b5ea7;
+      --accent-glow: rgba(255, 128, 0, 0.06);
+      --accent-hover: #e67e00;
+      --accent-border: rgba(255, 128, 0, 0.3);
+      --accent2: #ff8000;
       --accent3: #ff6b6b;
       --text: #e8e8f0;
       --muted: #888899;
@@ -105,11 +109,11 @@
 
     .nav-logo:hover .logo-hex {
       animation: spinHex 6s linear infinite;
-      filter: drop-shadow(0 0 8px var(--accent));
+      filter: drop-shadow(0 0 8px var(--accent2));
     }
 
     .nav-logo:hover .logo-m {
-      filter: drop-shadow(0 0 4px var(--accent));
+      filter: drop-shadow(0 0 4px var(--accent2));
     }
 
     @keyframes drawLogo {
@@ -134,11 +138,11 @@
 
     @keyframes glowPulse {
       0% {
-        filter: drop-shadow(0 0 2px var(--accent));
+        filter: drop-shadow(0 0 2px var(--accent2));
       }
 
       100% {
-        filter: drop-shadow(0 0 8px var(--accent));
+        filter: drop-shadow(0 0 8px var(--accent2));
       }
     }
 
@@ -157,7 +161,7 @@
       font-weight: 700;
       font-size: 1rem;
       letter-spacing: -0.02em;
-      color: var(--accent);
+      color: var(--accent2);
     }
 
     .nav-links {
@@ -200,14 +204,14 @@
     }
 
     /* ─── HERO ─── */
-    #home {
-      min-height: 100vh;
+    .app-hero {
+      min-height: 80vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: calc(var(--nav-h) + 4rem) 2rem 6rem;
+      padding: calc(var(--nav-h) + 4rem) 2rem 4rem;
       position: relative;
       overflow: hidden;
     }
@@ -217,7 +221,7 @@
       width: 700px;
       height: 700px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(255, 140, 0, 0.06) 0%, transparent 70%);
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
@@ -241,11 +245,12 @@
     }
 
     .hero-badge::before {
-      content: '⬡';
+      content: '🔒';
+      font-size: 0.8rem;
     }
 
     h1 {
-      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
       font-weight: 800;
       line-height: 1.05;
       letter-spacing: -0.03em;
@@ -260,7 +265,7 @@
     .hero-sub {
       font-size: 1.1rem;
       color: var(--muted);
-      max-width: 520px;
+      max-width: 600px;
       line-height: 1.7;
       margin-bottom: 2.5rem;
       animation: fadeUp 0.7s 0.2s ease both;
@@ -295,7 +300,7 @@
     }
 
     .btn-primary:hover {
-      background: #e67e00;
+      background: var(--accent-hover);
       transform: translateY(-2px);
     }
 
@@ -311,30 +316,75 @@
       transform: translateY(-2px);
     }
 
-    .hero-stats {
-      display: flex;
-      gap: 3rem;
-      margin-top: 4rem;
+    /* ─── APP PREVIEW ─── */
+    .app-preview-container {
+      max-width: 900px;
+      margin: 0 auto 6rem;
       animation: fadeUp 0.7s 0.4s ease both;
+      position: relative;
+      z-index: 10;
     }
 
-    .stat {
-      text-align: center;
+    .app-window {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05), 0 0 80px rgba(255, 128, 0, 0.08);
     }
 
-    .stat-num {
-      font-family: 'Space Mono', monospace;
-      font-size: 1.6rem;
-      font-weight: 700;
-      color: var(--accent);
-      display: block;
+    .app-header {
+      background: var(--surface2);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      padding-left: 1rem;
     }
 
-    .stat-label {
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
+    .win-title {
+      font-size: 0.75rem;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      font-family: 'Syne', sans-serif;
+    }
+
+    .win-controls {
+      display: flex;
+    }
+
+    .win-btn {
+      width: 46px;
+      height: 32px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       color: var(--muted);
+      transition: background 0.1s, color 0.1s;
+    }
+
+    .win-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text);
+    }
+
+    .win-btn.win-close:hover {
+      background: #e81123;
+      color: #fff;
+    }
+
+    .app-content {
+      padding: 0;
+      display: block;
+      background: var(--bg);
+      position: relative;
+    }
+
+    .app-content img {
+      width: 100%;
+      height: auto;
+      display: block;
     }
 
     /* ─── SECTIONS ─── */
@@ -405,154 +455,44 @@
       line-height: 1.65;
     }
 
-    .card-badge {
-      display: inline-block;
-      font-size: 0.68rem;
-      font-family: 'Space Mono', monospace;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      padding: 0.2rem 0.55rem;
-      border-radius: 4px;
-      margin-bottom: 0.8rem;
-    }
-
-    .badge-live {
-      background: rgba(255, 140, 0, 0.1);
-      color: var(--accent);
-      border: 1px solid rgba(255, 140, 0, 0.3);
-    }
-
-    .badge-archived {
-      background: rgba(255, 107, 107, 0.1);
-      color: var(--accent3);
-      border: 1px solid rgba(255, 107, 107, 0.3);
-    }
-
-    /* ─── SKILLS GRID ─── */
-    .skills-grid {
+    /* ─── HIGHLIGHT SECTION ─── */
+    .highlights {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 1rem;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 1rem;
     }
 
-    .skill-item {
+    .highlight {
+      text-align: center;
+      padding: 2rem 1.5rem;
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 1.4rem;
-      transition: border-color 0.2s;
+      border-radius: 12px;
+      transition: border-color 0.2s, transform 0.2s;
     }
 
-    .skill-item:hover {
-      border-color: var(--accent2);
+    .highlight:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
     }
 
-    .skill-item h4 {
-      font-size: 0.9rem;
+    .highlight-icon {
+      font-size: 2.2rem;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+
+    .highlight h3 {
+      font-size: 1rem;
       font-weight: 700;
       margin-bottom: 0.4rem;
     }
 
-    .skill-item p {
-      font-size: 0.82rem;
+    .highlight p {
+      font-size: 0.85rem;
       color: var(--muted);
       line-height: 1.6;
-    }
-
-    /* ─── STEPS ─── */
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 2rem;
-      counter-reset: steps;
-    }
-
-    .step {
-      position: relative;
-      padding: 2rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      counter-increment: steps;
-    }
-
-    .step::before {
-      content: "0" counter(steps);
-      font-family: 'Space Mono', monospace;
-      font-size: 3rem;
-      font-weight: 700;
-      color: var(--border);
-      display: block;
-      margin-bottom: 0.8rem;
-      line-height: 1;
-    }
-
-    .step h3 {
-      font-size: 1rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-    }
-
-    .step p {
-      font-size: 0.88rem;
-      color: var(--muted);
-      line-height: 1.65;
-    }
-
-    /* ─── CERTS ─── */
-    .certs {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .cert-chip {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 0.6rem 1.1rem;
-      font-size: 0.85rem;
-      font-weight: 600;
-    }
-
-    .cert-chip .dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 6px var(--accent);
-    }
-
-    /* ─── CTA BANNER ─── */
-    .cta-banner {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 4rem 3rem;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .cta-banner::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at 50% 0%, rgba(255, 140, 0, 0.05) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .cta-banner h2 {
-      margin-bottom: 0.8rem;
-    }
-
-    .cta-banner p {
-      color: var(--muted);
-      margin-bottom: 2rem;
-      font-size: 1rem;
     }
 
     /* ─── FOOTER ─── */
@@ -638,11 +578,15 @@
         display: none;
       }
 
-      .hero-stats {
-        gap: 1.5rem;
+      footer {
+        grid-template-columns: 1fr;
       }
 
-      footer {
+      .app-preview-container {
+        padding: 0 1rem;
+      }
+
+      .highlights {
         grid-template-columns: 1fr;
       }
     }
@@ -653,12 +597,12 @@
 
   <!-- NAV -->
   <nav>
-    <a class="nav-logo" href="#home">
+    <a class="nav-logo" href="index.html">
       <svg class="animated-logo icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <linearGradient id="logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="var(--accent)" />
-            <stop offset="100%" stop-color="var(--accent)" />
+            <stop offset="0%" stop-color="var(--accent2)" />
+            <stop offset="100%" stop-color="var(--accent2)" />
           </linearGradient>
         </defs>
         <polygon class="logo-hex" points="50,5 89,27.5 89,72.5 50,95 11,72.5 11,27.5" fill="none"
@@ -669,195 +613,156 @@
       <span>MTechWare</span>
     </a>
     <ul class="nav-links">
-      <li><a href="#home">Home</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#education">Education</a></li>
+      <li><a href="index.html">← Back to Portfolio</a></li>
       <li class="nav-divider"></li>
-      <li><a href="app.html">Toolkit</a></li>
-      <li><a href="mvault.html">MVault</a></li>
+      <li><a href="#">Overview</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="https://github.com/MTechWare/MVault/releases/download/Live/MVault.exe" class="nav-cta">Download</a>
+      </li>
     </ul>
   </nav>
 
   <!-- HERO -->
-  <section id="home" style="max-width:100%;padding-left:2rem;padding-right:2rem;">
+  <section class="app-hero" style="max-width:100%;">
     <div class="hero-glow"></div>
-    <div class="hero-badge">Aspiring IT Professional</div>
-    <h1>Hi, I'm <span class="accent">Max</span></h1>
+    <div class="hero-badge">Your secrets, your device</div>
+    <h1>M<span class="accent">Vault</span></h1>
     <p class="hero-sub">
-      Developing skills in technical support and troubleshooting through dedicated study.
-      Eager to apply knowledge in hardware, software, and network administration.
+      A secure, offline password manager built with React, TypeScript, and Tauri.
+      Store logins, cards, API keys, notes, bookmarks, and identities — all locally on your device.
     </p>
     <div class="hero-btns">
-      <a href="#contact" class="btn btn-primary">Get In Touch</a>
-      <a href="#projects" class="btn btn-outline">View Projects</a>
+      <a href="https://github.com/MTechWare/MVault/releases/download/Live/MVault.exe" class="btn btn-primary">Download
+        for Windows</a>
+      <a href="#features" class="btn btn-outline">Explore Features</a>
     </div>
-    <div class="hero-stats">
-      <div class="stat">
-        <span class="stat-num">99%</span>
-        <span class="stat-label">Yearly Uptime</span>
+  </section>
+
+  <!-- APP PREVIEW -->
+  <div class="app-preview-container">
+    <div class="app-window">
+      <div class="app-header">
+        <div class="win-title">
+          <span style="font-size: 0.85rem; margin-right: 0.5rem; opacity: 1;"></span>
+        </div>
+        <div class="win-controls">
+          <div class="win-btn win-min">
+            <svg width="10" height="1" viewBox="0 0 10 1">
+              <rect width="10" height="1" fill="currentColor" />
+            </svg>
+          </div>
+          <div class="win-btn win-max">
+            <svg width="10" height="10" viewBox="0 0 10 10">
+              <rect width="10" height="10" fill="none" stroke="currentColor" stroke-width="1" />
+            </svg>
+          </div>
+          <div class="win-btn win-close">
+            <svg width="10" height="10" viewBox="0 0 10 10">
+              <path d="M1 1l8 8M9 1l-8 8" stroke="currentColor" stroke-width="1.5" />
+            </svg>
+          </div>
+        </div>
       </div>
-      <div class="stat">
-        <span class="stat-num">CIT</span>
-        <span class="stat-label">Student</span>
+      <div class="app-content">
+        <img src="mvault.png" alt="MVault Interface — Secure Password Manager" />
       </div>
-      <div class="stat">
-        <span class="stat-num">24/7</span>
-        <span class="stat-label">Learning Mindset</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- WHY MVAULT -->
+  <section id="why">
+    <p class="section-tag">Why MVault</p>
+    <h2>Privacy First, Always</h2>
+    <p class="section-sub">No cloud. No servers. No subscriptions. Your data never leaves your machine.</p>
+    <div class="highlights">
+      <div class="highlight">
+        <span class="highlight-icon">🔐</span>
+        <h3>100% Offline</h3>
+        <p>All data stored locally via browser localStorage. No internet required.</p>
+      </div>
+      <div class="highlight">
+        <span class="highlight-icon">🛡️</span>
+        <h3>PIN Protected</h3>
+        <p>Minimum 8-character PIN policy with automatic lockout after repeated failures.</p>
+      </div>
+      <div class="highlight">
+        <span class="highlight-icon">💾</span>
+        <h3>Fully Portable</h3>
+        <p>Single .exe — drop it on a USB drive, Desktop, or network share and go.</p>
       </div>
     </div>
   </section>
 
   <div class="divider"></div>
 
-  <!-- SKILLS -->
-  <section id="skills">
-    <p class="section-tag">Competencies</p>
-    <h2>Skills Overview</h2>
-    <p class="section-sub">Key technical competencies I am actively developing and applying.</p>
-    <div class="skills-grid">
-      <div class="skill-item">
-        <h4>🔧 Technical Support</h4>
-        <p>Diagnosing hardware/software issues, providing remote assistance, and managing tickets.</p>
-      </div>
-      <div class="skill-item">
-        <h4>🖥️ Operating Systems</h4>
-        <p>Windows installation, configuration, troubleshooting, and user account management.</p>
-      </div>
-      <div class="skill-item">
-        <h4>🛡️ Help Desk Support</h4>
-        <p>User support, escalation workflows, documentation, and clear technical communication.</p>
-      </div>
-      <div class="skill-item">
-        <h4>🌐 AI & Automation</h4>
-        <p>AI fundamentals and building intelligent tools for IT support.</p>
-      </div>
-    </div>
-  </section>
+  <!-- FEATURES -->
+  <section id="features">
+    <p class="section-tag">Capabilities</p>
+    <h2>Vault Features</h2>
+    <p class="section-sub">Everything you need to manage your digital identity, organized and secure.</p>
 
-  <div class="divider"></div>
-
-  <!-- EDUCATION -->
-  <section id="education">
-    <p class="section-tag">Academic Path</p>
-    <h2>Training & Education</h2>
-    <p class="section-sub">Exploring a focused path in Information Technology and Computer Support.</p>
-
-    <div class="cards" style="margin-bottom:2.5rem;">
-      <div class="card">
-        <div class="card-icon">🏫</div>
-        <h3>Community College</h3>
-        <p>CIT Computer Support Program focusing on technical support fundamentals and network administration.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">🎯</div>
-        <h3>Technical Skills Focus</h3>
-        <p>Specializing in Help Desk Support, System Administration, IT Infrastructure, and User Support.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">📜</div>
-        <h3>Certifications</h3>
-        <p>Pursuing TestOut PC Pro, Hybrid Server Pro, and IT Help Desk Fundamentals certifications.</p>
-      </div>
-    </div>
-
-    <p class="section-tag" style="margin-top:1rem;">Certifications Pursuing</p>
-    <div class="certs">
-      <div class="cert-chip"><span class="dot"></span>TestOut PC Pro</div>
-      <div class="cert-chip"><span class="dot"></span>TestOut Hybrid Server</div>
-      <div class="cert-chip"><span class="dot"></span>Cisco - CCNA</div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- PROJECTS -->
-  <section id="projects">
-    <p class="section-tag">Portfolio</p>
-    <h2>Project Archive</h2>
-    <p class="section-sub">Personal projects and learning experiences that demonstrate my growing skill set.</p>
     <div class="cards">
-
       <div class="card">
-        <span class="card-badge badge-live">Live</span>
-        <div class="card-icon">🛠️</div>
-        <h3>MTech Toolkit</h3>
-        <p>Advanced Windows system management utility with a web interface for streamlined system operations and
-          monitoring.</p>
-        <br />
-        <a href="app.html" class="btn btn-primary" style="font-size:0.82rem;padding:0.5rem 1.1rem;" target="_blank">Get
-          App →</a>
+        <div class="card-icon">🔑</div>
+        <h3>Logins & Credentials</h3>
+        <p>Store usernames, passwords, URLs, and notes for every account. Copy credentials in one click.</p>
       </div>
-
       <div class="card">
-        <span class="card-badge badge-archived">Archived</span>
-        <div class="card-icon">🐍</div>
-        <h3>WinPY</h3>
-        <p>Python-based Windows utility. Archived and read-only — an early project demonstrating foundational scripting
-          skills.</p>
+        <div class="card-icon">💳</div>
+        <h3>Cards & Payment Info</h3>
+        <p>Securely save credit cards, debit cards, and payment details for quick access when you need them.</p>
       </div>
-
       <div class="card">
-        <span class="card-badge badge-live">Live</span>
+        <div class="card-icon">🔗</div>
+        <h3>API Keys</h3>
+        <p>Keep your API keys, tokens, and secrets organized and easily accessible for development work.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📝</div>
+        <h3>Secure Notes</h3>
+        <p>Store sensitive text — license keys, recovery codes, private notes — in an encrypted-at-rest vault.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔖</div>
+        <h3>Bookmarks</h3>
+        <p>Save and organize URLs with import support for Chrome and Edge HTML bookmark exports.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">👤</div>
+        <h3>Identities</h3>
+        <p>Store personal info like names, addresses, phone numbers, and emails for quick form-filling.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📁</div>
+        <h3>Folder Organization</h3>
+        <p>Group items into folders with full drag-and-drop support. Keep your vault tidy and navigable.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">⚙️</div>
+        <h3>Password Generator</h3>
+        <p>Generate strong, random passwords with a built-in strength checker to audit your security.</p>
+      </div>
+      <div class="card">
         <div class="card-icon">🌐</div>
-        <h3>MTechWare Website</h3>
-        <p>This portfolio site — designed, built, and maintained to showcase projects, skills, and professional growth.
-        </p>
-        <br />
-
-      </div>
-
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- HOW IT WORKS -->
-  <section id="how">
-    <p class="section-tag">How I Work</p>
-    <h2>Simple Steps, Real Solutions</h2>
-    <p class="section-sub">My approach to IT support and problem-solving — clear, effective, and user-first.</p>
-    <div class="steps">
-      <div class="step">
-        <h3>Identify the Problem</h3>
-        <p>Gather information, reproduce the issue, and isolate the root cause using structured diagnostic techniques.
-        </p>
-      </div>
-      <div class="step">
-        <h3>Research & Plan</h3>
-        <p>Consult documentation, apply known fixes, and design a resolution strategy with minimal disruption.</p>
-      </div>
-      <div class="step">
-        <h3>Resolve & Document</h3>
-        <p>Implement the fix, verify the solution, and document everything for future reference and knowledge sharing.
-        </p>
+        <h3>Browser Extension</h3>
+        <p>Auto-extracted extension for Chrome, Edge, and Brave. Autofill credentials directly from your vault.</p>
       </div>
     </div>
   </section>
 
   <div class="divider"></div>
-
-  <!-- CTA -->
-  <section id="contact" style="padding-bottom:2rem;">
-    <div class="cta-banner">
-      <p class="section-tag">Would you like to see more?</p>
-      <h2>Ready to join the community?</h2>
-      <p>Join our discord community to get the latest updates and releases.</p>
-      <a href="https://discord.gg/GSTEfkxhmD" class="btn btn-primary" style="font-size:1rem;padding:0.85rem 2rem;">Join
-        the
-        Community</a>
-    </div>
-  </section>
 
   <!-- FOOTER -->
   <footer>
     <div class="footer-brand">
-      <a class="nav-logo" href="#home"
+      <a class="nav-logo" href="index.html"
         style="text-decoration:none;display:inline-flex;align-items:center;gap:0.6rem;color:var(--text);">
         <svg class="animated-logo icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <linearGradient id="logo-grad-footer" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="var(--accent)" />
+              <stop offset="0%" stop-color="var(--accent2)" />
               <stop offset="100%" stop-color="#ffb347" />
             </linearGradient>
           </defs>
@@ -866,17 +771,15 @@
           <polyline class="logo-m" points="26,68 26,35 50,55 74,35 74,68" fill="none" stroke="url(#logo-grad-footer)"
             stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
-        <span style="font-family:'Space Mono',monospace;font-weight:700;color:var(--accent);">MTechWare</span>
+        <span style="font-family:'Space Mono',monospace;font-weight:700;color:var(--accent2);">MTechWare</span>
       </a>
       <p>IT professional in training — building skills in support, infrastructure, and system administration.</p>
     </div>
     <div>
       <h5>Quick Links</h5>
       <ul>
-        <li><a href="#home">Home</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#education">Education</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="https://github.com/MTechWare/mvault/releases">Download</a></li>
       </ul>
     </div>
     <div>
