@@ -6,8 +6,17 @@
   'use strict';
 
   var KEY = 'mtechware-settings';
-  var DEFAULTS = { theme: 'dark', accent: '#ff8000', background: 'grid' };
+  var DEFAULTS = { theme: 'dark', accent: '#ff8000', background: 'grid', logoAnim: 'shimmer' };
   var BACKGROUNDS = ['grid', 'dots', 'glow', 'gradient', 'solid'];
+
+  var LOGO_ANIMS = [
+    { name: 'None', value: 'none' },
+    { name: '✨ Shimmer', value: 'shimmer' },
+    { name: '💓 Pulse', value: 'pulse' },
+    { name: '🌟 Glow', value: 'glow' },
+    { name: '🏀 Bounce', value: 'bounce' },
+    { name: '⌨ Typewriter', value: 'typewriter' }
+  ];
 
   var ACCENTS = [
     { name: 'Orange', value: '#ff8000' },
@@ -26,10 +35,11 @@
       return {
         theme: ['dark', 'light', 'system'].indexOf(saved.theme) !== -1 ? saved.theme : DEFAULTS.theme,
         accent: /^#[0-9a-fA-F]{6}$/.test(saved.accent || '') ? saved.accent : DEFAULTS.accent,
-        background: BACKGROUNDS.indexOf(saved.background) !== -1 ? saved.background : DEFAULTS.background
+        background: BACKGROUNDS.indexOf(saved.background) !== -1 ? saved.background : DEFAULTS.background,
+        logoAnim: LOGO_ANIMS.some(function (a) { return a.value === saved.logoAnim; }) ? saved.logoAnim : DEFAULTS.logoAnim
       };
     } catch (e) {
-      return { theme: DEFAULTS.theme, accent: DEFAULTS.accent, background: DEFAULTS.background };
+      return { theme: DEFAULTS.theme, accent: DEFAULTS.accent, background: DEFAULTS.background, logoAnim: DEFAULTS.logoAnim };
     }
   }
 
@@ -66,6 +76,7 @@
   function apply() {
     root.setAttribute('data-theme', resolvedTheme());
     root.setAttribute('data-bg', settings.background);
+    root.setAttribute('data-logo-anim', settings.logoAnim);
     root.style.setProperty('--accent', settings.accent);
     /* Derived shades — pages that define these get recolored too */
     root.style.setProperty('--accent-hover', 'color-mix(in srgb, ' + settings.accent + ' 85%, #000)');
@@ -112,11 +123,26 @@
     'html[data-bg="gradient"] body { background-image: linear-gradient(160deg, color-mix(in srgb, var(--accent) 14%, var(--bg)) 0%, var(--bg) 45%, color-mix(in srgb, var(--accent) 8%, var(--bg)) 100%) !important; background-size: cover !important; background-attachment: fixed !important; }',
     'html[data-bg="solid"] body { background-image: none !important; }',
 
+    /* ─── Nav logo animations ─── */
+    'html[data-logo-anim="shimmer"] .nav-logo span { background: linear-gradient(100deg, var(--accent) 35%, color-mix(in srgb, var(--accent) 25%, #fff) 50%, var(--accent) 65%); background-size: 200% auto; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent !important; animation: mtwLogoShimmer 2.8s linear infinite; }',
+    '@keyframes mtwLogoShimmer { from { background-position: 200% center; } to { background-position: -200% center; } }',
+    'html[data-logo-anim="pulse"] .nav-logo { animation: mtwLogoPulse 1.8s ease-in-out infinite; }',
+    '@keyframes mtwLogoPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.07); } }',
+    'html[data-logo-anim="glow"] .nav-logo span { animation: mtwLogoGlow 2s ease-in-out infinite alternate; }',
+    'html[data-logo-anim="glow"] .nav-logo .animated-logo { animation: mtwLogoGlowIcon 2s ease-in-out infinite alternate; }',
+    '@keyframes mtwLogoGlow { from { text-shadow: 0 0 4px color-mix(in srgb, var(--accent) 50%, transparent); } to { text-shadow: 0 0 14px var(--accent), 0 0 28px color-mix(in srgb, var(--accent) 45%, transparent); } }',
+    '@keyframes mtwLogoGlowIcon { from { filter: drop-shadow(0 0 2px color-mix(in srgb, var(--accent) 50%, transparent)); } to { filter: drop-shadow(0 0 10px var(--accent)); } }',
+    'html[data-logo-anim="bounce"] .nav-logo { animation: mtwLogoBounce 1.4s cubic-bezier(0.28, 0.84, 0.42, 1) infinite; }',
+    '@keyframes mtwLogoBounce { 0%, 100% { transform: translateY(0); } 30% { transform: translateY(-6px); } 55% { transform: translateY(0); } 70% { transform: translateY(-3px); } 85% { transform: translateY(0); } }',
+    'html[data-logo-anim="typewriter"] .nav-logo span { display: inline-block; overflow: hidden; white-space: nowrap; vertical-align: bottom; border-right: 2px solid var(--accent); animation: mtwLogoType 4s steps(9) infinite alternate, mtwLogoCaret 0.7s step-end infinite; }',
+    '@keyframes mtwLogoType { 0% { width: 0; } 35% { width: 9.2ch; } 100% { width: 9.2ch; } }',
+    '@keyframes mtwLogoCaret { 0%, 100% { border-right-color: var(--accent); } 50% { border-right-color: transparent; } }',
+
     /* ─── Settings button + panel ─── */
     '#mtw-settings-btn { position: fixed; bottom: 1.4rem; right: 1.4rem; z-index: 10000; width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--border); background: var(--surface); color: var(--muted); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: color 0.2s, border-color 0.2s, transform 0.3s; box-shadow: 0 4px 16px rgba(0,0,0,0.25); }',
     '#mtw-settings-btn:hover { color: var(--accent); border-color: var(--accent); transform: rotate(45deg); }',
     '#mtw-settings-btn svg { width: 22px; height: 22px; }',
-    '#mtw-settings-panel { position: fixed; bottom: 4.6rem; right: 1.4rem; z-index: 10000; width: 264px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.1rem 1.2rem 1.2rem; font-family: "Syne", sans-serif; color: var(--text); box-shadow: 0 12px 40px rgba(0,0,0,0.35); display: none; }',
+    '#mtw-settings-panel { position: fixed; bottom: 4.6rem; right: 1.4rem; z-index: 10000; width: 264px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.1rem 1.2rem 1.2rem; font-family: "Syne", sans-serif; color: var(--text); box-shadow: 0 12px 40px rgba(0,0,0,0.35); display: none; max-height: calc(100vh - 6.5rem); overflow-y: auto; }',
     '#mtw-settings-panel.open { display: block; animation: mtwPanelIn 0.18s ease; }',
     '@keyframes mtwPanelIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }',
     '#mtw-settings-panel h6 { font-family: "Space Mono", monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--accent); margin: 0 0 0.8rem; }',
@@ -129,6 +155,10 @@
     '.mtw-bg-grid button { padding: 0.45rem 0; border-radius: 6px; border: 1px solid var(--border); background: transparent; color: var(--muted); font-family: "Syne", sans-serif; font-size: 0.74rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }',
     '.mtw-bg-grid button:hover { color: var(--text); border-color: var(--muted); }',
     '.mtw-bg-grid button.active { background: var(--accent); border-color: var(--accent); color: #000; }',
+    '.mtw-anim-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.4rem; }',
+    '.mtw-anim-grid button { padding: 0.45rem 0.2rem; border-radius: 6px; border: 1px solid var(--border); background: transparent; color: var(--muted); font-family: "Syne", sans-serif; font-size: 0.74rem; font-weight: 600; cursor: pointer; transition: all 0.15s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }',
+    '.mtw-anim-grid button:hover { color: var(--text); border-color: var(--muted); }',
+    '.mtw-anim-grid button.active { background: var(--accent); border-color: var(--accent); color: #000; }',
     '.mtw-swatches { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; }',
     '.mtw-swatches button { width: 100%; aspect-ratio: 1; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.15s, border-color 0.15s; padding: 0; }',
     '.mtw-swatches button:hover { transform: scale(1.12); }',
@@ -166,6 +196,10 @@
       return '<button type="button" data-accent="' + a.value + '" title="' + a.name + '" aria-label="' + a.name + '" style="background:' + a.value + '"></button>';
     }).join('');
 
+    var animsHTML = LOGO_ANIMS.map(function (a) {
+      return '<button type="button" data-logo-anim="' + a.value + '" title="' + a.name + '">' + a.name + '</button>';
+    }).join('');
+
     panel.innerHTML =
       '<h6>⬡ Settings</h6>' +
       '<div class="mtw-label">Theme</div>' +
@@ -182,6 +216,8 @@
       '<button type="button" data-bg="gradient">Gradient</button>' +
       '<button type="button" data-bg="solid">Solid</button>' +
       '</div>' +
+      '<div class="mtw-label">Logo Animation</div>' +
+      '<div class="mtw-anim-grid">' + animsHTML + '</div>' +
       '<div class="mtw-label">Accent Color</div>' +
       '<div class="mtw-swatches">' + swatchesHTML + '</div>' +
       '<div class="mtw-custom-row">' +
@@ -195,6 +231,7 @@
 
     var themeBtns = panel.querySelectorAll('.mtw-theme-row button');
     var bgBtns = panel.querySelectorAll('.mtw-bg-grid button');
+    var animBtns = panel.querySelectorAll('.mtw-anim-grid button');
     var swatchBtns = panel.querySelectorAll('.mtw-swatches button');
     var customInput = panel.querySelector('#mtw-custom-color');
 
@@ -204,6 +241,9 @@
       });
       bgBtns.forEach(function (b) {
         b.classList.toggle('active', b.getAttribute('data-bg') === settings.background);
+      });
+      animBtns.forEach(function (b) {
+        b.classList.toggle('active', b.getAttribute('data-logo-anim') === settings.logoAnim);
       });
       swatchBtns.forEach(function (b) {
         b.classList.toggle('active', b.getAttribute('data-accent').toLowerCase() === settings.accent.toLowerCase());
@@ -225,6 +265,13 @@
       });
     });
 
+    animBtns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        settings.logoAnim = b.getAttribute('data-logo-anim');
+        apply(); save(); syncUI();
+      });
+    });
+
     swatchBtns.forEach(function (b) {
       b.addEventListener('click', function () {
         settings.accent = b.getAttribute('data-accent');
@@ -238,7 +285,7 @@
     });
 
     panel.querySelector('#mtw-reset').addEventListener('click', function () {
-      settings = { theme: DEFAULTS.theme, accent: DEFAULTS.accent, background: DEFAULTS.background };
+      settings = { theme: DEFAULTS.theme, accent: DEFAULTS.accent, background: DEFAULTS.background, logoAnim: DEFAULTS.logoAnim };
       apply(); save(); syncUI();
     });
 
