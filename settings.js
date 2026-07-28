@@ -6,7 +6,7 @@
   'use strict';
 
   var KEY = 'mtechware-settings';
-  var DEFAULTS = { theme: 'dark', accent: '#ff8000', background: 'grid', logoAnim: 'typewriter' };
+  var DEFAULTS = { theme: 'dark', accent: '#ff8000', background: 'gradient', logoAnim: 'typewriter', bgAnim: 'on' };
   var BACKGROUNDS = ['grid', 'dots', 'glow', 'gradient', 'solid'];
 
   var LOGO_ANIMS = [
@@ -36,10 +36,11 @@
         theme: ['dark', 'light', 'system'].indexOf(saved.theme) !== -1 ? saved.theme : DEFAULTS.theme,
         accent: /^#[0-9a-fA-F]{6}$/.test(saved.accent || '') ? saved.accent : DEFAULTS.accent,
         background: BACKGROUNDS.indexOf(saved.background) !== -1 ? saved.background : DEFAULTS.background,
-        logoAnim: LOGO_ANIMS.some(function (a) { return a.value === saved.logoAnim; }) ? saved.logoAnim : DEFAULTS.logoAnim
+        logoAnim: LOGO_ANIMS.some(function (a) { return a.value === saved.logoAnim; }) ? saved.logoAnim : DEFAULTS.logoAnim,
+        bgAnim: ['on', 'off'].indexOf(saved.bgAnim) !== -1 ? saved.bgAnim : DEFAULTS.bgAnim
       };
     } catch (e) {
-      return { theme: DEFAULTS.theme, accent: DEFAULTS.accent, background: DEFAULTS.background, logoAnim: DEFAULTS.logoAnim };
+      return { theme: DEFAULTS.theme, accent: DEFAULTS.accent, background: DEFAULTS.background, logoAnim: DEFAULTS.logoAnim, bgAnim: DEFAULTS.bgAnim };
     }
   }
 
@@ -77,6 +78,7 @@
     root.setAttribute('data-theme', resolvedTheme());
     root.setAttribute('data-bg', settings.background);
     root.setAttribute('data-logo-anim', settings.logoAnim);
+    root.setAttribute('data-bg-anim', settings.bgAnim);
     root.style.setProperty('--accent', settings.accent);
     /* Derived shades — pages that define these get recolored too */
     root.style.setProperty('--accent-hover', 'color-mix(in srgb, ' + settings.accent + ' 85%, #000)');
@@ -119,9 +121,22 @@
     'html[data-theme="light"][data-bg="grid"] body { background-image: linear-gradient(rgba(0,0,0,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.08) 1px, transparent 1px) !important; }',
     'html[data-bg="dots"] body { background-image: radial-gradient(rgba(255,255,255,0.22) 1.5px, transparent 1.5px) !important; background-size: 26px 26px !important; }',
     'html[data-theme="light"][data-bg="dots"] body { background-image: radial-gradient(rgba(0,0,0,0.2) 1.5px, transparent 1.5px) !important; }',
-    'html[data-bg="glow"] body { background-image: radial-gradient(1100px 700px at 50% 0%, color-mix(in srgb, var(--accent) 13%, var(--bg)) 0%, var(--bg) 72%) !important; background-size: cover !important; background-attachment: fixed !important; }',
-    'html[data-bg="gradient"] body { background-image: linear-gradient(160deg, color-mix(in srgb, var(--accent) 14%, var(--bg)) 0%, var(--bg) 45%, color-mix(in srgb, var(--accent) 8%, var(--bg)) 100%) !important; background-size: cover !important; background-attachment: fixed !important; }',
+    '@property --mtw-glow-mix { syntax: "<percentage>"; inherits: false; initial-value: 13%; }',
+    '@property --mtw-glow-ext { syntax: "<percentage>"; inherits: false; initial-value: 72%; }',
+    '@property --mtw-grad-a { syntax: "<angle>"; inherits: false; initial-value: 160deg; }',
+    'html[data-bg="glow"] body { background-image: radial-gradient(1100px 700px at 50% 0%, color-mix(in srgb, var(--accent) var(--mtw-glow-mix), var(--bg)) 0%, var(--bg) var(--mtw-glow-ext)) !important; background-size: cover !important; background-attachment: fixed !important; }',
+    'html[data-bg="gradient"] body { background-image: linear-gradient(var(--mtw-grad-a), color-mix(in srgb, var(--accent) 14%, var(--bg)) 0%, var(--bg) 45%, color-mix(in srgb, var(--accent) 8%, var(--bg)) 100%) !important; background-size: cover !important; background-attachment: fixed !important; }',
     'html[data-bg="solid"] body { background-image: none !important; }',
+
+    /* ─── Background animations ─── */
+    'html[data-bg="grid"][data-bg-anim="on"] body { animation: mtwBgPanGrid 8s linear infinite; }',
+    'html[data-bg="dots"][data-bg-anim="on"] body { animation: mtwBgPanDots 12s linear infinite; }',
+    'html[data-bg="glow"][data-bg-anim="on"] body { animation: mtwBgGlow 5s ease-in-out infinite alternate; }',
+    'html[data-bg="gradient"][data-bg-anim="on"] body { animation: mtwBgGrad 30s linear infinite; }',
+    '@keyframes mtwBgPanGrid { from { background-position: 0 0; } to { background-position: 40px 40px; } }',
+    '@keyframes mtwBgPanDots { from { background-position: 0 0; } to { background-position: 26px -26px; } }',
+    '@keyframes mtwBgGlow { from { --mtw-glow-mix: 9%; --mtw-glow-ext: 62%; } to { --mtw-glow-mix: 18%; --mtw-glow-ext: 88%; } }',
+    '@keyframes mtwBgGrad { from { --mtw-grad-a: 160deg; } to { --mtw-grad-a: 520deg; } }',
 
     /* ─── Nav logo animations ─── */
     'html[data-logo-anim="shimmer"] .nav-logo span { background: linear-gradient(100deg, var(--accent) 35%, color-mix(in srgb, var(--accent) 25%, #fff) 50%, var(--accent) 65%); background-size: 200% auto; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent !important; animation: mtwLogoShimmer 2.8s linear infinite; }',
@@ -216,6 +231,11 @@
       '<button type="button" data-bg="gradient">Gradient</button>' +
       '<button type="button" data-bg="solid">Solid</button>' +
       '</div>' +
+      '<div class="mtw-label">Background Motion</div>' +
+      '<div class="mtw-theme-row" id="mtw-bg-anim-row">' +
+      '<button type="button" data-bg-anim="on">On</button>' +
+      '<button type="button" data-bg-anim="off">Off</button>' +
+      '</div>' +
       '<div class="mtw-label">Logo Animation</div>' +
       '<div class="mtw-anim-grid">' + animsHTML + '</div>' +
       '<div class="mtw-label">Accent Color</div>' +
@@ -232,6 +252,7 @@
     var themeBtns = panel.querySelectorAll('.mtw-theme-row button');
     var bgBtns = panel.querySelectorAll('.mtw-bg-grid button');
     var animBtns = panel.querySelectorAll('.mtw-anim-grid button');
+    var bgAnimBtns = panel.querySelectorAll('#mtw-bg-anim-row button');
     var swatchBtns = panel.querySelectorAll('.mtw-swatches button');
     var customInput = panel.querySelector('#mtw-custom-color');
 
@@ -244,6 +265,9 @@
       });
       animBtns.forEach(function (b) {
         b.classList.toggle('active', b.getAttribute('data-logo-anim') === settings.logoAnim);
+      });
+      bgAnimBtns.forEach(function (b) {
+        b.classList.toggle('active', b.getAttribute('data-bg-anim') === settings.bgAnim);
       });
       swatchBtns.forEach(function (b) {
         b.classList.toggle('active', b.getAttribute('data-accent').toLowerCase() === settings.accent.toLowerCase());
@@ -272,6 +296,13 @@
       });
     });
 
+    bgAnimBtns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        settings.bgAnim = b.getAttribute('data-bg-anim');
+        apply(); save(); syncUI();
+      });
+    });
+
     swatchBtns.forEach(function (b) {
       b.addEventListener('click', function () {
         settings.accent = b.getAttribute('data-accent');
@@ -285,7 +316,7 @@
     });
 
     panel.querySelector('#mtw-reset').addEventListener('click', function () {
-      settings = { theme: DEFAULTS.theme, accent: DEFAULTS.accent, background: DEFAULTS.background, logoAnim: DEFAULTS.logoAnim };
+      settings = { theme: DEFAULTS.theme, accent: DEFAULTS.accent, background: DEFAULTS.background, logoAnim: DEFAULTS.logoAnim, bgAnim: DEFAULTS.bgAnim };
       apply(); save(); syncUI();
     });
 
