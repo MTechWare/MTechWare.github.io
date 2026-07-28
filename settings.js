@@ -95,7 +95,7 @@
     'html[data-theme="light"] { --bg:#f6f5f2; --surface:#ffffff; --surface2:#efeee9; --border:#d8d5cd; --text:#1a1d23; --muted:#6b7280; }',
     'html[data-theme="light"] body { background-image: linear-gradient(rgba(0,0,0,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.045) 1px, transparent 1px); }',
     'html[data-theme="light"] body::before { opacity: 0.15; }',
-    'nav { background: color-mix(in srgb, var(--bg) 85%, transparent) !important; }',
+    'nav { background: color-mix(in srgb, var(--bg) 60%, transparent) !important; }',
     '.hero-glow { background: radial-gradient(circle, color-mix(in srgb, var(--accent) 8%, transparent) 0%, transparent 70%) !important; }',
     '.cta-banner::before { background: radial-gradient(ellipse at 50% 0%, color-mix(in srgb, var(--accent) 5%, transparent) 0%, transparent 70%) !important; }',
     '.badge-live { background: color-mix(in srgb, var(--accent) 10%, transparent) !important; color: var(--accent) !important; border-color: color-mix(in srgb, var(--accent) 30%, transparent) !important; }',
