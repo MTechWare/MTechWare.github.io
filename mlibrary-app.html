@@ -89,16 +89,38 @@
   body {
     font-family: var(--sans);
     background-color: var(--bg);
-    background-image:
-      linear-gradient(var(--grid-line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-    background-size: 40px 40px;
     color: var(--text);
     min-height: 100vh;
     display: flex;
     font-size: 15px;
     line-height: 1.6;
   }
+
+  /* ─── Background styles (Settings → Appearance) ── */
+  body.bg-grid {
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  body.bg-dots {
+    background-image: radial-gradient(color-mix(in srgb, var(--text) 14%, transparent) 1.5px, transparent 1.5px);
+    background-size: 22px 22px;
+  }
+  body.bg-glow {
+    background-image:
+      radial-gradient(ellipse 70% 55% at 18% 0%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 70%),
+      radial-gradient(ellipse 65% 50% at 85% 100%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 70%);
+    background-attachment: fixed;
+  }
+  body.bg-gradient {
+    background-image: linear-gradient(160deg,
+      color-mix(in srgb, var(--accent) 10%, var(--bg)) 0%,
+      var(--bg) 45%,
+      color-mix(in srgb, var(--accent) 6%, var(--bg)) 100%);
+    background-attachment: fixed;
+  }
+  body.bg-solid { background-image: none; }
 
   /* ─── Sidebar ─────────────────────────── */
   .sidebar {
@@ -2137,7 +2159,7 @@
   }
 </style>
 </head>
-<body>
+<body class="bg-grid">
 
 <!-- Sidebar -->
 <aside class="sidebar">
@@ -2427,6 +2449,16 @@
             <button class="theme-btn" id="theme-light" onclick="setTheme('light')">☀ Light</button>
             <button class="theme-btn" id="theme-dark" onclick="setTheme('dark')">☾ Dark</button>
             <button class="theme-btn" id="theme-system" onclick="setTheme('system')">⬡ Auto</button>
+          </div>
+        </div>
+        <div class="appearance-group">
+          <label>Background</label>
+          <div class="theme-options" style="flex-wrap:wrap">
+            <button class="theme-btn bg-btn" data-bg="grid" onclick="setBackground('grid')">▦ Grid</button>
+            <button class="theme-btn bg-btn" data-bg="dots" onclick="setBackground('dots')">⠿ Dots</button>
+            <button class="theme-btn bg-btn" data-bg="glow" onclick="setBackground('glow')">◉ Glow</button>
+            <button class="theme-btn bg-btn" data-bg="gradient" onclick="setBackground('gradient')">◧ Gradient</button>
+            <button class="theme-btn bg-btn" data-bg="solid" onclick="setBackground('solid')">▢ Solid</button>
           </div>
         </div>
         <div class="appearance-group">
@@ -3005,7 +3037,7 @@ function showPage(id) {
   if (id === 'templates') { if (typeof renderTemplates === 'function') renderTemplates(); }
   if (id === 'archive') { if (typeof renderArchive === 'function') renderArchive(); }
   if (id === 'reminders') { if (typeof renderReminders === 'function') renderReminders(); }
-  if (id === 'settings') { buildAccentSwatches(); updateThemeButtons(); updateAutoBackupUI(); updateBackupEncUI();const r = localStorage.getItem('mkd_radius') ?? '10'; document.getElementById('radius-slider').value = r; const ni = document.getElementById('brand-name-input'); if(ni) ni.value = localStorage.getItem('mkd_brand_name')||''; document.querySelectorAll('.brand-anim-btn').forEach(b => b.classList.toggle('active', b.dataset.anim === (localStorage.getItem('mkd_brand_anim')||'shimmer'))); }
+  if (id === 'settings') { buildAccentSwatches(); updateThemeButtons(); updateAutoBackupUI(); if (typeof updateBackupEncUI === 'function') updateBackupEncUI();const r = localStorage.getItem('mkd_radius') ?? '10'; document.getElementById('radius-slider').value = r; const ni = document.getElementById('brand-name-input'); if(ni) ni.value = localStorage.getItem('mkd_brand_name')||''; document.querySelectorAll('.brand-anim-btn').forEach(b => b.classList.toggle('active', b.dataset.anim === (localStorage.getItem('mkd_brand_anim')||'shimmer'))); }
 }
 
 function navBookmarks() {
@@ -4458,6 +4490,7 @@ function buildBackupData() {
     accent: localStorage.getItem('mkd_accent') || 'MTechWare',
     font:   localStorage.getItem('mkd_font')   || 'syne',
     radius: localStorage.getItem('mkd_radius') || '10',
+    background: localStorage.getItem('mkd_background') || 'grid',
     brandName: localStorage.getItem('mkd_brand_name') || '',
     brandAnim: localStorage.getItem('mkd_brand_anim') || 'shimmer',
   };
@@ -4542,6 +4575,7 @@ function _applyBackupData(data, status) {
         if (accent) { localStorage.setItem('mkd_accent', accent); applyAccent(accent); }
         if (font)   { localStorage.setItem('mkd_font',   font);   setFont(font); }
         if (radius) { localStorage.setItem('mkd_radius', radius); setRadius(radius); }
+        if (data.appearance.background) { setBackground(data.appearance.background); }
         if (data.appearance.brandName !== undefined) { localStorage.setItem('mkd_brand_name', data.appearance.brandName); }
         if (data.appearance.brandAnim) { localStorage.setItem('mkd_brand_anim', data.appearance.brandAnim); }
         initBrand();
@@ -4759,6 +4793,18 @@ function updateThemeButtons() {
   });
 }
 
+const BACKGROUNDS = ['grid', 'dots', 'glow', 'gradient', 'solid'];
+
+function setBackground(key) {
+  if (!BACKGROUNDS.includes(key)) key = 'grid';
+  localStorage.setItem('mkd_background', key);
+  document.body.classList.remove(...BACKGROUNDS.map(b => 'bg-' + b));
+  document.body.classList.add('bg-' + key);
+  document.querySelectorAll('.bg-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.bg === key);
+  });
+}
+
 function initAppearance() {
   // Theme
   const theme = localStorage.getItem('mkd_theme') || 'system';
@@ -4779,6 +4825,9 @@ function initAppearance() {
   // Radius
   const radius = localStorage.getItem('mkd_radius') ?? '10';
   setRadius(radius);
+
+  // Background
+  setBackground(localStorage.getItem('mkd_background') || 'grid');
 
   // Brand name
   initBrand();
