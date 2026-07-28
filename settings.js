@@ -6,7 +6,7 @@
   'use strict';
 
   var KEY = 'mtechware-settings';
-  var DEFAULTS = { theme: 'dark', accent: '#ff8000', background: 'grid', logoAnim: 'shimmer' };
+  var DEFAULTS = { theme: 'dark', accent: '#ff8000', background: 'grid', logoAnim: 'typewriter' };
   var BACKGROUNDS = ['grid', 'dots', 'glow', 'gradient', 'solid'];
 
   var LOGO_ANIMS = [
