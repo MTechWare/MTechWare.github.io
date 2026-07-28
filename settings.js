@@ -41,6 +41,23 @@
   var root = document.documentElement;
   var lightQuery = window.matchMedia('(prefers-color-scheme: light)');
 
+  function hexToHsl(hex) {
+    var r = parseInt(hex.slice(1, 3), 16) / 255;
+    var g = parseInt(hex.slice(3, 5), 16) / 255;
+    var b = parseInt(hex.slice(5, 7), 16) / 255;
+    var max = Math.max(r, g, b), min = Math.min(r, g, b), d = max - min;
+    var h = 0;
+    if (d > 0) {
+      if (max === r) h = 60 * (((g - b) / d) % 6);
+      else if (max === g) h = 60 * ((b - r) / d + 2);
+      else h = 60 * ((r - g) / d + 4);
+    }
+    if (h < 0) h += 360;
+    var l = (max + min) / 2;
+    var s = d === 0 ? 0 : d / (1 - Math.abs(2 * l - 1));
+    return { h: h, s: s, l: l };
+  }
+
   function resolvedTheme() {
     if (settings.theme === 'system') return lightQuery.matches ? 'light' : 'dark';
     return settings.theme;
@@ -55,6 +72,17 @@
     root.style.setProperty('--accent-glow', 'color-mix(in srgb, ' + settings.accent + ' 6%, transparent)');
     root.style.setProperty('--accent-border', 'color-mix(in srgb, ' + settings.accent + ' 30%, transparent)');
     root.style.setProperty('--accent2', settings.accent);
+    /* Recolor app screenshots: shift their built-in orange accent to the chosen accent.
+       Grays/blacks in the shots are unaffected by hue-rotate + saturate. */
+    var shotFilter = 'none';
+    if (settings.accent.toLowerCase() !== DEFAULTS.accent) {
+      var base = hexToHsl(DEFAULTS.accent);
+      var target = hexToHsl(settings.accent);
+      var rotate = Math.round(target.h - base.h);
+      var saturate = base.s > 0 ? Math.max(0, target.s / base.s) : 1;
+      shotFilter = 'hue-rotate(' + rotate + 'deg) saturate(' + saturate.toFixed(2) + ')';
+    }
+    root.style.setProperty('--mtw-shot-filter', shotFilter);
   }
 
   apply();
@@ -73,6 +101,7 @@
     '.badge-live { background: color-mix(in srgb, var(--accent) 10%, transparent) !important; color: var(--accent) !important; border-color: color-mix(in srgb, var(--accent) 30%, transparent) !important; }',
     '.btn-primary:hover { background: color-mix(in srgb, var(--accent) 85%, #000) !important; }',
     '.animated-logo stop { stop-color: var(--accent); }',
+    '.app-content img { filter: var(--mtw-shot-filter, none); }',
 
     /* ─── Background styles ─── */
     'html[data-bg="grid"] body { background-image: linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px) !important; background-size: 40px 40px !important; }',
