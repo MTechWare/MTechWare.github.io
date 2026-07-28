@@ -10,31 +10,31 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --bg: #f6f5f2;
+    --bg: #f7f4ee;
     --surface: #ffffff;
-    --surface2: #efeee9;
-    --border: rgba(0,0,0,0.1);
-    --border-strong: rgba(0,0,0,0.18);
-    --text: #1a1d23;
-    --text-muted: #6b7280;
-    --text-faint: #9ca3af;
+    --surface2: #f0ece3;
+    --border: rgba(75,60,35,0.14);
+    --border-strong: rgba(75,60,35,0.28);
+    --text: #26221a;
+    --text-muted: #635e52;
+    --text-faint: #948d7e;
     --accent: #d96c00;
     --accent-light: #ffefdd;
     --accent-text: #8f4700;
     --danger: #c0392b;
     --danger-light: #fdf0ef;
-    --tag-bg: #ece9e3;
-    --card-hover: #fbfaf7;
-    --folder-bg: #f1efe9;
-    --sidebar-bg: #f1f0ec;
+    --tag-bg: #ece7db;
+    --card-hover: #fcfaf5;
+    --folder-bg: #f2efe7;
+    --sidebar-bg: #f1eee6;
     --sidebar-active-bg: #ffe8d0;
-    --grid-line: rgba(0,0,0,0.03);
+    --grid-line: rgba(120,95,55,0.055);
     --serif: 'Syne', sans-serif;
     --sans: 'Syne', 'Inter', -apple-system, sans-serif;
     --mono: 'Space Mono', 'JetBrains Mono', monospace;
     --radius: 6px;
     --radius-sm: 4px;
-    --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05);
+    --shadow: 0 1px 2px rgba(88,70,40,0.07), 0 4px 16px rgba(88,70,40,0.08);
   }
 
   /* Dark mode via class (set by JS) or system preference as fallback */
@@ -384,7 +384,7 @@
     transition: border-color 0.15s;
   }
 
-  .search-input:focus { border-color: var(--accent); }
+  .search-input:focus { border-color: var(--accent); background: var(--surface); box-shadow: 0 0 0 3px var(--accent-light); }
   .search-input::placeholder { color: var(--text-faint); }
 
   .btn {
@@ -756,7 +756,7 @@
     color: var(--text);
     outline: none;
   }
-  .notes-list-search input:focus { border-color: var(--accent); background: var(--surface); }
+  .notes-list-search input:focus { border-color: var(--accent); background: var(--surface); box-shadow: 0 0 0 3px var(--accent-light); }
   .notes-list-search input::placeholder { color: var(--text-faint); }
 
   .notes-list-scroll {
@@ -955,7 +955,7 @@
     transition: border-color 0.15s;
     appearance: auto;
   }
-  input[type="date"]:focus, input[type="time"]:focus, select:focus { border-color: var(--accent); background: var(--surface); }
+  input[type="date"]:focus, input[type="time"]:focus, select:focus { border-color: var(--accent); background: var(--surface); box-shadow: 0 0 0 3px var(--accent-light); }
 
   input[type="text"], textarea {
     width: 100%;
@@ -971,7 +971,7 @@
     transition: border-color 0.15s;
   }
 
-  input[type="text"]:focus, textarea:focus { border-color: var(--accent); background: var(--surface); }
+  input[type="text"]:focus, textarea:focus { border-color: var(--accent); background: var(--surface); box-shadow: 0 0 0 3px var(--accent-light); }
   input[type="text"]::placeholder, textarea::placeholder { color: var(--text-faint); }
   textarea { min-height: 100px; line-height: 1.5; }
 
@@ -1716,7 +1716,7 @@
     outline: none;
     width: 140px;
   }
-  .bulk-tag-input:focus { border-color: var(--accent); }
+  .bulk-tag-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-light); }
 
   /* ─── Favicon refresh btn ──────────────── */
   .bm-favicon-wrap {
@@ -1755,7 +1755,7 @@
     transition: border-color 0.15s, background 0.15s;
     margin-bottom: 0;
   }
-  .global-search-input:focus { border-color: var(--accent); background: var(--surface); }
+  .global-search-input:focus { border-color: var(--accent); background: var(--surface); box-shadow: 0 0 0 3px var(--accent-light); }
   .global-search-input::placeholder { color: var(--text-faint); }
   .global-search-wrap {
     position: relative;
@@ -1925,7 +1925,7 @@
     border-radius: var(--radius-sm); padding: 0.45rem 0.65rem;
     font-family: var(--sans); font-size: 13px; color: var(--text); outline: none;
   }
-  .tpl-list-search input:focus { border-color: var(--accent); background: var(--surface); }
+  .tpl-list-search input:focus { border-color: var(--accent); background: var(--surface); box-shadow: 0 0 0 3px var(--accent-light); }
   .tpl-list-search input::placeholder { color: var(--text-faint); }
   .tpl-list-scroll { flex: 1; overflow-y: auto; }
   .tpl-list-item {
@@ -2088,6 +2088,7 @@
   .tpl-fill-field input:focus, .tpl-fill-field textarea:focus {
     border-color: var(--accent);
     background: var(--surface);
+    box-shadow: 0 0 0 3px var(--accent-light);
   }
   .tpl-fill-preview-wrap {
     margin-top: 0.25rem;
@@ -6721,7 +6722,7 @@ if (!document.getElementById('modal-first-run').classList.contains('open')) {
     <h2 style="font-size:1.15rem;font-weight:700;color:var(--text);margin-bottom:0.6rem">Back up your library</h2>
     <p style="color:var(--text-muted);font-size:13.5px;line-height:1.7;margin-bottom:0.5rem">
       Your bookmarks and notes are currently stored only in this browser.<br>
-      <strong style="color:#e0a52e">If browser data is cleared, everything will be lost.</strong>
+      <strong style="color:var(--danger)">If browser data is cleared, everything will be lost.</strong>
     </p>
     <p style="color:var(--text-faint);font-size:13px;line-height:1.6;margin-bottom:1.5rem">
       We recommend choosing a folder so your data is automatically backed up as <strong style="color:var(--text-muted)">MLibrary-backup.json</strong> whenever you use the app.

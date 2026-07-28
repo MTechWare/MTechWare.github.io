@@ -6,7 +6,8 @@
   'use strict';
 
   var KEY = 'mtechware-settings';
-  var DEFAULTS = { theme: 'dark', accent: '#ff8000' };
+  var DEFAULTS = { theme: 'dark', accent: '#ff8000', background: 'grid' };
+  var BACKGROUNDS = ['grid', 'dots', 'glow', 'gradient', 'solid'];
 
   var ACCENTS = [
     { name: 'Orange', value: '#ff8000' },
@@ -24,10 +25,11 @@
       var saved = JSON.parse(localStorage.getItem(KEY) || '{}');
       return {
         theme: ['dark', 'light', 'system'].indexOf(saved.theme) !== -1 ? saved.theme : DEFAULTS.theme,
-        accent: /^#[0-9a-fA-F]{6}$/.test(saved.accent || '') ? saved.accent : DEFAULTS.accent
+        accent: /^#[0-9a-fA-F]{6}$/.test(saved.accent || '') ? saved.accent : DEFAULTS.accent,
+        background: BACKGROUNDS.indexOf(saved.background) !== -1 ? saved.background : DEFAULTS.background
       };
     } catch (e) {
-      return { theme: DEFAULTS.theme, accent: DEFAULTS.accent };
+      return { theme: DEFAULTS.theme, accent: DEFAULTS.accent, background: DEFAULTS.background };
     }
   }
 
@@ -46,6 +48,7 @@
 
   function apply() {
     root.setAttribute('data-theme', resolvedTheme());
+    root.setAttribute('data-bg', settings.background);
     root.style.setProperty('--accent', settings.accent);
     /* Derived shades — pages that define these get recolored too */
     root.style.setProperty('--accent-hover', 'color-mix(in srgb, ' + settings.accent + ' 85%, #000)');
@@ -71,6 +74,15 @@
     '.btn-primary:hover { background: color-mix(in srgb, var(--accent) 85%, #000) !important; }',
     '.animated-logo stop { stop-color: var(--accent); }',
 
+    /* ─── Background styles ─── */
+    'html[data-bg="grid"] body { background-image: linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px) !important; background-size: 40px 40px !important; }',
+    'html[data-theme="light"][data-bg="grid"] body { background-image: linear-gradient(rgba(0,0,0,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.08) 1px, transparent 1px) !important; }',
+    'html[data-bg="dots"] body { background-image: radial-gradient(rgba(255,255,255,0.22) 1.5px, transparent 1.5px) !important; background-size: 26px 26px !important; }',
+    'html[data-theme="light"][data-bg="dots"] body { background-image: radial-gradient(rgba(0,0,0,0.2) 1.5px, transparent 1.5px) !important; }',
+    'html[data-bg="glow"] body { background-image: radial-gradient(1100px 700px at 50% 0%, color-mix(in srgb, var(--accent) 13%, var(--bg)) 0%, var(--bg) 72%) !important; background-size: cover !important; background-attachment: fixed !important; }',
+    'html[data-bg="gradient"] body { background-image: linear-gradient(160deg, color-mix(in srgb, var(--accent) 14%, var(--bg)) 0%, var(--bg) 45%, color-mix(in srgb, var(--accent) 8%, var(--bg)) 100%) !important; background-size: cover !important; background-attachment: fixed !important; }',
+    'html[data-bg="solid"] body { background-image: none !important; }',
+
     /* ─── Settings button + panel ─── */
     '#mtw-settings-btn { position: fixed; bottom: 1.4rem; right: 1.4rem; z-index: 10000; width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--border); background: var(--surface); color: var(--muted); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: color 0.2s, border-color 0.2s, transform 0.3s; box-shadow: 0 4px 16px rgba(0,0,0,0.25); }',
     '#mtw-settings-btn:hover { color: var(--accent); border-color: var(--accent); transform: rotate(45deg); }',
@@ -84,6 +96,10 @@
     '.mtw-theme-row button { flex: 1; padding: 0.45rem 0; border-radius: 6px; border: 1px solid var(--border); background: transparent; color: var(--muted); font-family: "Syne", sans-serif; font-size: 0.78rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }',
     '.mtw-theme-row button:hover { color: var(--text); border-color: var(--muted); }',
     '.mtw-theme-row button.active { background: var(--accent); border-color: var(--accent); color: #000; }',
+    '.mtw-bg-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.4rem; }',
+    '.mtw-bg-grid button { padding: 0.45rem 0; border-radius: 6px; border: 1px solid var(--border); background: transparent; color: var(--muted); font-family: "Syne", sans-serif; font-size: 0.74rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }',
+    '.mtw-bg-grid button:hover { color: var(--text); border-color: var(--muted); }',
+    '.mtw-bg-grid button.active { background: var(--accent); border-color: var(--accent); color: #000; }',
     '.mtw-swatches { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; }',
     '.mtw-swatches button { width: 100%; aspect-ratio: 1; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.15s, border-color 0.15s; padding: 0; }',
     '.mtw-swatches button:hover { transform: scale(1.12); }',
@@ -129,6 +145,14 @@
       '<button type="button" data-theme="light">Light</button>' +
       '<button type="button" data-theme="system">Auto</button>' +
       '</div>' +
+      '<div class="mtw-label">Background</div>' +
+      '<div class="mtw-bg-grid">' +
+      '<button type="button" data-bg="grid">Grid</button>' +
+      '<button type="button" data-bg="dots">Dots</button>' +
+      '<button type="button" data-bg="glow">Glow</button>' +
+      '<button type="button" data-bg="gradient">Gradient</button>' +
+      '<button type="button" data-bg="solid">Solid</button>' +
+      '</div>' +
       '<div class="mtw-label">Accent Color</div>' +
       '<div class="mtw-swatches">' + swatchesHTML + '</div>' +
       '<div class="mtw-custom-row">' +
@@ -141,12 +165,16 @@
     document.body.appendChild(panel);
 
     var themeBtns = panel.querySelectorAll('.mtw-theme-row button');
+    var bgBtns = panel.querySelectorAll('.mtw-bg-grid button');
     var swatchBtns = panel.querySelectorAll('.mtw-swatches button');
     var customInput = panel.querySelector('#mtw-custom-color');
 
     function syncUI() {
       themeBtns.forEach(function (b) {
         b.classList.toggle('active', b.getAttribute('data-theme') === settings.theme);
+      });
+      bgBtns.forEach(function (b) {
+        b.classList.toggle('active', b.getAttribute('data-bg') === settings.background);
       });
       swatchBtns.forEach(function (b) {
         b.classList.toggle('active', b.getAttribute('data-accent').toLowerCase() === settings.accent.toLowerCase());
@@ -157,6 +185,13 @@
     themeBtns.forEach(function (b) {
       b.addEventListener('click', function () {
         settings.theme = b.getAttribute('data-theme');
+        apply(); save(); syncUI();
+      });
+    });
+
+    bgBtns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        settings.background = b.getAttribute('data-bg');
         apply(); save(); syncUI();
       });
     });
@@ -174,7 +209,7 @@
     });
 
     panel.querySelector('#mtw-reset').addEventListener('click', function () {
-      settings = { theme: DEFAULTS.theme, accent: DEFAULTS.accent };
+      settings = { theme: DEFAULTS.theme, accent: DEFAULTS.accent, background: DEFAULTS.background };
       apply(); save(); syncUI();
     });
 
