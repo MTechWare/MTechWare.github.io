@@ -216,7 +216,7 @@
       width: 700px;
       height: 700px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(255, 128, 0, 0.06) 0%, transparent 70%);
+      background: radial-gradient(circle, color-mix(in srgb, var(--accent) 6%, transparent) 0%, transparent 70%);
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
@@ -294,7 +294,7 @@
     }
 
     .btn-primary:hover {
-      background: #e67e00;
+      background: color-mix(in srgb, var(--accent) 85%, #000);
       transform: translateY(-2px);
     }
 
@@ -675,7 +675,7 @@
           <defs>
             <linearGradient id="logo-grad-footer" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stop-color="var(--accent)" />
-              <stop offset="100%" stop-color="#ffb347" />
+              <stop offset="100%" stop-color="var(--accent)" />
             </linearGradient>
           </defs>
           <polygon class="logo-hex" points="50,5 89,27.5 89,72.5 50,95 11,72.5 11,27.5" fill="none"

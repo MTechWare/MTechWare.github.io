@@ -19,10 +19,10 @@
       --surface2: #1a1a26;
       --border: #2a2a40;
       --accent: #ff8000;
-      --accent-glow: rgba(255, 128, 0, 0.06);
-      --accent-hover: #e67e00;
-      --accent-border: rgba(255, 128, 0, 0.3);
-      --accent2: #ff8000;
+      --accent-glow: color-mix(in srgb, var(--accent) 6%, transparent);
+      --accent-hover: color-mix(in srgb, var(--accent) 85%, #000);
+      --accent-border: color-mix(in srgb, var(--accent) 30%, transparent);
+      --accent2: var(--accent);
       --accent3: #ff6b6b;
       --text: #e8e8f0;
       --muted: #888899;
@@ -330,7 +330,7 @@
       border: 1px solid var(--border);
       border-radius: 8px;
       overflow: hidden;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05), 0 0 80px rgba(255, 128, 0, 0.08);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05), 0 0 80px color-mix(in srgb, var(--accent) 8%, transparent);
     }
 
     .app-header {
@@ -764,7 +764,7 @@
           <defs>
             <linearGradient id="logo-grad-footer" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stop-color="var(--accent2)" />
-              <stop offset="100%" stop-color="#ffb347" />
+              <stop offset="100%" stop-color="var(--accent)" />
             </linearGradient>
           </defs>
           <polygon class="logo-hex" points="50,5 89,27.5 89,72.5 50,95 11,72.5 11,27.5" fill="none"
