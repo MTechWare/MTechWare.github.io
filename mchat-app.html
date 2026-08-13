@@ -1,0 +1,1999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MChat — Your Outreach Generator</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Mono:wght@400;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f6f5f2;
+    --surface: #ffffff;
+    --surface2: #efeee9;
+    --border: rgba(0,0,0,0.1);
+    --border-strong: rgba(0,0,0,0.18);
+    --text: #1a1d23;
+    --text-muted: #6b7280;
+    --text-faint: #9ca3af;
+    --accent: #d96c00;
+    --accent-light: #ffefdd;
+    --accent-text: #8f4700;
+    --danger: #c0392b;
+    --danger-light: #fdf0ef;
+    --bg-alpha: 0.03;
+    --bg-cell: 40px;
+    --grid-line: rgba(0,0,0,var(--bg-alpha));
+    --sans: 'Syne', 'Inter', -apple-system, sans-serif;
+    --mono: 'Space Mono', 'JetBrains Mono', monospace;
+    --radius: 6px;
+    --radius-sm: 4px;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05);
+    --ok: #128a5b;
+  }
+
+  html.dark, html[data-theme="dark"] {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface2: #1a1a26;
+    --border: #2a2a40;
+    --border-strong: #3a3a58;
+    --text: #e8e8f0;
+    --text-muted: #888899;
+    --text-faint: #565670;
+    --accent: #ff8000;
+    --accent-light: rgba(255,128,0,0.12);
+    --accent-text: #ffa64d;
+    --danger: #ff6b6b;
+    --danger-light: #2a1618;
+    --grid-line: rgba(255,255,255,var(--bg-alpha));
+    --shadow: 0 1px 3px rgba(0,0,0,0.35), 0 4px 12px rgba(0,0,0,0.25);
+    --ok: #4ade80;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    html:not([data-theme="light"]):not([data-theme="dark"]) {
+      --bg: #0a0a0f;
+      --surface: #111118;
+      --surface2: #1a1a26;
+      --border: #2a2a40;
+      --border-strong: #3a3a58;
+      --text: #e8e8f0;
+      --text-muted: #888899;
+      --text-faint: #565670;
+      --accent: #ff8000;
+      --accent-light: rgba(255,128,0,0.12);
+      --accent-text: #ffa64d;
+      --grid-line: rgba(255,255,255,var(--bg-alpha));
+      --shadow: 0 1px 3px rgba(0,0,0,0.35), 0 4px 12px rgba(0,0,0,0.25);
+      --ok: #4ade80;
+    }
+  }
+
+  body {
+    font-family: var(--sans);
+    background-color: var(--bg);
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: var(--bg-cell) var(--bg-cell);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 40px 16px;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* ─── Background patterns (settings) ─── */
+  body.bg-dots {
+    background-image: radial-gradient(circle, var(--grid-line) 1.5px, transparent 1.5px);
+  }
+  body.bg-lines {
+    background-image: repeating-linear-gradient(45deg, var(--grid-line) 0, var(--grid-line) 1px, transparent 1px, transparent var(--bg-cell));
+    background-size: auto;
+  }
+  body.bg-none { background-image: none; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--accent);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    width: 100%;
+    max-width: 640px;
+    padding: 28px 32px 32px;
+    align-self: flex-start;
+  }
+
+  .brand-row { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 22px; }
+  .brand-name {
+    font-family: var(--mono);
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: var(--accent);
+  }
+  .brand-sub {
+    font-size: 11px;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 1px;
+  }
+  .theme-toggle {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-muted);
+    font-family: var(--mono);
+    font-size: 12px;
+    padding: 6px 10px;
+    cursor: pointer;
+    transition: border-color .15s, color .15s;
+  }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent-text); }
+
+  label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-faint);
+    margin: 18px 0 6px;
+  }
+  .hint { font-weight: 400; text-transform: none; letter-spacing: 0; color: var(--text-faint); }
+
+  input[type="text"], textarea {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.6rem 0.75rem;
+    font-family: var(--sans);
+    font-size: 14px;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  input[type="text"]:focus, textarea:focus { border-color: var(--accent); background: var(--surface); }
+  input[type="text"]::placeholder, textarea::placeholder { color: var(--text-faint); }
+
+  .row { display: flex; gap: 12px; }
+  .row > div { flex: 1; }
+  .input-row { display: flex; align-items: stretch; }
+  .input-row input { border-radius: var(--radius-sm) 0 0 var(--radius-sm); border-right: none; }
+  .suffix {
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    color: var(--text-muted);
+    font-family: var(--mono);
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 7px 13px;
+    border: 1px solid var(--border);
+    /* scales with the corner-roundness setting; ≥ half the chip height clamps to a pill */
+    border-radius: calc(var(--radius) * 3);
+    background: var(--surface);
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: background .15s, border-color .15s, color .15s;
+  }
+  .chip:hover { border-color: var(--accent); color: var(--accent-text); }
+  .chip.active { background: var(--accent); border-color: transparent; color: #111518; font-weight: 600; }
+  .chip-add { border-style: dashed; color: var(--text-faint); font-family: var(--mono); }
+  .chip-add:hover { border-style: solid; }
+
+  .label-row { display: flex; justify-content: space-between; align-items: baseline; }
+  .label-row label { margin: 18px 0 6px; }
+  .label-tools { display: flex; gap: 8px; align-items: center; }
+  .chip-search {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 4px 8px;
+    width: 120px;
+    outline: none;
+    transition: border-color 0.15s, width 0.2s;
+  }
+  .chip-search:focus { border-color: var(--accent); width: 170px; }
+  .chip-search::placeholder { color: var(--text-faint); }
+  .mini-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-muted);
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 3px 9px;
+    cursor: pointer;
+    transition: border-color .15s, color .15s;
+  }
+  .mini-btn:hover { border-color: var(--accent); color: var(--accent-text); }
+  .mini-btn.active { border-color: var(--accent); color: var(--accent-text); background: var(--accent-light); }
+
+  .editor {
+    margin-top: 12px;
+    padding: 14px;
+    border: 1px dashed var(--border-strong);
+    border-radius: var(--radius);
+    background: var(--surface2);
+  }
+  .editor label { margin-top: 12px; }
+  .editor label:first-child { margin-top: 0; }
+  .editor input[type="text"], .editor textarea { background: var(--surface); }
+  .editor textarea { min-height: 110px; resize: vertical; line-height: 1.5; }
+  .editor-actions { display: flex; gap: 10px; margin-top: 12px; }
+  .editor-actions .btn { flex: none; padding: 0.45rem 0.9rem; font-size: 13px; }
+  .editor-note { font-size: 12px; color: var(--text-faint); margin-top: 10px; }
+  .editor-note code {
+    font-family: var(--mono);
+    font-size: 11px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 1px 5px;
+  }
+
+  textarea#message {
+    min-height: 150px;
+    resize: vertical;
+    line-height: 1.5;
+  }
+
+  .buttons { display: flex; gap: 12px; margin-top: 20px; }
+  .btn {
+    flex: 1;
+    padding: 0.7rem 1rem;
+    border-radius: var(--radius-sm);
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    transition: background 0.15s, border-color 0.15s, opacity .15s;
+    white-space: nowrap;
+  }
+  .btn:hover { background: var(--surface2); }
+  .btn-accent { background: var(--accent); color: #111518; border-color: transparent; font-weight: 600; }
+  .btn-accent:hover { opacity: 0.9; background: var(--accent); }
+  .btn:disabled { opacity: .4; cursor: not-allowed; }
+  .btn:disabled:hover { background: var(--surface); }
+  .btn-accent:disabled:hover { background: var(--accent); opacity: .4; }
+
+  .status { text-align: center; font-size: 13px; color: var(--ok); margin-top: 12px; min-height: 18px; font-family: var(--mono); }
+  .footer-note { color: var(--text-faint); font-size: 12px; margin-top: 14px; text-align: center; line-height: 1.7; }
+  .web-link { color: var(--accent-text); text-decoration: none; }
+  .web-link:hover { text-decoration: underline; }
+
+  .btn-danger { color: var(--danger); }
+  .btn-danger:hover { background: var(--danger-light); border-color: var(--danger); }
+
+  /* ─── Settings modal (same idiom as MLibrary) ─── */
+  .modal-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    z-index: 800;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    backdrop-filter: blur(2px);
+  }
+  .modal-backdrop.open { display: flex; }
+
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    padding: 1.75rem;
+    width: 100%;
+    max-width: 720px;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: modalIn 0.18s ease;
+  }
+
+  @keyframes modalIn {
+    from { opacity: 0; transform: translateY(-10px) scale(0.98); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  .modal-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.25rem; }
+  .modal-title { font-family: var(--sans); font-size: 19px; font-weight: 600; color: var(--text); }
+  .modal-close {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 2px 6px;
+  }
+  .modal-close:hover { color: var(--text); }
+
+  .settings-section {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.1rem 1.2rem;
+    margin-bottom: 1rem;
+    background: var(--surface);
+  }
+  .settings-section:last-child { margin-bottom: 0; }
+  .settings-section h3 { font-size: 15px; font-weight: 600; margin-bottom: 0.35rem; }
+  .settings-section p { font-size: 13px; color: var(--text-muted); margin-bottom: 0.85rem; }
+  .settings-section.danger { border-color: var(--danger); }
+
+  .appearance-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1.25rem;
+  }
+  .appearance-group > label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 0.6rem;
+  }
+
+  .theme-options { display: flex; gap: 0.5rem; }
+  .theme-btn {
+    flex: 1;
+    padding: 0.5rem 0.4rem;
+    border: 2px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface2);
+    color: var(--text-muted);
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: center;
+    transition: border-color 0.15s, color 0.15s, background 0.15s;
+  }
+  .theme-btn:hover { border-color: var(--accent); color: var(--text); }
+  .theme-btn.active { border-color: var(--accent); background: var(--accent-light); color: var(--accent-text); }
+
+  .font-options { display: flex; flex-direction: column; gap: 0.4rem; }
+  .font-btn {
+    padding: 0.5rem 0.75rem;
+    border: 2px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface2);
+    color: var(--text-muted);
+    font-size: 13px;
+    cursor: pointer;
+    text-align: left;
+    transition: border-color 0.15s, color 0.15s, background 0.15s;
+  }
+  .font-btn:hover { border-color: var(--accent); color: var(--text); }
+  .font-btn.active { border-color: var(--accent); background: var(--accent-light); color: var(--accent-text); }
+
+  .bg-options { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .bg-btn {
+    flex: 1;
+    min-width: 90px;
+    padding: 0.5rem 0.75rem;
+    border: 2px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface2);
+    color: var(--text-muted);
+    font-family: var(--sans);
+    font-size: 13px;
+    cursor: pointer;
+    text-align: center;
+    transition: border-color 0.15s, color 0.15s, background 0.15s;
+  }
+  .bg-btn:hover { border-color: var(--accent); color: var(--text); }
+  .bg-btn.active { border-color: var(--accent); background: var(--accent-light); color: var(--accent-text); }
+  .bg-slider-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-muted); }
+
+  .accent-swatches { display: flex; flex-wrap: wrap; gap: 7px; }
+  .accent-swatch {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    cursor: pointer;
+    transition: transform 0.15s, border-color 0.15s;
+    outline: none;
+  }
+  .accent-swatch:hover { transform: scale(1.15); }
+  .accent-swatch.active { border-color: var(--text); }
+
+  .accent-custom-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+  .accent-custom-row label {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 400;
+    margin: 0;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  #accentPicker {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 3px solid var(--border-strong);
+    padding: 0;
+    cursor: pointer;
+    background: none;
+    outline: none;
+    overflow: hidden;
+    flex-shrink: 0;
+    transition: border-color 0.15s, transform 0.15s;
+  }
+  #accentPicker::-webkit-color-swatch-wrapper { padding: 0; }
+  #accentPicker::-webkit-color-swatch { border: none; border-radius: 50%; }
+  #accentPicker::-moz-color-swatch { border: none; border-radius: 50%; }
+  #accentPicker:hover { transform: scale(1.15); }
+  #accentPicker.active { border-color: var(--text); }
+
+  #bgColorPicker {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 3px solid var(--border-strong);
+    padding: 0;
+    cursor: pointer;
+    background: none;
+    outline: none;
+    overflow: hidden;
+    flex-shrink: 0;
+    transition: border-color 0.15s, transform 0.15s;
+  }
+  #bgColorPicker::-webkit-color-swatch-wrapper { padding: 0; }
+  #bgColorPicker::-webkit-color-swatch { border: none; border-radius: 50%; }
+  #bgColorPicker::-moz-color-swatch { border: none; border-radius: 50%; }
+  #bgColorPicker:hover { transform: scale(1.15); }
+  #bgColorPicker.active { border-color: var(--text); }
+
+  .data-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+  .data-actions .btn { flex: none; padding: 0.45rem 0.9rem; font-size: 13px; }
+  .data-status { font-size: 12px; color: var(--accent-text); margin-top: 10px; min-height: 15px; }
+
+  /* ─── Corner roundness (same as MLibrary) ─── */
+  .radius-slider-wrap { display: flex; flex-direction: column; gap: 0.5rem; }
+  input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer; }
+  .radius-preview { display: flex; gap: 6px; }
+  .radius-preview-box {
+    flex: 1;
+    height: 32px;
+    background: var(--accent-light);
+    border: 2px solid var(--accent);
+    border-radius: var(--radius);
+    transition: border-radius 0.2s;
+  }
+
+  /* ─── Brand name animations (same as MLibrary) ─── */
+  @keyframes brandShimmer {
+    0%   { background-position: -200% center; }
+    100% { background-position: 200% center; }
+  }
+  .brand-anim-shimmer .brand-name {
+    background: linear-gradient(90deg, var(--text) 25%, var(--accent) 50%, var(--text) 75%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: brandShimmer 3s linear infinite;
+  }
+  @keyframes brandPulse {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.45; }
+  }
+  .brand-anim-pulse .brand-name { animation: brandPulse 2.4s ease-in-out infinite; }
+  @keyframes brandGlow {
+    0%, 100% { text-shadow: 0 0 0px transparent; }
+    50%      { text-shadow: 0 0 12px var(--accent), 0 0 24px var(--accent); }
+  }
+  .brand-anim-glow .brand-name { animation: brandGlow 2.8s ease-in-out infinite; }
+  @keyframes brandBounce {
+    0%, 100% { transform: translateY(0); }
+    30%      { transform: translateY(-4px); }
+    60%      { transform: translateY(-1px); }
+  }
+  .brand-anim-bounce .brand-name { animation: brandBounce 2s ease-in-out infinite; display: inline-block; }
+  @keyframes brandCursor {
+    0%, 100% { border-right-color: var(--accent); }
+    50%      { border-right-color: transparent; }
+  }
+  .brand-anim-typewriter .brand-name {
+    border-right: 2px solid var(--accent);
+    padding-right: 3px;
+    animation: brandCursor 1s step-end infinite;
+  }
+
+  .brand-anim-preview { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
+  .brand-anim-btn {
+    padding: 0.4rem 0.9rem;
+    border: 2px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface2);
+    color: var(--text-muted);
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s, background 0.15s;
+  }
+  .brand-anim-btn:hover { border-color: var(--accent); color: var(--text); }
+  .brand-anim-btn.active { border-color: var(--accent); background: var(--accent-light); color: var(--accent-text); }
+
+  .autobackup-status { margin-bottom: 0.85rem; font-size: 13px; color: var(--text-muted); }
+  .brand-name-input {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-family: var(--mono);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .brand-name-input:focus { border-color: var(--accent); }
+
+  /* ─── History ─── */
+  .history-list { max-height: 50vh; overflow-y: auto; }
+  .history-entry {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    margin-bottom: 10px;
+    background: var(--surface2);
+  }
+  .history-entry:last-child { margin-bottom: 0; }
+  .history-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+  .history-meta-left { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .history-time { font-family: var(--mono); font-size: 11px; color: var(--text-muted); }
+  .history-to { font-family: var(--mono); font-size: 11px; color: var(--accent-text); }
+  .history-scenario { font-size: 11px; color: var(--text-faint); font-style: italic; }
+  .history-msg {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-break: break-word;
+    margin-bottom: 8px;
+    padding: 8px 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+  }
+  .history-actions { display: flex; gap: 6px; }
+  .history-actions .btn { flex: none; padding: 0.3rem 0.7rem; font-size: 12px; }
+  .history-empty { text-align: center; color: var(--text-faint); font-size: 13px; padding: 2rem 0; }
+  .history-filter {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-family: var(--sans);
+    font-size: 13px;
+    color: var(--text);
+    outline: none;
+    margin-bottom: 12px;
+    transition: border-color 0.15s;
+  }
+  .history-filter:focus { border-color: var(--accent); }
+  .history-filter::placeholder { color: var(--text-faint); }
+  .history-stats { font-size: 12px; color: var(--text-faint); margin-bottom: 10px; }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="brand-row">
+    <div class="brand">
+      <div class="brand-name" id="brandName">MChat</div>
+      <div class="brand-sub">Your Outreach Generator</div>
+    </div>
+    <button class="theme-toggle" id="settingsBtn" type="button" title="Settings">&#9881; settings</button>
+  </div>
+
+  <div class="label-row">
+    <label style="margin-top:0;">Scenario</label>
+    <div class="label-tools">
+      <input type="search" class="chip-search" id="tplSearch" placeholder="&#128269; search" autocomplete="off">
+      <button class="mini-btn" id="editToggle" type="button">&#9998; edit</button>
+    </div>
+  </div>
+  <div class="chips" id="chips"></div>
+
+  <div class="editor" id="editor" hidden>
+    <label for="tplName">Scenario name</label>
+    <input type="text" id="tplName" autocomplete="off" placeholder="e.g. VPN check-in">
+    <label for="tplText">Template</label>
+    <textarea id="tplText" spellcheck="true"></textarea>
+    <p class="editor-note">Placeholders: <code>{name}</code> <code>{ticket}</code> <code>{issue}</code> <code>{tech}</code> <code>{email}</code> — they fill in automatically. Changes save as you type.</p>
+    <div class="editor-actions">
+      <button class="btn" id="tplDelete" type="button">Delete scenario</button>
+      <button class="btn" id="tplReset" type="button">Reset all to defaults</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div>
+      <label for="firstName">User's first name</label>
+      <input type="text" id="firstName" placeholder="e.g. Max" autocomplete="off">
+    </div>
+    <div>
+      <label for="ticket">Ticket # <span class="hint">(INC / RITM)</span></label>
+      <input type="text" id="ticket" placeholder="e.g. INC0451234" autocomplete="off">
+    </div>
+  </div>
+
+  <div id="envSection">
+    <div class="label-row">
+      <label>Teams environment</label>
+      <button class="mini-btn" id="envToggle" type="button">&#9881; configure</button>
+    </div>
+    <div class="chips" id="envChips"></div>
+
+    <div class="editor" id="envEditor" hidden>
+      <label for="envName">Name <span class="hint">(shown on the chip)</span></label>
+      <input type="text" id="envName" autocomplete="off" placeholder="e.g. Contoso">
+      <label for="envSuffix">Email domain <span class="hint">(added to clockIDs/usernames)</span></label>
+      <input type="text" id="envSuffix" autocomplete="off" placeholder="e.g. @example.com">
+      <label for="envTenant">Teams tenant ID <span class="hint">(optional — makes the chat open in that org)</span></label>
+      <input type="text" id="envTenant" autocomplete="off" placeholder="e.g. 72f988bf-86f1-41af-91ab-2d7cd011db47">
+      <p class="editor-note">Find the tenant ID in Teams: click <code>&hellip;</code> next to the org name &rarr; the switcher URL contains <code>tenantId=&hellip;</code>, or ask your admin. Changes save as you type.</p>
+      <div class="editor-actions">
+        <button class="btn btn-danger" id="envDelete" type="button">&#128465; Remove this environment</button>
+      </div>
+    </div>
+  </div>
+
+  <label for="userEmail">User's email or clockID <span class="hint">(for opening the Teams chat)</span></label>
+  <div class="input-row">
+    <input type="text" id="userEmail" placeholder="e.g. First.Last or 123456" autocomplete="off">
+    <span class="suffix" id="emailSuffix">@example.com</span>
+  </div>
+
+  <label for="issue">Issue summary <span class="hint">(short — fills into the message)</span></label>
+  <input type="text" id="issue" placeholder="e.g. Outlook not opening" autocomplete="off">
+
+  <label for="techName">Your name <span class="hint">(remembered on this computer)</span></label>
+  <input type="text" id="techName" placeholder="e.g. Max" autocomplete="off">
+
+  <label for="message">Message <span class="hint">(edit freely before sending)</span></label>
+  <textarea id="message" spellcheck="true"></textarea>
+
+  <div class="buttons">
+    <button class="btn btn-accent" id="openTeams" disabled>Open chat in Teams</button>
+    <button class="btn" id="openOutlook" disabled>Open in Outlook</button>
+    <button class="btn" id="copyMsg" disabled>Copy message</button>
+    <button class="btn" id="historyBtn" type="button">&#128339; history</button>
+  </div>
+  <p class="status" id="status"></p>
+  <p class="footer-note">Teams opens a chat, Outlook a draft email — message pre-filled, you still press send yourself.<br>
+  Teams not opening? <a href="#" id="openWeb" class="web-link">Open in web Teams instead</a></p>
+</div>
+
+<div class="modal-backdrop" id="settingsModal">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title">Settings</div>
+      <button class="modal-close" id="settingsClose" type="button" title="Close">&times;</button>
+    </div>
+
+    <div class="settings-section">
+      <h3>Appearance</h3>
+      <p>Customise the look and feel of MChat.</p>
+      <div class="appearance-grid">
+        <div class="appearance-group">
+          <label>Theme</label>
+          <div class="theme-options">
+            <button class="theme-btn" data-theme="light" type="button">&#9728; Light</button>
+            <button class="theme-btn" data-theme="dark" type="button">&#9790; Dark</button>
+            <button class="theme-btn" data-theme="auto" type="button">&#11041; Auto</button>
+          </div>
+        </div>
+        <div class="appearance-group">
+          <label>Accent colour</label>
+          <div class="accent-swatches" id="accentSwatches"></div>
+          <div class="accent-custom-row">
+            <input type="color" id="accentPicker" title="Custom colour" value="#ff8000">
+            <label for="accentPicker">Custom colour</label>
+          </div>
+        </div>
+        <div class="appearance-group">
+          <label>Interface font</label>
+          <div class="font-options">
+            <button class="font-btn" data-font="syne" type="button" style="font-family:'Syne',sans-serif">Syne</button>
+            <button class="font-btn" data-font="dm" type="button" style="font-family:'DM Sans',sans-serif">DM Sans</button>
+            <button class="font-btn" data-font="inter" type="button" style="font-family:'Inter',sans-serif">Inter <span style="font-size:11px;opacity:0.6">(default)</span></button>
+            <button class="font-btn" data-font="mono" type="button" style="font-family:'Space Mono',monospace">Monospace</button>
+          </div>
+        </div>
+        <div class="appearance-group">
+          <label>Corner roundness</label>
+          <div class="radius-slider-wrap">
+            <input type="range" id="radiusSlider" min="0" max="20" step="2" value="6">
+            <div class="radius-preview">
+              <div class="radius-preview-box"></div>
+              <div class="radius-preview-box"></div>
+              <div class="radius-preview-box"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <h3>Background</h3>
+      <p>Choose the backdrop pattern behind the card and tune its size and visibility.</p>
+      <div class="appearance-grid">
+        <div class="appearance-group" style="grid-column: 1 / -1;">
+          <label>Pattern</label>
+          <div class="bg-options">
+            <button class="bg-btn active" data-bg="grid" type="button">&#9638; Grid <span style="font-size:11px;opacity:0.6">(default)</span></button>
+            <button class="bg-btn" data-bg="dots" type="button">&#8942;&#8942; Dots</button>
+            <button class="bg-btn" data-bg="lines" type="button">&#9585; Lines</button>
+            <button class="bg-btn" data-bg="none" type="button">&#9711; None</button>
+          </div>
+        </div>
+        <div class="appearance-group">
+          <label>Pattern size</label>
+          <div class="radius-slider-wrap">
+            <input type="range" id="bgSizeSlider" min="20" max="80" step="5" value="40">
+            <div class="bg-slider-label"><span>Dense</span><span>Sparse</span></div>
+          </div>
+        </div>
+        <div class="appearance-group">
+          <label>Intensity</label>
+          <div class="radius-slider-wrap">
+            <input type="range" id="bgAlphaSlider" min="1" max="12" step="1" value="3">
+            <div class="bg-slider-label"><span>Subtle</span><span>Bold</span></div>
+          </div>
+        </div>
+        <div class="appearance-group">
+          <label>Colour</label>
+          <div class="accent-custom-row" style="margin-top: 0;">
+            <input type="color" id="bgColorPicker" title="Background colour" value="#0a0a0f">
+            <label for="bgColorPicker">Custom colour</label>
+            <button class="btn" id="bgColorReset" type="button" style="padding: 0.3rem 0.7rem; font-size: 12px;">Theme default</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <h3>Brand name</h3>
+      <p>Customise the name shown in the header and choose an animation style.</p>
+      <div class="appearance-grid">
+        <div class="appearance-group">
+          <label>Name</label>
+          <input type="text" class="brand-name-input" id="brandNameInput" maxlength="24" placeholder="MChat" autocomplete="off">
+        </div>
+        <div class="appearance-group" style="grid-column: 1 / -1;">
+          <label>Animation</label>
+          <div class="brand-anim-preview">
+            <button class="brand-anim-btn active" data-anim="none" type="button">None</button>
+            <button class="brand-anim-btn" data-anim="shimmer" type="button">&#10024; Shimmer</button>
+            <button class="brand-anim-btn" data-anim="pulse" type="button">&#128147; Pulse</button>
+            <button class="brand-anim-btn" data-anim="glow" type="button">&#127775; Glow</button>
+            <button class="brand-anim-btn" data-anim="bounce" type="button">&#127936; Bounce</button>
+            <button class="brand-anim-btn" data-anim="typewriter" type="button">&#9000; Typewriter</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <h3>Data</h3>
+      <p>Back up your scenarios, environments, name &amp; appearance — or move them to another computer.</p>
+      <div class="data-actions">
+        <button class="btn" id="exportBtn" type="button">&#11015; Export backup</button>
+        <button class="btn" id="importBtn" type="button">&#11014; Import backup</button>
+        <input type="file" id="importFile" accept=".json" style="display:none">
+      </div>
+      <div class="data-status" id="dataStatus"></div>
+    </div>
+
+    <div class="settings-section">
+      <h3>Auto-backup</h3>
+      <p>Automatically save a <code>MChat-backup.json</code> file to a folder on your device every 5 minutes and when you switch tabs. Requires Chrome or Edge.</p>
+      <div class="autobackup-status" id="autobackupStatus"></div>
+      <div class="data-actions">
+        <button class="btn btn-accent" id="autobackupPick" type="button">&#128193; Choose folder</button>
+        <button class="btn" id="autobackupSaveNow" style="display:none" type="button">&#128190; Save now</button>
+        <button class="btn btn-danger" id="autobackupClear" style="display:none" type="button">Remove</button>
+      </div>
+    </div>
+
+    <div class="settings-section danger">
+      <h3>Danger zone</h3>
+      <p>Permanently remove all MChat data saved in this browser. This cannot be undone.</p>
+      <button class="btn btn-danger" id="clearAllBtn" type="button">&#128465; Clear all data</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="historyModal">
+  <div class="modal" style="max-width: 640px;">
+    <div class="modal-head">
+      <div class="modal-title">Message history</div>
+      <button class="modal-close" id="historyClose" type="button" title="Close">&times;</button>
+    </div>
+    <input type="search" class="history-filter" id="historyFilter" placeholder="&#128269; filter by recipient, scenario, or message text" autocomplete="off">
+    <div class="history-stats" id="historyStats"></div>
+    <div class="history-list" id="historyList"></div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="setupModal">
+  <div class="modal" style="max-width: 460px;">
+    <div class="modal-head">
+      <div class="modal-title">Welcome to MChat</div>
+    </div>
+    <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 1rem;">Two quick questions to get you set up — you'll only see this once.</p>
+
+    <div class="settings-section">
+      <h3>Teams environments</h3>
+      <p>MChat can include switcher chips for common email domains, so you can type a bare username and have the domain appended automatically. Do you want to set any up now?</p>
+      <div class="chips" id="setupEnvChoice">
+        <button class="chip active" data-choice="pick" type="button">Let me pick</button>
+        <button class="chip" data-choice="none" type="button">None — I'll type full addresses</button>
+      </div>
+      <div id="setupEnvPicker" style="margin-top: 12px;">
+        <p style="margin-bottom: 0.6rem;">Tap the ones you need — or none at all, and just type full email addresses.</p>
+        <div class="chips" id="setupPickChips"></div>
+        <div style="display: flex; gap: 8px; margin-top: 10px;">
+          <input type="text" id="setupCustomDomain" autocomplete="off" placeholder="add your own — e.g. @company.com" style="flex: 1;">
+          <button class="btn" id="setupCustomAdd" type="button" style="flex: none;">+ add</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <h3>Auto-backup</h3>
+      <p>Optionally save your scenarios &amp; settings to a folder on this device automatically, so nothing is lost if the browser cache is cleared. Requires Chrome or Edge.</p>
+      <div class="autobackup-status" id="setupBackupStatus">Not enabled.</div>
+      <div class="data-actions">
+        <button class="btn btn-accent" id="setupBackupPick" type="button">&#128193; Choose backup folder</button>
+      </div>
+    </div>
+
+    <button class="btn btn-accent" id="setupDone" type="button" style="width: 100%; margin-top: 4px;">Done</button>
+  </div>
+</div>
+
+<script>
+  const els = {
+    chips: document.getElementById('chips'),
+    firstName: document.getElementById('firstName'),
+    ticket: document.getElementById('ticket'),
+    userEmail: document.getElementById('userEmail'),
+    issue: document.getElementById('issue'),
+    techName: document.getElementById('techName'),
+    message: document.getElementById('message'),
+    openTeams: document.getElementById('openTeams'),
+    copyMsg: document.getElementById('copyMsg'),
+    status: document.getElementById('status'),
+  };
+
+  const TECH_KEY = 'mchat_techName';
+  const THEME_KEY = 'mchat_theme';
+  const ACCENT_KEY = 'mchat_accent';
+
+  // ── Appearance: theme + accent, same presets as MLibrary ──
+  const ACCENT_PRESETS = [
+    { name: 'MTechWare', light: { accent:'#d96c00', light:'#ffefdd', text:'#8f4700' }, dark: { accent:'#ff8000', light:'rgba(255,128,0,0.12)', text:'#ffa64d' } },
+    { name: 'Forest',   light: { accent:'#2d5a3d', light:'#e8f0eb', text:'#1c3d28' }, dark: { accent:'#5a9e6e', light:'#1a2e20', text:'#a8d4b5' } },
+    { name: 'Ocean',    light: { accent:'#1a5f8a', light:'#e3f0f8', text:'#0e3d5e' }, dark: { accent:'#4a9eca', light:'#0e2a3a', text:'#8fd0f0' } },
+    { name: 'Plum',     light: { accent:'#6b3d8a', light:'#f0e8f8', text:'#3d1a5e' }, dark: { accent:'#a06eca', light:'#2a1a3a', text:'#d4a8f0' } },
+    { name: 'Crimson',  light: { accent:'#a02020', light:'#f8e8e8', text:'#6e1010' }, dark: { accent:'#e06060', light:'#3a1a1a', text:'#f0a8a8' } },
+    { name: 'Amber',    light: { accent:'#9a6000', light:'#fdf3d8', text:'#6b3e00' }, dark: { accent:'#e0a830', light:'#3a2800', text:'#f5d080' } },
+    { name: 'Slate',    light: { accent:'#3a4d6e', light:'#e8ecf5', text:'#1e2e4a' }, dark: { accent:'#7a98c8', light:'#1a2035', text:'#b0c8f0' } },
+    { name: 'Rose',     light: { accent:'#9c3060', light:'#f8e8f0', text:'#6e1040' }, dark: { accent:'#d87aaa', light:'#3a1a28', text:'#f0b0d0' } },
+    { name: 'Teal',     light: { accent:'#1a7a70', light:'#e0f5f3', text:'#0e4e48' }, dark: { accent:'#4abfb5', light:'#0e2e2c', text:'#8de8e0' } },
+  ];
+
+  function isDarkMode() {
+    const t = localStorage.getItem(THEME_KEY) || 'auto';
+    if (t === 'dark') return true;
+    if (t === 'light') return false;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+  }
+
+  function deriveAccentShades(hex) {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    const dark = isDarkMode();
+    const bg = dark ? 18 : 255;
+    const mix = (c) => Math.round(bg + (c - bg) * (dark ? 0.18 : 0.12));
+    const light = `rgb(${mix(r)},${mix(g)},${mix(b)})`;
+    const factor = dark ? 1.65 : 0.65;
+    const t = (c) => Math.min(255, Math.round(c * factor));
+    const text = `rgb(${t(r)},${t(g)},${t(b)})`;
+    return { light, text };
+  }
+
+  function applyAccent(value) {
+    const isCustom = value && value.startsWith('#');
+    if (isCustom) {
+      const { light, text } = deriveAccentShades(value);
+      document.documentElement.style.setProperty('--accent', value);
+      document.documentElement.style.setProperty('--accent-light', light);
+      document.documentElement.style.setProperty('--accent-text', text);
+    } else {
+      const preset = ACCENT_PRESETS.find(p => p.name === value) || ACCENT_PRESETS[0];
+      const vars = isDarkMode() ? preset.dark : preset.light;
+      document.documentElement.style.setProperty('--accent', vars.accent);
+      document.documentElement.style.setProperty('--accent-light', vars.light);
+      document.documentElement.style.setProperty('--accent-text', vars.text);
+    }
+  }
+
+  function setAccent(value) {
+    localStorage.setItem(ACCENT_KEY, value);
+    applyAccent(value);
+    const isCustom = value && value.startsWith('#');
+    document.querySelectorAll('.accent-swatch').forEach(el => {
+      el.classList.toggle('active', !isCustom && el.dataset.accent === value);
+    });
+    const picker = document.getElementById('accentPicker');
+    picker.classList.toggle('active', isCustom);
+    if (isCustom) picker.value = value;
+  }
+
+  function buildAccentSwatches() {
+    const container = document.getElementById('accentSwatches');
+    const saved = localStorage.getItem(ACCENT_KEY) || 'MTechWare';
+    const isCustom = saved.startsWith('#');
+    container.innerHTML = '';
+    ACCENT_PRESETS.forEach(p => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'accent-swatch' + (!isCustom && p.name === saved ? ' active' : '');
+      btn.dataset.accent = p.name;
+      btn.title = p.name;
+      btn.style.background = p.light.accent;
+      btn.addEventListener('click', () => setAccent(p.name));
+      container.appendChild(btn);
+    });
+    const picker = document.getElementById('accentPicker');
+    picker.classList.toggle('active', isCustom);
+    if (isCustom) picker.value = saved;
+  }
+  document.getElementById('accentPicker').addEventListener('input', (e) => setAccent(e.target.value));
+
+  function applyTheme(theme) {
+    if (theme === 'auto') document.documentElement.removeAttribute('data-theme');
+    else document.documentElement.setAttribute('data-theme', theme);
+    document.querySelectorAll('.theme-btn').forEach(b => b.classList.toggle('active', b.dataset.theme === theme));
+    applyAccent(localStorage.getItem(ACCENT_KEY) || 'MTechWare');
+  }
+  function setTheme(t) {
+    localStorage.setItem(THEME_KEY, t);
+    applyTheme(t);
+  }
+  document.querySelectorAll('.theme-btn').forEach(b =>
+    b.addEventListener('click', () => setTheme(b.dataset.theme)));
+
+  // ── Interface font, same options as MLibrary ──
+  const FONT_KEY = 'mchat_font';
+  const FONTS = {
+    syne:  '"Syne", "Inter", -apple-system, sans-serif',
+    dm:    '"DM Sans", -apple-system, sans-serif',
+    inter: '"Inter", -apple-system, sans-serif',
+    mono:  '"Space Mono", "JetBrains Mono", monospace',
+  };
+  function applyFont(key) {
+    document.documentElement.style.setProperty('--sans', FONTS[key] || FONTS.inter);
+    document.querySelectorAll('.font-btn').forEach(b => b.classList.toggle('active', b.dataset.font === key));
+  }
+  function setFont(key) {
+    localStorage.setItem(FONT_KEY, key);
+    applyFont(key);
+  }
+  document.querySelectorAll('.font-btn').forEach(b =>
+    b.addEventListener('click', () => setFont(b.dataset.font)));
+  applyFont(localStorage.getItem(FONT_KEY) || 'inter');
+
+  // ── Background pattern, size & intensity ──
+  const BG_PATTERN_KEY = 'mchat_bg_pattern';
+  const BG_SIZE_KEY = 'mchat_bg_size';
+  const BG_ALPHA_KEY = 'mchat_bg_alpha';
+  const BG_PATTERNS = ['grid', 'dots', 'lines', 'none'];
+  function applyBgPattern(p) {
+    if (!BG_PATTERNS.includes(p)) p = 'grid';
+    document.body.classList.remove('bg-dots', 'bg-lines', 'bg-none');
+    if (p !== 'grid') document.body.classList.add('bg-' + p);
+    document.querySelectorAll('.bg-btn').forEach(b => b.classList.toggle('active', b.dataset.bg === p));
+  }
+  function applyBgSize(px) {
+    document.documentElement.style.setProperty('--bg-cell', px + 'px');
+  }
+  function applyBgAlpha(val) {
+    document.documentElement.style.setProperty('--bg-alpha', String(val / 100));
+  }
+  document.querySelectorAll('.bg-btn').forEach(b =>
+    b.addEventListener('click', () => {
+      localStorage.setItem(BG_PATTERN_KEY, b.dataset.bg);
+      applyBgPattern(b.dataset.bg);
+    }));
+  document.getElementById('bgSizeSlider').addEventListener('input', (e) => {
+    localStorage.setItem(BG_SIZE_KEY, e.target.value);
+    applyBgSize(e.target.value);
+  });
+  document.getElementById('bgAlphaSlider').addEventListener('input', (e) => {
+    localStorage.setItem(BG_ALPHA_KEY, e.target.value);
+    applyBgAlpha(e.target.value);
+  });
+  applyBgPattern(localStorage.getItem(BG_PATTERN_KEY) || 'grid');
+  applyBgSize(parseInt(localStorage.getItem(BG_SIZE_KEY), 10) || 40);
+  applyBgAlpha(parseInt(localStorage.getItem(BG_ALPHA_KEY), 10) || 3);
+
+  // ── Background colour (empty = follow the theme) ──
+  const BG_COLOR_KEY = 'mchat_bg_color';
+  function applyBgColor(c) {
+    if (c) document.documentElement.style.setProperty('--bg', c);
+    else document.documentElement.style.removeProperty('--bg');
+    const picker = document.getElementById('bgColorPicker');
+    picker.classList.toggle('active', !!c);
+    if (c) picker.value = c;
+  }
+  document.getElementById('bgColorPicker').addEventListener('input', (e) => {
+    localStorage.setItem(BG_COLOR_KEY, e.target.value);
+    applyBgColor(e.target.value);
+  });
+  document.getElementById('bgColorReset').addEventListener('click', () => {
+    localStorage.removeItem(BG_COLOR_KEY);
+    applyBgColor('');
+  });
+  applyBgColor(localStorage.getItem(BG_COLOR_KEY) || '');
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+    if ((localStorage.getItem(THEME_KEY) || 'auto') === 'auto') applyTheme('auto');
+  });
+  applyTheme(localStorage.getItem(THEME_KEY) || 'auto');
+
+  // ── Corner roundness, same as MLibrary (MChat default: 6) ──
+  const RADIUS_KEY = 'mchat_radius';
+  function setRadius(val) {
+    localStorage.setItem(RADIUS_KEY, val);
+    document.documentElement.style.setProperty('--radius', val + 'px');
+    document.documentElement.style.setProperty('--radius-sm', Math.max(2, val - 2) + 'px');
+    document.getElementById('radiusSlider').value = val;
+  }
+  document.getElementById('radiusSlider').addEventListener('input', (e) => setRadius(e.target.value));
+  if (localStorage.getItem(RADIUS_KEY) !== null) setRadius(localStorage.getItem(RADIUS_KEY));
+
+  // ── Brand name & animation, same as MLibrary ──
+  const BRAND_NAME_KEY = 'mchat_brand_name';
+  const BRAND_ANIM_KEY = 'mchat_brand_anim';
+  function setBrandName(val) {
+    localStorage.setItem(BRAND_NAME_KEY, val.trim()); // store raw (empty = default)
+    document.getElementById('brandName').textContent = val.trim() || 'MChat';
+  }
+  function setBrandAnim(anim) {
+    localStorage.setItem(BRAND_ANIM_KEY, anim);
+    const brand = document.querySelector('.brand');
+    brand.className = brand.className.replace(/\bbrand-anim-\S+/g, '').trim();
+    if (anim && anim !== 'none') brand.classList.add('brand-anim-' + anim);
+    document.querySelectorAll('.brand-anim-btn').forEach(b =>
+      b.classList.toggle('active', b.dataset.anim === anim));
+  }
+  document.getElementById('brandNameInput').addEventListener('input', (e) => setBrandName(e.target.value));
+  document.querySelectorAll('.brand-anim-btn').forEach(b =>
+    b.addEventListener('click', () => setBrandAnim(b.dataset.anim)));
+  setBrandName(localStorage.getItem(BRAND_NAME_KEY) || '');
+  // one-time migration: shimmer became the default; earlier versions auto-saved 'none'
+  if (!localStorage.getItem('mchat_anim_seed_shimmer')) {
+    if (localStorage.getItem(BRAND_ANIM_KEY) === 'none') localStorage.setItem(BRAND_ANIM_KEY, 'shimmer');
+    localStorage.setItem('mchat_anim_seed_shimmer', '1');
+  }
+  setBrandAnim(localStorage.getItem(BRAND_ANIM_KEY) || 'shimmer');
+
+  // ── Settings modal ──
+  const settingsModal = document.getElementById('settingsModal');
+  function closeSettings() { settingsModal.classList.remove('open'); }
+  document.getElementById('settingsBtn').addEventListener('click', () => {
+    buildAccentSwatches();
+    document.getElementById('radiusSlider').value = localStorage.getItem(RADIUS_KEY) || '6';
+    document.getElementById('bgSizeSlider').value = localStorage.getItem(BG_SIZE_KEY) || '40';
+    document.getElementById('bgAlphaSlider').value = localStorage.getItem(BG_ALPHA_KEY) || '3';
+    applyBgPattern(localStorage.getItem(BG_PATTERN_KEY) || 'grid');
+    const savedBgColor = localStorage.getItem(BG_COLOR_KEY);
+    document.getElementById('bgColorPicker').classList.toggle('active', !!savedBgColor);
+    if (savedBgColor) document.getElementById('bgColorPicker').value = savedBgColor;
+    else {
+      const themeBg = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim();
+      if (/^#[0-9a-f]{6}$/i.test(themeBg)) document.getElementById('bgColorPicker').value = themeBg;
+    }
+    document.getElementById('brandNameInput').value = localStorage.getItem(BRAND_NAME_KEY) || '';
+    document.querySelectorAll('.brand-anim-btn').forEach(b =>
+      b.classList.toggle('active', b.dataset.anim === (localStorage.getItem(BRAND_ANIM_KEY) || 'shimmer')));
+    updateAutoBackupUI();
+    settingsModal.classList.add('open');
+  });
+  document.getElementById('settingsClose').addEventListener('click', closeSettings);
+  settingsModal.addEventListener('click', (e) => { if (e.target === settingsModal) closeSettings(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeSettings(); });
+
+  // ── Data: export / import / clear ──
+  const MCHAT_KEYS = ['mchat_techName', 'mchat_theme', 'mchat_accent', 'mchat_font', 'mchat_radius', 'mchat_bg_pattern', 'mchat_bg_size', 'mchat_bg_alpha', 'mchat_bg_color', 'mchat_brand_name', 'mchat_brand_anim', 'mchat_templates', 'mchat_envs', 'mchat_activeEnv'];
+  const dataStatus = document.getElementById('dataStatus');
+
+  function buildBackupData() {
+    const data = { app: 'MChat', version: 1 };
+    MCHAT_KEYS.forEach(k => { data[k] = localStorage.getItem(k); });
+    return data;
+  }
+
+  document.getElementById('exportBtn').addEventListener('click', () => {
+    const data = buildBackupData();
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'MChat-backup.json';
+    a.click();
+    URL.revokeObjectURL(a.href);
+    dataStatus.textContent = 'Backup downloaded as MChat-backup.json.';
+  });
+
+  document.getElementById('importBtn').addEventListener('click', () =>
+    document.getElementById('importFile').click());
+  document.getElementById('importFile').addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const data = JSON.parse(reader.result);
+        if (data.app !== 'MChat') throw new Error('not an MChat backup');
+        MCHAT_KEYS.forEach(k => {
+          if (typeof data[k] === 'string') localStorage.setItem(k, data[k]);
+        });
+        dataStatus.textContent = 'Backup restored — reloading…';
+        setTimeout(() => location.reload(), 400);
+      } catch (err) {
+        dataStatus.textContent = 'Import failed: that file is not a valid MChat backup.';
+      }
+      e.target.value = '';
+    };
+    reader.readAsText(file);
+  });
+
+  document.getElementById('clearAllBtn').addEventListener('click', () => {
+    if (!confirm('Permanently delete ALL MChat data saved in this browser (scenarios, environments, appearance, your name)? This cannot be undone.')) return;
+    MCHAT_KEYS.forEach(k => localStorage.removeItem(k));
+    ['mchat_tpl_seed_pwreset', 'mchat_tpl_seed_postcall', 'mchat_anim_seed_shimmer', 'mchat_setup_done', 'mchat_autobackup_dir', 'mchat_autobackup_last'].forEach(k => localStorage.removeItem(k));
+    location.reload();
+  });
+
+  // ── Auto-backup via File System Access API, same as MLibrary ──
+  function _idbOpen() {
+    return new Promise((resolve, reject) => {
+      const req = indexedDB.open('mchat_fs', 1);
+      req.onupgradeneeded = e => e.target.result.createObjectStore('handles');
+      req.onsuccess = e => resolve(e.target.result);
+      req.onerror = () => reject(req.error);
+    });
+  }
+  async function _idbPut(key, value) {
+    const db = await _idbOpen();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction('handles', 'readwrite');
+      tx.objectStore('handles').put(value, key);
+      tx.oncomplete = resolve; tx.onerror = () => reject(tx.error);
+    });
+  }
+  async function _idbGet(key) {
+    const db = await _idbOpen();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction('handles', 'readonly');
+      const req = tx.objectStore('handles').get(key);
+      req.onsuccess = () => resolve(req.result); req.onerror = () => reject(req.error);
+    });
+  }
+  async function _idbDel(key) {
+    const db = await _idbOpen();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction('handles', 'readwrite');
+      tx.objectStore('handles').delete(key);
+      tx.oncomplete = resolve; tx.onerror = () => reject(tx.error);
+    });
+  }
+
+  function updateAutoBackupUI() {
+    const statusEl = document.getElementById('autobackupStatus');
+    const saveBtn = document.getElementById('autobackupSaveNow');
+    const clearBtn = document.getElementById('autobackupClear');
+    const dir = localStorage.getItem('mchat_autobackup_dir');
+    const last = localStorage.getItem('mchat_autobackup_last');
+    if (dir) {
+      statusEl.innerHTML = '<span style="color:var(--accent)">&#10003;</span> Folder: <strong>' + dir + '</strong>' + (last ? ' &middot; Last saved: ' + last : '');
+      saveBtn.style.display = '';
+      clearBtn.style.display = '';
+    } else {
+      statusEl.textContent = 'No folder chosen yet.';
+      saveBtn.style.display = 'none';
+      clearBtn.style.display = 'none';
+    }
+  }
+
+  async function _doWriteBackup(handle) {
+    // Never overwrite an existing backup with empty data — guards against
+    // auto-backup running right after cache/storage is cleared.
+    if (!localStorage.getItem(TPL_KEY) && !localStorage.getItem('mchat_envs') && !localStorage.getItem(TECH_KEY)) return false;
+    try {
+      const perm = await handle.queryPermission({ mode: 'readwrite' });
+      if (perm !== 'granted') {
+        const req = await handle.requestPermission({ mode: 'readwrite' });
+        if (req !== 'granted') { updateAutoBackupUI(); return false; }
+      }
+      const fileHandle = await handle.getFileHandle('MChat-backup.json', { create: true });
+      const writable = await fileHandle.createWritable();
+      await writable.write(JSON.stringify(buildBackupData(), null, 2));
+      await writable.close();
+      const now = new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+      localStorage.setItem('mchat_autobackup_last', now);
+      updateAutoBackupUI();
+      return true;
+    } catch (e) {
+      console.warn('Auto-backup write failed:', e);
+      return false;
+    }
+  }
+
+  async function pickBackupFolder(statusEl) {
+    statusEl = statusEl || document.getElementById('autobackupStatus');
+    if (!('showDirectoryPicker' in window)) {
+      statusEl.textContent = 'Auto-backup requires Chrome or Edge.';
+      return;
+    }
+    try {
+      const handle = await window.showDirectoryPicker({ mode: 'readwrite' });
+      await _idbPut('backup_dir', handle);
+      localStorage.setItem('mchat_autobackup_dir', handle.name);
+      updateAutoBackupUI();
+      if (statusEl.id !== 'autobackupStatus') statusEl.textContent = 'Auto-backup enabled — saving to “' + handle.name + '”.';
+      await _doWriteBackup(handle);
+    } catch (e) {
+      if (e.name !== 'AbortError') statusEl.textContent = 'Could not access folder.';
+    }
+  }
+  document.getElementById('autobackupPick').addEventListener('click', () => pickBackupFolder());
+
+  document.getElementById('autobackupSaveNow').addEventListener('click', async () => {
+    const handle = await _idbGet('backup_dir');
+    if (handle) await _doWriteBackup(handle);
+  });
+
+  document.getElementById('autobackupClear').addEventListener('click', async () => {
+    await _idbDel('backup_dir');
+    localStorage.removeItem('mchat_autobackup_dir');
+    localStorage.removeItem('mchat_autobackup_last');
+    updateAutoBackupUI();
+  });
+
+  async function _autoBackupTick() {
+    try {
+      const handle = await _idbGet('backup_dir');
+      if (handle) await _doWriteBackup(handle);
+    } catch (e) {}
+  }
+  setInterval(_autoBackupTick, 5 * 60 * 1000);
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') _autoBackupTick();
+  });
+
+  const TPL_KEY = 'mchat_templates';
+
+  const DEFAULT_TEMPLATES = [
+    {
+      name: 'Initial outreach',
+      text: 'Hi {name}, this is {tech} from the IT Service Desk reaching out about your ticket {ticket} regarding {issue}. Do you have a few minutes to work on this now? If another time works better, just let me know what time suits you.'
+    },
+    {
+      name: 'Need more info',
+      text: "Hi {name}, this is {tech} from the IT Service Desk. I'm working on your ticket {ticket} regarding {issue} and need a little more information to move forward. When you get a moment, could you reply here with more details (any error messages, when it started, and whether it happens every time)? Thanks!"
+    },
+    {
+      name: 'Remote session',
+      text: 'Hi {name}, this is {tech} from the IT Service Desk working on your ticket {ticket} regarding {issue}. The quickest way to resolve this is a short remote session so I can take a look at your screen. Are you available now? If not, let me know a time that works for you today.'
+    },
+    {
+      name: 'No response follow-up',
+      text: "Hi {name}, {tech} from the IT Service Desk following up on your ticket {ticket} regarding {issue}. I haven't been able to reach you yet — are you still experiencing the issue? If I don't hear back, the ticket may be closed due to no response, but you can always reopen it or submit a new one if the issue returns."
+    },
+    {
+      name: 'Resolution confirmation',
+      text: "Hi {name}, this is {tech} from the IT Service Desk. I believe your ticket {ticket} regarding {issue} is now resolved. Could you confirm everything is working on your end? If so, I'll close the ticket — and if anything comes back up, don't hesitate to reach out."
+    },
+    {
+      name: 'Post-call follow-up',
+      text: "Hi {name}, this is {tech} from the IT Service Desk. Thanks for taking the time to speak with me about your ticket {ticket} regarding {issue}. If anything comes back up or you run into any other issues, don't hesitate to reach out to us — we're happy to help. Have a great rest of your day!"
+    },
+    {
+      name: 'Password reset',
+      text: `Hi {name}, this is {tech} from the IT Service Desk regarding your ticket {ticket}. Here is your information to help you sign into your account.
+
+Website = [SSO URL]
+Username = {email}
+Temporary password = [TempPassword123!]
+----------------------------------------------------------------
+
+What are the requirements for my Active Directory or "LAN" Password?
+Answer
+\t• At least 16 characters in length, more is acceptable.
+\t• At least one lowercase letter
+\t• At least one uppercase letter
+\t• At least one number
+\t• At least one special character
+\t• No part of your name
+\t• No words appearing in the dictionary, unless run together or broken apart
+\t• Cannot repeat same character 3 times in a row. Ex: 111, aaa
+\t• You may not use a password you have used before, although changes may be minimal.
+Not meeting one or more of these requirements will result in an error, "Password does not meet Policy Restrictions."
+
+Please message us back if still having issues.`
+    },
+  ];
+
+  function loadTemplates() {
+    try {
+      const t = JSON.parse(localStorage.getItem(TPL_KEY));
+      if (Array.isArray(t) && t.length && t.every(x => x && typeof x.name === 'string' && typeof x.text === 'string')) return t;
+    } catch (e) {}
+    return DEFAULT_TEMPLATES.map(t => ({ ...t }));
+  }
+  function saveTemplates() { localStorage.setItem(TPL_KEY, JSON.stringify(templates)); }
+
+  let templates = loadTemplates();
+
+  // one-time seed: add Password reset to template lists saved before it existed
+  if (!localStorage.getItem('mchat_tpl_seed_pwreset')) {
+    if (!templates.some(t => t.name === 'Password reset')) {
+      templates.push({ ...DEFAULT_TEMPLATES.find(t => t.name === 'Password reset') });
+      if (localStorage.getItem(TPL_KEY)) saveTemplates();
+    }
+    localStorage.setItem('mchat_tpl_seed_pwreset', '1');
+  }
+
+  // one-time seed: add Post-call follow-up to template lists saved before it existed
+  if (!localStorage.getItem('mchat_tpl_seed_postcall')) {
+    if (!templates.some(t => t.name === 'Post-call follow-up')) {
+      templates.push({ ...DEFAULT_TEMPLATES.find(t => t.name === 'Post-call follow-up') });
+      if (localStorage.getItem(TPL_KEY)) saveTemplates();
+    }
+    localStorage.setItem('mchat_tpl_seed_postcall', '1');
+  }
+
+
+  let activeTemplate = 0;
+  let userEdited = false;
+
+  const editor = document.getElementById('editor');
+  const editToggle = document.getElementById('editToggle');
+  const tplName = document.getElementById('tplName');
+  const tplText = document.getElementById('tplText');
+
+  function buildMessage(text, f) {
+    return text
+      .replace(/\{name\}/g, f.firstName)
+      .replace(/\{ticket\}/g, f.ticket)
+      .replace(/\{issue\}/g, f.issue)
+      .replace(/\{tech\}/g, f.techName)
+      .replace(/\{email\}/g, f.email);
+  }
+
+  function loadEditor() {
+    tplName.value = templates[activeTemplate].name;
+    tplText.value = templates[activeTemplate].text;
+  }
+
+  function renderChips() {
+    const q = document.getElementById('tplSearch').value.trim().toLowerCase();
+    els.chips.innerHTML = '';
+    let shown = 0;
+    templates.forEach((t, i) => {
+      // filter by name or template text; the active scenario stays visible so it can't get "lost"
+      if (q && i !== activeTemplate && !t.name.toLowerCase().includes(q) && !t.text.toLowerCase().includes(q)) return;
+      shown++;
+      const chip = document.createElement('button');
+      chip.type = 'button';
+      chip.className = 'chip' + (i === activeTemplate ? ' active' : '');
+      chip.textContent = t.name;
+      chip.addEventListener('click', () => {
+        activeTemplate = i;
+        userEdited = false;
+        renderChips();
+        loadEditor();
+        refresh();
+      });
+      els.chips.appendChild(chip);
+    });
+    const add = document.createElement('button');
+    add.type = 'button';
+    add.className = 'chip chip-add';
+    add.textContent = q && shown === 1 && templates.length > 1 ? 'no other matches' : '+ new';
+    add.disabled = add.textContent !== '+ new';
+    add.addEventListener('click', () => {
+      const search = document.getElementById('tplSearch');
+      if (search.value) { search.value = ''; }
+      templates.push({
+        name: 'New scenario',
+        text: 'Hi {name}, this is {tech} from the IT Service Desk regarding your ticket {ticket} about {issue}. '
+      });
+      activeTemplate = templates.length - 1;
+      userEdited = false;
+      saveTemplates();
+      renderChips();
+      editor.hidden = false;
+      editToggle.classList.add('active');
+      loadEditor();
+      refresh();
+      tplName.focus();
+      tplName.select();
+    });
+    els.chips.appendChild(add);
+  }
+
+  document.getElementById('tplSearch').addEventListener('input', renderChips);
+
+  editToggle.addEventListener('click', () => {
+    editor.hidden = !editor.hidden;
+    editToggle.classList.toggle('active', !editor.hidden);
+    if (!editor.hidden) loadEditor();
+  });
+
+  tplName.addEventListener('input', () => {
+    templates[activeTemplate].name = tplName.value.trim() || 'Untitled';
+    saveTemplates();
+    renderChips();
+  });
+
+  tplText.addEventListener('input', () => {
+    templates[activeTemplate].text = tplText.value;
+    userEdited = false;
+    saveTemplates();
+    refresh();
+  });
+
+  document.getElementById('tplDelete').addEventListener('click', () => {
+    if (templates.length === 1) { alert('At least one scenario is required.'); return; }
+    if (!confirm('Delete scenario "' + templates[activeTemplate].name + '"?')) return;
+    templates.splice(activeTemplate, 1);
+    activeTemplate = Math.max(0, Math.min(activeTemplate, templates.length - 1));
+    userEdited = false;
+    saveTemplates();
+    renderChips();
+    loadEditor();
+    refresh();
+  });
+
+  document.getElementById('tplReset').addEventListener('click', () => {
+    if (!confirm('Reset all scenarios to the built-in defaults? Custom scenarios will be removed.')) return;
+    templates = DEFAULT_TEMPLATES.map(t => ({ ...t }));
+    activeTemplate = 0;
+    userEdited = false;
+    saveTemplates();
+    renderChips();
+    loadEditor();
+    refresh();
+  });
+
+  function fields() {
+    return {
+      firstName: els.firstName.value.trim() || '[name]',
+      ticket: els.ticket.value.trim().toUpperCase() || '[ticket #]',
+      issue: els.issue.value.trim() || '[issue]',
+      techName: els.techName.value.trim() || '[your name]',
+      email: getEmail() || '[email]',
+    };
+  }
+
+  const ENV_KEY = 'mchat_envs';
+  const ENV_ACTIVE_KEY = 'mchat_activeEnv';
+
+  const DEFAULT_ENVS = [
+    { name: 'Example', suffix: '@example.com', tenantId: '' },
+  ];
+
+  function loadEnvs() {
+    try {
+      const e = JSON.parse(localStorage.getItem(ENV_KEY));
+      // an empty array is valid — it means "no environments, type full addresses"
+      if (Array.isArray(e) && e.every(x => x && typeof x.name === 'string')) {
+        return e;
+      }
+    } catch (err) {}
+    return DEFAULT_ENVS.map(e => ({ ...e }));
+  }
+  function saveEnvs() { localStorage.setItem(ENV_KEY, JSON.stringify(envs)); }
+
+  let envs = loadEnvs();
+
+
+  let activeEnv = Math.max(0, Math.min(parseInt(localStorage.getItem(ENV_ACTIVE_KEY), 10) || 0, envs.length - 1));
+
+  const envEditor = document.getElementById('envEditor');
+  const envToggle = document.getElementById('envToggle');
+  const envSuffix = document.getElementById('envSuffix');
+  const envTenant = document.getElementById('envTenant');
+  const emailSuffix = document.getElementById('emailSuffix');
+
+  function renderEnvChips() {
+    // no environments = full addresses only, but keep "+ add" so the state is recoverable
+    const hasEnv = !!envs[activeEnv];
+    emailSuffix.hidden = !hasEnv;
+    envToggle.hidden = !hasEnv;
+    if (!hasEnv) { envEditor.hidden = true; envToggle.classList.remove('active'); }
+    els.userEmail.placeholder = hasEnv ? 'e.g. First.Last or 123456' : 'e.g. First.Last@example.com';
+    const chipsEl = document.getElementById('envChips');
+    chipsEl.innerHTML = '';
+    envs.forEach((e, i) => {
+      const chip = document.createElement('button');
+      chip.type = 'button';
+      chip.className = 'chip' + (i === activeEnv ? ' active' : '');
+      chip.textContent = e.name;
+      chip.addEventListener('click', () => {
+        activeEnv = i;
+        localStorage.setItem(ENV_ACTIVE_KEY, String(i));
+        renderEnvChips();
+        loadEnvEditor();
+        refresh();
+      });
+      chipsEl.appendChild(chip);
+    });
+    const addChip = document.createElement('button');
+    addChip.type = 'button';
+    addChip.className = 'chip chip-add';
+    addChip.textContent = '+ add';
+    addChip.addEventListener('click', () => {
+      envs.push({ name: 'New env', suffix: '', tenantId: '' });
+      activeEnv = envs.length - 1;
+      localStorage.setItem(ENV_ACTIVE_KEY, String(activeEnv));
+      saveEnvs();
+      renderEnvChips();
+      loadEnvEditor();
+      envEditor.hidden = false;
+      envToggle.classList.add('active');
+      refresh();
+      document.getElementById('envName').select();
+    });
+    chipsEl.appendChild(addChip);
+    if (hasEnv) emailSuffix.textContent = envs[activeEnv].suffix || '@…';
+  }
+
+  function loadEnvEditor() {
+    if (!envs[activeEnv]) return;
+    document.getElementById('envName').value = envs[activeEnv].name;
+    envSuffix.value = envs[activeEnv].suffix;
+    envTenant.value = envs[activeEnv].tenantId;
+  }
+
+  envToggle.addEventListener('click', () => {
+    envEditor.hidden = !envEditor.hidden;
+    envToggle.classList.toggle('active', !envEditor.hidden);
+    if (!envEditor.hidden) loadEnvEditor();
+  });
+
+  envSuffix.addEventListener('input', () => {
+    if (!envs[activeEnv]) return;
+    let s = envSuffix.value.trim();
+    if (s && !s.startsWith('@')) s = '@' + s;
+    envs[activeEnv].suffix = s;
+    saveEnvs();
+    emailSuffix.textContent = s || '@…';
+    refresh();
+  });
+
+  envTenant.addEventListener('input', () => {
+    if (!envs[activeEnv]) return;
+    envs[activeEnv].tenantId = envTenant.value.trim();
+    saveEnvs();
+  });
+
+  document.getElementById('envName').addEventListener('input', (e) => {
+    if (!envs[activeEnv]) return;
+    envs[activeEnv].name = e.target.value.trim() || 'New env';
+    saveEnvs();
+    // re-label the chips without rebuilding them, so typing keeps focus
+    [...document.querySelectorAll('#envChips .chip:not(.chip-add)')].forEach((c, i) => {
+      c.textContent = envs[i].name;
+    });
+  });
+
+  document.getElementById('envDelete').addEventListener('click', () => {
+    if (!envs[activeEnv]) return;
+    if (!confirm('Remove the "' + envs[activeEnv].name + '" environment?')) return;
+    envs.splice(activeEnv, 1);
+    activeEnv = Math.max(0, Math.min(activeEnv, envs.length - 1));
+    localStorage.setItem(ENV_ACTIVE_KEY, String(activeEnv));
+    saveEnvs();
+    renderEnvChips();
+    loadEnvEditor();
+    refresh();
+  });
+
+  function getEmail() {
+    const raw = els.userEmail.value.trim();
+    if (!raw) return '';
+    if (raw.includes('@')) return raw;
+    // without a domain we can't address the chat — type a full email or configure the suffix
+    return envs[activeEnv] && envs[activeEnv].suffix ? raw + envs[activeEnv].suffix : '';
+  }
+
+  function refresh() {
+    if (!userEdited) {
+      els.message.value = buildMessage(templates[activeTemplate].text, fields());
+    }
+    const hasMsg = els.message.value.trim().length > 0;
+    els.openTeams.disabled = !(hasMsg && getEmail());
+    document.getElementById('openOutlook').disabled = !(hasMsg && getEmail());
+    els.copyMsg.disabled = !hasMsg;
+    els.status.textContent = '';
+  }
+
+  function chatPath() {
+    let path = '/l/chat/0/0?users=' + encodeURIComponent(getEmail()) +
+      '&message=' + encodeURIComponent(els.message.value);
+    const tenant = envs[activeEnv] ? envs[activeEnv].tenantId : '';
+    if (tenant) path += '&tenantId=' + encodeURIComponent(tenant);
+    return path;
+  }
+
+  function openTeams() {
+    if (!getEmail()) return;
+    // msteams: protocol opens the Teams desktop app directly
+    window.location.href = 'msteams:' + chatPath();
+    els.status.textContent = 'Opening Teams chat with ' + getEmail() + '…';
+  }
+
+  function openTeamsWeb() {
+    if (!getEmail()) return;
+    window.open('https://teams.microsoft.com' + chatPath(), '_blank');
+    els.status.textContent = 'Opening Teams in browser with ' + getEmail() + '…';
+  }
+
+  function outlookSubject() {
+    const ticket = els.ticket.value.trim().toUpperCase();
+    const issue = els.issue.value.trim();
+    let subject = 'IT Service Desk';
+    if (ticket) subject += ' – ' + ticket;
+    if (issue) subject += ' – ' + issue;
+    return subject;
+  }
+
+  function openOutlook() {
+    const email = getEmail();
+    if (!email) return;
+    window.location.href = 'mailto:' + encodeURIComponent(email) +
+      '?subject=' + encodeURIComponent(outlookSubject()) +
+      '&body=' + encodeURIComponent(els.message.value);
+    els.status.textContent = 'Opening Outlook draft to ' + email + '…';
+  }
+
+  async function copyMessage() {
+    try {
+      await navigator.clipboard.writeText(els.message.value);
+      els.status.textContent = 'Message copied to clipboard.';
+    } catch (e) {
+      els.message.select();
+      document.execCommand('copy');
+      els.status.textContent = 'Message copied to clipboard.';
+    }
+  }
+
+  [els.firstName, els.ticket, els.issue].forEach(el =>
+    el.addEventListener('input', () => { userEdited = false; refresh(); }));
+  els.userEmail.addEventListener('input', refresh);
+  els.techName.addEventListener('input', () => {
+    localStorage.setItem(TECH_KEY, els.techName.value.trim());
+    userEdited = false;
+    refresh();
+  });
+  els.message.addEventListener('input', () => {
+    userEdited = true;
+    refresh();
+  });
+  els.openTeams.addEventListener('click', openTeams);
+  document.getElementById('openOutlook').addEventListener('click', openOutlook);
+  els.copyMsg.addEventListener('click', copyMessage);
+  document.getElementById('openWeb').addEventListener('click', (e) => {
+    e.preventDefault();
+    openTeamsWeb();
+  });
+
+  els.techName.value = localStorage.getItem(TECH_KEY) || '';
+  renderChips();
+  renderEnvChips();
+  refresh();
+
+  // ── Autofill from a ServiceNow ticket (bookmarklet) ──
+  // The bookmarklet (MChat-bookmarklet.html) copies "MCHAT-FILL:<params>" to the
+  // clipboard, which we pick up when this tab gains focus. The same params also
+  // work in the URL (#name=…&ticket=…) for a hosted copy of the app.
+  const FILL_SENTINEL = 'MCHAT-FILL:';
+  let lastFillPayload = '';
+
+  // a full email switches to the matching environment so the suffix chip stays true
+  function setEmailField(email) {
+    const i = envs.findIndex(e => e.suffix && email.toLowerCase().endsWith(e.suffix.toLowerCase()));
+    if (i >= 0) {
+      activeEnv = i;
+      localStorage.setItem(ENV_ACTIVE_KEY, String(i));
+      renderEnvChips();
+      loadEnvEditor();
+      els.userEmail.value = email.slice(0, -envs[i].suffix.length);
+    } else {
+      els.userEmail.value = email;
+    }
+  }
+
+  function applyFill(params) {
+    const get = k => (params.get(k) || '').trim();
+    const name = get('name'), ticket = get('ticket'), issue = get('issue'), email = get('email');
+    if (!(name || ticket || issue || email)) return false;
+    if (name) els.firstName.value = name;
+    if (ticket) els.ticket.value = ticket.toUpperCase();
+    if (issue) els.issue.value = issue;
+    if (email) setEmailField(email);
+    const scenario = get('scenario');
+    if (scenario) {
+      const i = templates.findIndex(t => t.name.toLowerCase() === scenario.toLowerCase());
+      if (i >= 0) { activeTemplate = i; renderChips(); loadEditor(); }
+    }
+    userEdited = false;
+    refresh();
+    els.status.textContent = 'Filled from ticket' + (ticket ? ' ' + ticket.toUpperCase() : '') + '.';
+    return true;
+  }
+
+  function applyFillPayload(text, explicit) {
+    if (!text || !text.startsWith(FILL_SENTINEL) || text === lastFillPayload) return false;
+    lastFillPayload = text;
+    const params = new URLSearchParams(text.slice(FILL_SENTINEL.length));
+    const ts = parseInt(params.get('ts'), 10);
+    if (!explicit && ts && Date.now() - ts > 20 * 60 * 1000) return false; // stale copy from an old click
+    return applyFill(params);
+  }
+
+  // Ctrl+V anywhere on the page fills from a bookmarklet payload — needs no
+  // clipboard permission, so it never prompts. Other pastes pass through untouched.
+  document.addEventListener('paste', (e) => {
+    const text = e.clipboardData ? e.clipboardData.getData('text') : '';
+    if (text && text.startsWith(FILL_SENTINEL)) {
+      e.preventDefault();
+      applyFillPayload(text, true);
+    }
+  });
+
+  // Silent auto-fill on focus, but ONLY if clipboard permission is already granted:
+  // file:// pages can't persist that grant, so reading here re-prompted on every
+  // focus — and clicking Allow re-focused the page, looping the prompt forever.
+  async function fillFromClipboard() {
+    if (!navigator.clipboard || !navigator.clipboard.readText || !navigator.permissions || !navigator.permissions.query) return;
+    try {
+      const p = await navigator.permissions.query({ name: 'clipboard-read' });
+      if (p.state !== 'granted') return;
+      applyFillPayload(await navigator.clipboard.readText(), false);
+    } catch (e) {}
+  }
+  window.addEventListener('focus', fillFromClipboard);
+
+  (function fillFromUrl() {
+    for (const src of [location.hash.replace(/^#/, ''), location.search.replace(/^\?/, '')]) {
+      if (src && applyFill(new URLSearchParams(src))) return;
+    }
+    fillFromClipboard();
+  })();
+
+  // ── First-run setup: ask once, never again ──
+  const SETUP_KEY = 'mchat_setup_done';
+  if (!localStorage.getItem(SETUP_KEY)) {
+    const setupModal = document.getElementById('setupModal');
+    const choiceBtns = [...document.querySelectorAll('#setupEnvChoice .chip')];
+    let envChoice = 'all';
+    const pickList = DEFAULT_ENVS.map(e => ({ ...e, picked: false }));
+    function renderPickChips() {
+      const wrap = document.getElementById('setupPickChips');
+      wrap.innerHTML = '';
+      pickList.forEach(p => {
+        const chip = document.createElement('button');
+        chip.type = 'button';
+        chip.className = 'chip' + (p.picked ? ' active' : '');
+        chip.textContent = p.name + ' — ' + p.suffix;
+        chip.addEventListener('click', () => { p.picked = !p.picked; renderPickChips(); });
+        wrap.appendChild(chip);
+      });
+    }
+    choiceBtns.forEach(b => b.addEventListener('click', () => {
+      envChoice = b.dataset.choice;
+      choiceBtns.forEach(x => x.classList.toggle('active', x === b));
+      document.getElementById('setupEnvPicker').hidden = envChoice !== 'pick';
+      if (envChoice === 'pick') renderPickChips();
+    }));
+    document.getElementById('setupCustomAdd').addEventListener('click', () => {
+      const input = document.getElementById('setupCustomDomain');
+      let s = input.value.trim().toLowerCase();
+      if (!s) return;
+      if (!s.startsWith('@')) s = '@' + s;
+      if (!pickList.some(p => p.suffix === s)) {
+        const name = s.slice(1).split('.')[0];
+        pickList.push({ name: name.charAt(0).toUpperCase() + name.slice(1), suffix: s, tenantId: '', picked: true });
+      }
+      input.value = '';
+      renderPickChips();
+    });
+    document.getElementById('setupBackupPick').addEventListener('click', () =>
+      pickBackupFolder(document.getElementById('setupBackupStatus')));
+    document.getElementById('setupDone').addEventListener('click', () => {
+      if (envChoice === 'pick') {
+        envs = pickList.filter(p => p.picked).map(p => ({ name: p.name, suffix: p.suffix, tenantId: p.tenantId }));
+        saveEnvs();
+        activeEnv = 0;
+        localStorage.setItem(ENV_ACTIVE_KEY, '0');
+        renderEnvChips();
+        loadEnvEditor();
+        refresh();
+      }
+      localStorage.setItem(SETUP_KEY, '1');
+      setupModal.classList.remove('open');
+    });
+    setupModal.classList.add('open');
+  }
+
+  // ── Message history ──
+  const HIST_KEY = 'mchat_history';
+  const HIST_MAX = 100;
+
+  function loadHistory() {
+    try { return JSON.parse(localStorage.getItem(HIST_KEY)) || []; }
+    catch { return []; }
+  }
+  function saveHistory(h) { localStorage.setItem(HIST_KEY, JSON.stringify(h)); }
+
+  function addHistoryEntry(msg) {
+    const h = loadHistory();
+    h.unshift({
+      id: Date.now(),
+      ts: new Date().toISOString(),
+      to: getEmail() || '',
+      scenario: templates[activeTemplate].name,
+      msg: msg,
+    });
+    if (h.length > HIST_MAX) { saveHistory(h.slice(0, HIST_MAX)); return; }
+    saveHistory(h);
+  }
+
+  function renderHistory(filter) {
+    const h = loadHistory();
+    const list = document.getElementById('historyList');
+    const stats = document.getElementById('historyStats');
+    list.innerHTML = '';
+
+    const q = (filter || '').toLowerCase();
+    const filtered = q ? h.filter(e =>
+      e.to.toLowerCase().includes(q) ||
+      e.scenario.toLowerCase().includes(q) ||
+      e.msg.toLowerCase().includes(q)
+    ) : h;
+
+    stats.textContent = q
+      ? filtered.length + ' of ' + h.length + ' entries'
+      : h.length + ' entries';
+
+    if (!filtered.length) {
+      list.innerHTML = '<div class="history-empty">' + (q ? 'No matches.' : 'No messages sent yet.') + '</div>';
+      return;
+    }
+
+    filtered.forEach(e => {
+      const d = new Date(e.ts);
+      const time = d.toLocaleDateString() + ' ' + d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+      const entry = document.createElement('div');
+      entry.className = 'history-entry';
+      entry.innerHTML =
+        '<div class="history-meta">' +
+          '<div class="history-meta-left">' +
+            '<span class="history-time">' + time + '</span>' +
+            '<span class="history-to">→ ' + (e.to || 'unknown') + '</span>' +
+          '</div>' +
+          '<span class="history-scenario">' + esc(e.scenario) + '</span>' +
+        '</div>' +
+        '<div class="history-msg">' + esc(e.msg) + '</div>' +
+        '<div class="history-actions">' +
+          '<button class="btn" data-copy="' + e.id + '" type="button">Copy</button>' +
+          '<button class="btn" data-resend="' + e.id + '" type="button">Resend</button>' +
+          '<button class="btn btn-danger" data-hist-del="' + e.id + '" type="button">Delete</button>' +
+        '</div>';
+      list.appendChild(entry);
+    });
+
+    list.querySelectorAll('[data-copy]').forEach(btn =>
+      btn.addEventListener('click', () => {
+        const entry = h.find(x => x.id == btn.dataset.copy);
+        if (entry) {
+          navigator.clipboard.writeText(entry.msg).then(() => {
+            els.status.textContent = 'Message copied from history.';
+          });
+        }
+      }));
+
+    list.querySelectorAll('[data-resend]').forEach(btn =>
+      btn.addEventListener('click', () => {
+        const entry = h.find(x => x.id == btn.dataset.resend);
+        if (entry) {
+          els.message.value = entry.msg;
+          els.status.textContent = 'Message loaded — edit and send as new.';
+          refresh();
+        }
+      }));
+
+    list.querySelectorAll('[data-hist-del]').forEach(btn =>
+      btn.addEventListener('click', async () => {
+        const id = Number(btn.dataset.histDel);
+        const fresh = loadHistory().filter(x => x.id !== id);
+        saveHistory(fresh);
+        renderHistory(document.getElementById('historyFilter').value);
+      }));
+  }
+
+  function esc(s) {
+    const d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+  }
+
+  const historyModal = document.getElementById('historyModal');
+  document.getElementById('historyBtn').addEventListener('click', () => {
+    renderHistory('');
+    document.getElementById('historyFilter').value = '';
+    historyModal.classList.add('open');
+  });
+  document.getElementById('historyClose').addEventListener('click', () => historyModal.classList.remove('open'));
+  historyModal.addEventListener('click', (e) => { if (e.target === historyModal) historyModal.classList.remove('open'); });
+  document.getElementById('historyFilter').addEventListener('input', (e) => renderHistory(e.target.value));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') historyModal.classList.remove('open'); });
+
+  // Each button already has its own handler from the original code above;
+  // these listeners fire alongside them and record history entries.
+  els.openTeams.addEventListener('click', () => {
+    if (els.message.value.trim()) addHistoryEntry(els.message.value);
+  });
+  document.getElementById('openOutlook').addEventListener('click', () => {
+    if (els.message.value.trim()) addHistoryEntry(els.message.value);
+  });
+  els.copyMsg.addEventListener('click', () => {
+    if (els.message.value.trim()) addHistoryEntry(els.message.value);
+  });
+</script>
+</body>
+</html>

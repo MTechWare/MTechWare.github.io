@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MChat — Outreach Message Generator</title>
+  <meta name="description"
+    content="MChat generates polished outreach messages for IT ticket callers and opens them straight in Microsoft Teams or Outlook — scenario templates, placeholders, and multi-org support, all in a single HTML file." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #111118;
+      --surface2: #1a1a26;
+      --border: #2a2a40;
+      --accent: #ff8000;
+      --accent-glow: color-mix(in srgb, var(--accent) 6%, transparent);
+      --accent-hover: color-mix(in srgb, var(--accent) 85%, #000);
+      --accent-border: color-mix(in srgb, var(--accent) 30%, transparent);
+      --accent2: var(--accent);
+      --accent3: #ff6b6b;
+      --text: #e8e8f0;
+      --muted: #888899;
+      --nav-h: 68px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg);
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ─── NOISE OVERLAY ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.35;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--nav-h);
+      background: rgba(10, 10, 15, 0.6);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+      z-index: 100;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    /* ─── ANIMATED LOGO ─── */
+    .animated-logo {
+      width: 28px;
+      height: 28px;
+      display: block;
+      overflow: visible;
+    }
+
+    .logo-hex {
+      stroke-dasharray: 280;
+      stroke-dashoffset: 0;
+      animation: drawLogo 2s ease backwards, glowPulse 3s 2s infinite alternate;
+      transform-origin: 50px 50px;
+    }
+
+    .logo-m {
+      stroke-dasharray: 180;
+      stroke-dashoffset: 0;
+      animation: drawLogoM 1.5s 0.5s ease backwards;
+    }
+
+    .nav-logo:hover .logo-hex {
+      animation: spinHex 6s linear infinite;
+      filter: drop-shadow(0 0 8px var(--accent2));
+    }
+
+    .nav-logo:hover .logo-m {
+      filter: drop-shadow(0 0 4px var(--accent2));
+    }
+
+    @keyframes drawLogo {
+      from {
+        stroke-dashoffset: 280;
+      }
+
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    @keyframes drawLogoM {
+      from {
+        stroke-dashoffset: 180;
+      }
+
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    @keyframes glowPulse {
+      0% {
+        filter: drop-shadow(0 0 2px var(--accent2));
+      }
+
+      100% {
+        filter: drop-shadow(0 0 8px var(--accent2));
+      }
+    }
+
+    @keyframes spinHex {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .nav-logo span {
+      font-family: 'Space Mono', monospace;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: -0.02em;
+      color: var(--accent2);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    .nav-divider {
+      width: 1px;
+      height: 24px;
+      background-color: var(--border);
+    }
+
+    .nav-cta {
+      background: var(--accent);
+      color: #000 !important;
+      padding: 0.45rem 1.1rem;
+      border-radius: 4px;
+      font-weight: 700 !important;
+    }
+
+    .nav-cta:hover {
+      opacity: 0.85;
+    }
+
+    /* ─── HERO ─── */
+    .app-hero {
+      min-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: calc(var(--nav-h) + 4rem) 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-glow {
+      position: absolute;
+      width: 700px;
+      height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      padding: 0.3rem 0.8rem;
+      border-radius: 100px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .hero-badge::before {
+      content: '💬';
+      font-size: 0.8rem;
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+      animation: fadeUp 0.7s 0.1s ease both;
+    }
+
+    h1 .accent {
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 600px;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+      animation: fadeUp 0.7s 0.2s ease both;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: fadeUp 0.7s 0.3s ease both;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.75rem 1.6rem;
+      border-radius: 6px;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #000;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    /* ─── APP PREVIEW ─── */
+    .app-preview-container {
+      max-width: 900px;
+      margin: 0 auto 6rem;
+      animation: fadeUp 0.7s 0.4s ease both;
+      position: relative;
+      z-index: 10;
+    }
+
+    .app-window {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05), 0 0 80px color-mix(in srgb, var(--accent) 8%, transparent);
+    }
+
+    .app-header {
+      background: var(--surface2);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      padding-left: 1rem;
+    }
+
+    .win-title {
+      font-size: 0.75rem;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      font-family: 'Syne', sans-serif;
+    }
+
+    .win-controls {
+      display: flex;
+    }
+
+    .win-btn {
+      width: 46px;
+      height: 32px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: var(--muted);
+      transition: background 0.1s, color 0.1s;
+    }
+
+    .win-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text);
+    }
+
+    .win-btn.win-close:hover {
+      background: #e81123;
+      color: #fff;
+    }
+
+    .app-content {
+      padding: 0;
+      display: block;
+      background: var(--bg);
+      position: relative;
+    }
+
+    .app-content img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* ─── SECTIONS ─── */
+    section {
+      padding: 6rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      margin-bottom: 0.8rem;
+    }
+
+    h2 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-sub {
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 480px;
+      line-height: 1.7;
+      margin-bottom: 3rem;
+    }
+
+    /* ─── CARDS GRID ─── */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.8rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+    }
+
+    .card-icon {
+      font-size: 1.6rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .card p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ─── HIGHLIGHT SECTION ─── */
+    .highlights {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+
+    .highlight {
+      text-align: center;
+      padding: 2rem 1.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .highlight:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+    }
+
+    .highlight-icon {
+      font-size: 2.2rem;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+
+    .highlight h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+
+    .highlight p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .footer-brand p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 0.6rem;
+      line-height: 1.65;
+      max-width: 260px;
+    }
+
+    footer h5 {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    footer ul {
+      list-style: none;
+    }
+
+    footer ul li {
+      margin-bottom: 0.6rem;
+    }
+
+    footer ul a {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.88rem;
+      transition: color 0.2s;
+    }
+
+    footer ul a:hover {
+      color: var(--accent);
+    }
+
+    .footer-copy {
+      border-top: 1px solid var(--border);
+      padding: 1.5rem 2.5rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--muted);
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* ─── DIVIDER ─── */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 0;
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 700px) {
+      .nav-links {
+        display: none;
+      }
+
+      footer {
+        grid-template-columns: 1fr;
+      }
+
+      .app-preview-container {
+        padding: 0 1rem;
+      }
+
+      .highlights {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+  <script src="settings.js?v=7"></script>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="index.html">
+      <svg class="animated-logo icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="var(--accent2)" />
+            <stop offset="100%" stop-color="var(--accent2)" />
+          </linearGradient>
+        </defs>
+        <polygon class="logo-hex" points="50,5 89,27.5 89,72.5 50,95 11,72.5 11,27.5" fill="none"
+          stroke="url(#logo-grad)" stroke-width="6" />
+        <polyline class="logo-m" points="26,68 26,35 50,55 74,35 74,68" fill="none" stroke="url(#logo-grad)"
+          stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      <span>MTechWare</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">← Back to Portfolio</a></li>
+      <li class="nav-divider"></li>
+      <li><a href="#">Overview</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="mchat-app.html" class="nav-cta">Launch App</a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="app-hero" style="max-width:100%;">
+    <div class="hero-glow"></div>
+    <div class="hero-badge">Your outreach generator</div>
+    <h1>M<span class="accent">Chat</span></h1>
+    <p class="hero-sub">
+      Turn a ticket into a polished outreach message in seconds. Pick a scenario, fill in the caller's
+      details, and open the conversation straight in Microsoft Teams or Outlook — all from a single HTML file.
+    </p>
+    <div class="hero-btns">
+      <a href="mchat-app.html" class="btn btn-primary">Launch MChat</a>
+      <a href="#features" class="btn btn-outline">Explore Features</a>
+    </div>
+  </section>
+
+  <!-- APP PREVIEW -->
+  <div class="app-preview-container">
+    <div class="app-window">
+      <div class="app-header">
+        <div class="win-title">
+          <span style="font-size: 0.85rem; margin-right: 0.5rem; opacity: 1;"></span>
+        </div>
+        <div class="win-controls">
+          <div class="win-btn win-min">
+            <svg width="10" height="1" viewBox="0 0 10 1">
+              <rect width="10" height="1" fill="currentColor" />
+            </svg>
+          </div>
+          <div class="win-btn win-max">
+            <svg width="10" height="10" viewBox="0 0 10 10">
+              <rect width="10" height="10" fill="none" stroke="currentColor" stroke-width="1" />
+            </svg>
+          </div>
+          <div class="win-btn win-close">
+            <svg width="10" height="10" viewBox="0 0 10 10">
+              <path d="M1 1l8 8M9 1l-8 8" stroke="currentColor" stroke-width="1.5" />
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="app-content">
+        <img src="mchat.png" alt="MChat Interface — Outreach Message Generator for Teams & Outlook" />
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- WHY MCHAT -->
+  <section id="why">
+    <p class="section-tag">Why MChat</p>
+    <h2>From Ticket to Conversation</h2>
+    <p class="section-sub">No cloud. No accounts. No copy-paste gymnastics. One click opens the chat.</p>
+    <div class="highlights">
+      <div class="highlight">
+        <span class="highlight-icon">⚡</span>
+        <h3>Seconds, Not Minutes</h3>
+        <p>Pick a scenario, type a name and ticket number, and the message writes itself — consistent and professional
+          every time.</p>
+      </div>
+      <div class="highlight">
+        <span class="highlight-icon">📄</span>
+        <h3>Single File</h3>
+        <p>The entire app is one HTML file — open it in any browser, host it anywhere, carry it on a USB drive.</p>
+      </div>
+      <div class="highlight">
+        <span class="highlight-icon">🔓</span>
+        <h3>No Accounts</h3>
+        <p>Open it and go. No sign-up, no sync service, no telemetry — your templates never leave your device.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- FEATURES -->
+  <section id="features">
+    <p class="section-tag">Capabilities</p>
+    <h2>Outreach Features</h2>
+    <p class="section-sub">Everything you need to reach ticket callers quickly and consistently.</p>
+
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">📋</div>
+        <h3>Scenario Templates</h3>
+        <p>Ready-made messages for initial outreach, follow-ups, remote sessions, password resets, and resolution
+          confirmations — or write your own.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🧩</div>
+        <h3>Smart Placeholders</h3>
+        <p>Drop {name}, {ticket}, {issue}, {tech}, and {email} into any template and they fill in live as you type.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">💬</div>
+        <h3>Teams Deep Links</h3>
+        <p>One click opens a chat with the caller in the Teams desktop app — with your message pre-typed. Web Teams
+          fallback included.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📧</div>
+        <h3>Outlook Drafts</h3>
+        <p>Prefer email? The same message opens as an Outlook draft with an auto-generated subject line.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🏢</div>
+        <h3>Multi-Org Environments</h3>
+        <p>Switch between organisations — each with its own email domain and optional Teams tenant — so bare clockIDs
+          become full addresses automatically.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">💾</div>
+        <h3>Import & Backup</h3>
+        <p>Export your scenarios and settings as JSON, move them between machines, or enable automatic folder backups.
+        </p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🎨</div>
+        <h3>Custom Themes</h3>
+        <p>Light and dark modes, accent colors, fonts, corner roundness, and background patterns — make it yours.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🚀</div>
+        <h3>Guided First Run</h3>
+        <p>A one-time setup asks which environments you need and offers auto-backup — then gets out of your way.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand">
+      <a class="nav-logo" href="index.html"
+        style="text-decoration:none;display:inline-flex;align-items:center;gap:0.6rem;color:var(--text);">
+        <svg class="animated-logo icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="logo-grad-footer" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="var(--accent2)" />
+              <stop offset="100%" stop-color="var(--accent)" />
+            </linearGradient>
+          </defs>
+          <polygon class="logo-hex" points="50,5 89,27.5 89,72.5 50,95 11,72.5 11,27.5" fill="none"
+            stroke="url(#logo-grad-footer)" stroke-width="6" />
+          <polyline class="logo-m" points="26,68 26,35 50,55 74,35 74,68" fill="none" stroke="url(#logo-grad-footer)"
+            stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <span style="font-family:'Space Mono',monospace;font-weight:700;color:var(--accent2);">MTechWare</span>
+      </a>
+      <p>IT professional in training — building skills in support, infrastructure, and system administration.</p>
+    </div>
+    <div>
+      <h5>Quick Links</h5>
+      <ul>
+        <li><a href="#features">Features</a></li>
+        <li><a href="mchat-app.html">Launch App</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Resources</h5>
+      <ul>
+        <li><a href="app.html">MTech Toolkit</a></li>
+        <li><a href="mvault.html">MVault</a></li>
+        <li><a href="mlibrary.html">MLibrary</a></li>
+        <li><a href="index.html">Portfolio Site</a></li>
+      </ul>
+    </div>
+  </footer>
+  <div class="footer-copy">© 2026 MTechWare · All rights reserved.</div>
+</body>
+
+</html>
